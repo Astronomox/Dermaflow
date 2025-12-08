@@ -103,6 +103,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 -----
 **Built by [YASINLASISI](https://github.com/YASINLASISI)**
-**Re-built and Maintained by [Astronomox](https://www.google.com/search?q=https://github.com/Astronomox)**
 
-```
+---------------------------------------------------------------------
+
+**Re-built and Maintained by [Astronomox](https://www.google.com/search?q=https://github.com/Astronomox)**
