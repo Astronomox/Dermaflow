@@ -1,0 +1,372 @@
+{
+    "welcomeBack": "Kaabọ Pada, Gabriel!",
+    "dashboardSubtitle": "Eyi ni àkópọ̀ ìròyìn nípa alábàápín ìlera awọ ara rẹ.",
+    "advancedAiAnalysis": "Ìtúpalẹ̀ AI tó Ga Títí",
+    "advancedAiAnalysisDesc": "Gba ìtúpalẹ̀ ewu àwọn egbò awọ ara rẹ pẹ̀lú AI wa tó péye, tí a fún ní agbára pẹ̀lú Bio-LLM kan pàtàkì.",
+    "performNewAnalysis": "Ṣe Ìtúpalẹ̀ Tuntun",
+    "analyses": "Àwọn Ìtúpalẹ̀",
+    "low": "Kéré",
+    "avgRisk": "Ewu Apapọ̀",
+    "avgConfidence": "Ìgbẹ́kẹ̀lé Apapọ̀",
+    "newSkinAnalysis": "Ìtúpalẹ̀ Awọ Tuntun",
+    "newSkinAnalysisDesc": "Gbé àwòrán kan sókè láti gba ìtúpalẹ̀ ewu tí AI ṣe.",
+    "askBioLLM": "Béèrè lọ́wọ́ Bio-LLM",
+    "askBioLLMDesc": "Ǹjẹ́ o ní ìbéèrè kan? AI ìṣègùn wa le ràn ọ́ lọ́wọ́.",
+    "uvEnvironment": "UV & Ayìká",
+    "uvEnvironmentDesc": "Ṣàyẹ̀wò àmì ewu awọ ara ní gidi ní ìbámu pẹ̀lú ipò rẹ.",
+    "teleDermHub": "Ibùdó Tele-Derm",
+    "teleDermHubDesc": "Sopọ̀ mọ́ àwọn onímọ̀ nípa awọ ara lẹ́sẹ̀kẹsẹ̀.",
+    "geneticRiskAnalyzer": "Olùtúpalẹ̀ Ewu Jiini",
+    "geneticRiskAnalyzerDesc": "Sọ tẹ́lẹ̀ ìfarahàn ewu melanoma jiini rẹ.",
+    "dermatologyDigitalTwin": "Ìbejì Digita ti Awọ Ara",
+    "dermatologyDigitalTwinDesc": "Wo àwòkọ́ṣe fìrì-fọ́nrán ti ìlera awọ ara rẹ nígbà gbogbo.",
+    "yes": "Bẹ́ẹ̀ni",
+    "no": "Bẹ́ẹ̀kọ́",
+    "sometimes": "Nígbà míì",
+    "unsure": "Mi ò dájú",
+    "sidebar": {
+        "dashboard": "Ojú-iṣẹ́",
+        "skinAnalysis": "Ìtúpalẹ̀ Awọ",
+        "recommendations": "Àwọn Àbá",
+        "askBioLLM": "Béèrè lọ́wọ́ Bio-LLM",
+        "oncoConnect": "Onco-Connect",
+        "sparkFeatures": "Àwọn Ẹ̀yà Spark",
+        "uvEnvironment": "UV & Ayìká",
+        "teleDermHub": "Ibùdó Tele-Derm",
+        "geneticRisk": "Ewu Jiini",
+        "digitalTwin": "Ìbejì Digita"
+    },
+    "analysis": {
+        "pageHeader": {
+            "title": "Ìtúpalẹ̀ Egbò Awọ",
+            "subtitle": "Gbé àwòrán kan sókè láti gba ìtúpalẹ̀ ewu tí AI ṣe.",
+            "newAnalysisButton": "Bẹ̀rẹ̀ Ìtúpalẹ̀ Tuntun"
+        },
+        "upload": {
+            "title": "Gbé Àwòrán Rẹ Sókè",
+            "description": "Tẹ ìsàlẹ̀ láti yan àwòrán egbò awọ kan.",
+            "chooseFileButton": "Yan Fáìlì",
+            "fileTypes": "Ó ṣe àtìlẹ́yìn fún JPEG, PNG, WEBP. Fún ète ẹ̀kọ́ nìkan."
+        },
+        "analysisSection": {
+            "title": "Ìtúpalẹ̀ AI",
+            "originalImage": "Àwòrán Àpilẹ̀ṣẹ̀",
+            "aiHeatmap": "Mápù Ooru AI"
+        },
+        "results": {
+            "title": "Àwọn Èsì Ìtúpalẹ̀",
+            "description": "Ìtúpalẹ̀ tí AI ṣe lórí àwòrán tí a pèsè.",
+            "refinedAssessment": "Ìtúpalẹ̀ Tí A Túnṣe",
+            "rationale": "Ìdí",
+            "initialAssessment": "Ìtúpalẹ̀ Àkọ́kọ́",
+            "confidenceScore": "Àmì Ìgbẹ́kẹ̀lé",
+            "disclaimer": "Àkíyèsí: Èyí jẹ́ ìtúpalẹ̀ tí AI ṣe fún ète ẹ̀kọ́, kì í ṣe àyẹ̀wò ìṣègùn. Máa kan sí oníṣègùn tó mọṣẹ́ nígbà gbogbo."
+        },
+        "questionnaire": {
+            "triggerButton": "Túnṣe pẹ̀lú Ìbéèrè",
+            "title": "Ìwé Ìbéèrè Àyẹ̀wò",
+            "description": "Dáhùn àwọn ìbéèrè wọ̀nyí láti ran AI lọ́wọ́ láti tún ìtúpalẹ̀ rẹ̀ ṣe.",
+            "durationLabel": "Ó ti pẹ́ tó tí egbò náà ti wà?",
+            "durationPlaceholder": "f.a., oṣù 2",
+            "sizeLabel": "Ìwọ̀n rẹ̀ tó bíi mélòó?",
+            "sizePlaceholder": "f.a., 5mm tàbí 1/4 inch",
+            "bleedingLabel": "Ǹjẹ́ ó máa ń ṣẹ̀jẹ̀?",
+            "itchingLabel": "Ǹjẹ́ ó máa ń yún ọ?",
+            "colorChangeLabel": "Ǹjẹ́ àwọ̀ rẹ̀ ti yí padà láìpẹ́?",
+            "selectPlaceholder": "Yan aṣayan kan",
+            "submitButton": "Túnṣe Ìtúpalẹ̀"
+        },
+        "readAloudButton": "Kà á Sóde",
+        "generateAudioPrompt": "Tẹ bọtini lati ṣe agbekalẹ kika ohun afetigbọ ti itupalẹ naa.",
+        "audio": {
+            "loading": "Ó ń ṣe ohùn...",
+            "error": "Aṣiṣe ní ṣíṣe ohùn."
+        },
+        "toast": {
+            "analysisFailedTitle": "Ìtúpalẹ̀ Kùnà",
+            "analysisFailedDesc": "Kò le ṣe àgbéjáde àlàyé AI. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i.",
+            "assessmentRefinedTitle": "A Ti Tún Ìtúpalẹ̀ Ṣe",
+            "assessmentRefinedDesc": "A ti ṣe àtúnṣe ìtúpalẹ̀ ewu rẹ ní ìbámu pẹ̀lú àwọn ìdáhùn rẹ.",
+            "refinementFailedTitle": "Ìtúnṣe Kùnà",
+            "refinementFailedDesc": "Kò le tún ìtúpalẹ̀ ṣe. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i."
+        }
+    },
+    "askAi": {
+        "pageHeader": {
+            "title": "Béèrè lọ́wọ́ Bio-LLM Ìṣègùn Wa",
+            "subtitle": "Gba àwọn ìdáhùn sí àwọn ìbéèrè rẹ nípa awọ ara látọwọ́ AI wa tó mọṣẹ́."
+        },
+        "cardTitle": "Q&A Nípa Awọ Ara",
+        "emptyState": {
+            "title": "Béèrè ìbéèrè kan láti bẹ̀rẹ̀ ìjíròrò.",
+            "example": "f.a., \"Kí ni àwọn àmì àrùn awọ eczema?\""
+        },
+        "thinking": "Ó ń ronú...",
+        "inputPlaceholder": "Tẹ ìbéèrè rẹ síbí...",
+        "recommendationPrefix": "Àbá",
+        "toast": {
+            "errorTitle": "Aṣìṣe kan Ṣẹlẹ̀",
+            "errorDesc": "Kò le gba ìdáhùn látọwọ́ AI. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i."
+        }
+    },
+    "digitalTwin": {
+        "pageHeader": {
+            "title": "Ìbejì Digita ti Awọ Ara",
+            "subtitle": "Àwòkọ́ṣe fìrì-fọ́nrán ti awọ ara rẹ tí ó máa ń ṣe àtúnṣe pẹ̀lú ìṣàyẹ̀wò kọ̀ọ̀kan."
+        },
+        "userCard": {
+            "title": "Ìbejì Digita ti Gabriel",
+            "lastUpdated": "Ìgbà ìkẹyìn tó ṣe àtúnṣe: Lónìí",
+            "scans": "Àwọn Ìṣàyẹ̀wò",
+            "lesionsTracked": "Àwọn Egbò Tí A Tọpinpin"
+        },
+        "metricsCard": {
+            "title": "Àwọn Wíwọ̀n Pàtàkì",
+            "uvScore": "Àpapọ̀ Àmì UV",
+            "uvScoreValue": "78/100 (Gíga)",
+            "agingPrediction": "Ìsọtẹ́lẹ̀ Gbígbó Awọ",
+            "agingPredictionValue": "+3 ọdún (ìṣirò ọdún 5)",
+            "nextScan": "Ìṣàyẹ̀wò Tó Kàn",
+            "nextScanValue": "Ní oṣù 3"
+        },
+        "evolutionCard": {
+            "title": "Ìtànkálẹ̀ Egbò & Ìbàjẹ́ Oòrùn",
+            "description": "Ó ń fi àpapọ̀ ìbàjẹ́ oòrùn hàn àti ìrísí ọjọ́ iwájú tí a sọ tẹ́lẹ̀.",
+            "predictionTitle": "Ìrísí Egbò Tí A Sọ Tẹ́lẹ̀ Ní Ọdún 1",
+            "current": "Lọ́wọ́lọ́wọ́",
+            "predicted": "Tí A Sọ Tẹ́lẹ̀"
+        },
+        "chart": {
+            "sunDamage": "Ìbàjẹ́ Oòrùn",
+            "uvExposure": "Ìfarahàn sí UV"
+        }
+    },
+    "geneticRisk": {
+        "pageHeader": {
+            "title": "Olùtúpalẹ̀ Ewu Jiini",
+            "subtitle": "Sọ tẹ́lẹ̀ ìfarahàn ewu melanoma jiini rẹ pẹ̀lú àwòṣe ewu Bayesian."
+        },
+        "formCard": {
+            "title": "Ìwífún Rẹ",
+            "description": "A ń lo dátà yìí láti ṣe ìṣirò àmì ewu rẹ."
+        },
+        "form": {
+            "age": "Ọjọ́ orí",
+            "skinPhenotype": "Irú Awọ Ara (Ìwọ̀n Fitzpatrick)",
+            "lesionRecurrence": "Àtúnṣẹlẹ̀ Egbò",
+            "sunExposure": "Ìfarahàn sí Oòrùn Gbogbogbò",
+            "familyHistory": "Ìtàn Ìdílé Nípa Àrùn Jejere Awọ",
+            "geoLocation": "Ipò Ayé Akọkọ",
+            "geoLocationPlaceholder": "f.a., Accra, Ghana",
+            "selectPlaceholder": "Yan aṣayan kan",
+            "skinTypes": {
+                "I": "Irú I (Pupa, ó máa ń jó nígbà gbogbo)",
+                "II": "Irú II (Pupa díẹ̀, ó sábà máa ń jó)",
+                "III": "Irú III (Àwọ̀ Búráwùn Fẹ́ẹ́rẹ́, ó máa ń jó nígbà míì)",
+                "IV": "Irú IV (Àwọ̀ Búráwùn Díẹ̀, ó ṣọ̀wọ́n kí ó jó)",
+                "V": "Irú V (Àwọ̀ Búráwùn Dúdú, ó ṣọ̀wọ́n púpọ̀ kí ó jó)",
+                "VI": "Irú VI (Àwọ̀ Dúdú Púpọ̀, kì í jó rárá)"
+            },
+            "sunExposureLevels": {
+                "low": "Kéré (Nínú ilé ní ọ̀pọ̀ ìgbà)",
+                "moderate": "Díẹ̀ (Díẹ̀ nínú àwọn ìgbòkègbodò òde)",
+                "high": "Gíga (Ó ń ṣiṣẹ́ ní òde, ó máa ń wẹ̀ nínú oòrùn)"
+            }
+        },
+        "analyzeButton": "Túpalẹ̀ Ewu Mi",
+        "resultCard": {
+            "title": "Èsì Ìtúpalẹ̀",
+            "description": "Ewu jiini tí a sọ tẹ́lẹ̀ fún melanoma.",
+            "analyzing": "Ó ń túpalẹ̀ àkójọpọ̀ rẹ...",
+            "placeholder": "Àwọn èsì rẹ yóò hàn níbí.",
+            "disclaimer": "Èyí jẹ́ ìsọtẹ́lẹ̀ tí ó dá lórí àwọn àwòṣe ìṣirò kì í ṣe àyẹ̀wò ìṣègùn. Kan sí oníṣègùn fún àyẹ̀wò tó péye.",
+            "prefix": "Ìdààmú àrùn awọ ara rẹ tí a sọ tẹ́lẹ̀ jẹ́: ",
+            "levels": {
+                "low": "Kéré",
+                "moderate": "Díẹ̀",
+                "elevated": "Gíga"
+            }
+        }
+    },
+    "recommendations": {
+        "pageHeader": {
+            "title": "Àwọn Àbá Tí A Ṣe Fúnra Ẹni",
+            "subtitle": "Parí fọ́ọ̀mù ìsàlẹ̀ láti gba àwọn àbá ìmọ́tótó àti ìgbésí ayé tí AI ṣe."
+        },
+        "detailsCard": {
+            "title": "Àwọn Àlàyé Rẹ",
+            "description": "Pèsè ìwífún díẹ̀ fún ìrírí tó bá ọ mu."
+        },
+        "form": {
+            "skinType": {
+                "label": "Irú Awọ Ara",
+                "placeholder": "Yan irú awọ ara rẹ",
+                "types": {
+                    "oily": "Onírora",
+                    "dry": "Gbígbẹ",
+                    "sensitive": "Tí ó nira",
+                    "acneProne": "Oní-chun",
+                    "combination": "Àdàpọ̀",
+                    "normal": "Déédéé"
+                }
+            },
+            "age": {
+                "label": "Ọjọ́ orí",
+                "placeholder": "f.a., 25"
+            },
+            "lifestyle": {
+                "label": "Ìgbésí Ayé",
+                "placeholder": "Yan ìgbésí ayé rẹ",
+                "lifestyles": {
+                    "active": "Aláápọn (Eré ìdárayá déédéé)",
+                    "moderate": "Díẹ̀",
+                    "sedentary": "Oníjòókòó (Nínú ilé ní ọ̀pọ̀ ìgbà)"
+                }
+            },
+            "climate": {
+                "label": "Ojú ọjọ́",
+                "placeholder": "Yan ojú ọjọ́ rẹ",
+                "climates": {
+                    "hot": "Ooru",
+                    "cold": "Òtútù",
+                    "humid": "Onírinrin",
+                    "dry": "Gbígbẹ",
+                    "temperate": "Oníwọ̀ntúnwọ̀nsì"
+                }
+            },
+            "concerns": {
+                "label": "Àwọn Àníyàn Akọkọ",
+                "placeholder": "f.a., dídènà ọjọ́ ogbó, ìkíyun, àwọn àbààwọ̀n dúdú..."
+            }
+        },
+        "generateButton": "Mú Àwọn Àbá Jáde",
+        "planCard": {
+            "title": "Ètò Rẹ Tí A Ṣe Fúnra Rẹ",
+            "description": "Wọ̀nyí ni àwọn àbá tí AI ṣe ní ìbámu pẹ̀lú àkójọpọ̀ rẹ.",
+            "placeholder": "Àwọn àbá rẹ yóò hàn níbí."
+        },
+        "toast": {
+            "failedTitle": "Ìgbéjáde Kùnà",
+            "failedDesc": "Kò le mú àwọn àbá jáde. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i."
+        }
+    },
+    "teleDerm": {
+        "pageHeader": {
+            "title": "Ibùdó Tele-Derm",
+            "subtitle": "Wá kí o sì sopọ̀ mọ́ àwọn onímọ̀ nípa awọ ara tí a fìdájú ní gbogbo àgbáyé."
+        },
+        "searchPlaceholder": "Wá pẹ̀lú orúkọ, ìmọ̀-ẹ̀rọ, tàbí orílẹ̀-èdè...",
+        "searchButton": "Wá Dókítà",
+        "reviews": "àwọn àtúnyẹ̀wò",
+        "price": "{{price}} / ìjíròrò {{duration}}",
+        "startConsultButton": "Bẹ̀rẹ̀ Ìjíròrò Kékeré"
+    },
+    "triage": {
+        "pageHeader": {
+            "title": "Ètò Ìtọ́jú Onco-Connect",
+            "subtitle": "Afárá rẹ láàrin ìtúpalẹ̀ AI àti ìtọ́jú ìṣègùn tó péye."
+        },
+        "referralCard": {
+            "title": "Káàdì Ìtọ́kasí Digita",
+            "description": "Fi èyí han oníṣègùn fún àkópọ̀ ìtúpalẹ̀ rẹ.",
+            "patientId": "ID Alásìsàn",
+            "analysisDate": "Ọjọ́ Ìtúpalẹ̀",
+            "aiAssessment": "Ìtúpalẹ̀ AI",
+            "assessmentValue": "Kò léwu (Nevus)",
+            "confidence": "Ìgbẹ́kẹ̀lé",
+            "printButton": "Tẹ Káàdì Jáde",
+            "downloadButton": "Gba lati ayelujara"
+        },
+        "map": {
+            "title": "Àwọn Ibùdó Onkoloji Tí A Fìdájú Nítòsí",
+            "description": "Tẹ ipò rẹ sílẹ̀ láti wá àwọn ibùdó tó fìdájú nítòsí rẹ.",
+            "searchPlaceholder": "f.a., ìlú tàbí koodu zip rẹ",
+            "searchButton": "Ṣàwárí",
+            "center1": "Ilé Ìwòsàn Gbogbogbò Ìlú",
+            "center2": "Dermatology Aarin Ilu",
+            "center3": "Ibùdó Jejere Gúúsù"
+        }
+    },
+    "uvRisk": {
+        "pageHeader": {
+            "title": "Ewu UV & Ayìká",
+            "subtitle": "Gba àmì ewu awọ ara ní gidi fún ipò rẹ."
+        },
+        "searchPlaceholder": "f.a., Lagos, Nairobi, tàbí Kabul",
+        "checkRiskButton": "Ṣayẹwo Ewu",
+        "levels": {
+            "extreme": "Àmì UV Tó Ga Jùlọ",
+            "veryHigh": "Àmì UV Gíga Púpọ̀"
+        },
+        "recommendations": {
+            "lagos": "Lo ìṣẹ́jú díẹ̀ sí 8 nínú oòrùn tààrà. Fi SPF 30+ sílẹ̀ ní gbogbo wákàtí 2.",
+            "kabul": "Lo ìṣẹ́jú 10-15 nínú oòrùn tààrà. Fi SPF 30+ sílẹ̀.",
+            "nairobi": "Dín ìfarahàn sí oòrùn kù láàrin 10 òwúrọ̀ sí 4 ìrọ̀lẹ́. Wọ aṣọ ààbò."
+        },
+        "metrics": {
+            "airPollution": "Ìbàjẹ́ Afẹ́fẹ́",
+            "heatExposure": "Ìfarahàn sí Ooru",
+            "humidity": "Ìrinrin",
+            "melanomaRisk": "Ewu Melanoma"
+        },
+        "riskLevels": {
+            "high": "Gíga",
+            "moderate": "Díẹ̀"
+        }
+    },
+    "months": {
+        "jan": "Ján",
+        "feb": "Féb",
+        "mar": "Máàṣì",
+        "apr": "Ápr",
+        "may": "Méè",
+        "jun": "Júúnù",
+        "jul": "Júláì",
+        "aug": "Ọ́g",
+        "sep": "Sẹ́p",
+        "oct": "Ọ́t",
+        "nov": "Nóf",
+        "dec": "Dís"
+    },
+    "auth": {
+      "login": {
+        "title": "Wọlé",
+        "subtitle": "Tẹ í-meèlì rẹ sí ìsàlẹ̀ láti wọlé sí àkàùntù rẹ.",
+        "buttonText": "Wọlé",
+        "noAccount": "O kò ní àkàùntù?",
+        "signUpLink": "Forúkọsílẹ̀",
+        "toast": {
+          "successTitle": "Aṣeyọrí Ìwọlé",
+          "successDescription": "Kaabọ padà!",
+          "errorTitle": "Ìwọlé Kùnà",
+          "errorDescription": "Aṣìṣe kan ṣẹlẹ̀. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i.",
+          "invalidCredentials": "Ìwífún ìwọlé kò tọ̀nà. Jọ̀wọ́ ṣàyẹ̀wò í-meèlì àti ọ̀rọ̀ aṣínà rẹ."
+        }
+      },
+      "signup": {
+        "title": "Ṣẹ́dàá àkàùntù",
+        "subtitle": "Tẹ í-meèlì rẹ sí ìsàlẹ̀ láti ṣẹ́dàá àkàùntù rẹ.",
+        "buttonText": "Forúkọsílẹ̀",
+        "haveAccount": "O ti ní àkàùntù tẹ́lẹ̀?",
+        "loginLink": "Wọlé",
+         "toast": {
+          "successTitle": "A Ti Ṣẹ́dàá Àkàùntù",
+          "successDescription": "Kaabọ sí Dermaflow AI!",
+          "errorTitle": "Ìforúkọsílẹ̀ Kùnà",
+          "errorDescription": "Aṣìṣe kan ṣẹlẹ̀. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kan sí i.",
+          "emailInUse": "A ti ń lo í-meèlì yìí tẹ́lẹ̀. Jọ̀wọ́ gbìyànjú òmíràn."
+        }
+      },
+      "logout": {
+        "buttonText": "Jáde",
+        "toast": {
+          "successTitle": "O ti jáde kúrò."
+        }
+      },
+      "form": {
+        "emailLabel": "Í-meèlì",
+        "passwordLabel": "Ọ̀rọ̀ aṣínà",
+        "confirmPasswordLabel": "Jẹ́rìí sí Ọ̀rọ̀ aṣínà"
+      }
+    }
+}

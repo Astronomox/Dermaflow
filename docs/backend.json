@@ -1,0 +1,69 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the Dermaflow AI application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the User entity."
+        },
+        "email": {
+          "type": "string",
+          "description": "User's email address.",
+          "format": "email"
+        },
+        "creationDate": {
+          "type": "string",
+          "description": "The timestamp for when the user created the account.",
+          "format": "date-time"
+        },
+        "lastLogin": {
+          "type": "string",
+          "description": "The timestamp for when the user last logged in",
+          "format": "date-time"
+        },
+        "languagePreference": {
+          "type": "string",
+          "description": "The user's preferred language for the app interface and voice readouts."
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "creationDate",
+        "lastLogin",
+        "languagePreference"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profile information. Uses path-based ownership for simplified security rules. Includes id, email, creationDate, lastLogin, and languagePreference.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user, matching the Firebase Authentication UID."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to prioritize authorization independence, clarity, and scalability. User data is stored under `/users/{userId}`, ensuring path-based ownership, which simplifies security rules. The application will store user data in a dedicated collection.  There are no collaborative data models that require membership maps. This design supports secure `list` operations by ensuring all documents within a collection share the same security requirements. There are no global roles. Authorization relies solely on `request.auth.uid`. Timestamps will be used for creation and modification times. This enforces the invariants of ownership and timestamps."
+  }
+}

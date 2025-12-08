@@ -1,0 +1,372 @@
+{
+    "welcomeBack": "Barka da dawowa, Gabriel!",
+    "dashboardSubtitle": "Ga takaitaccen bayani kan abokin lafiyar fatar jikinka.",
+    "advancedAiAnalysis": "Binciken AI na Gaba",
+    "advancedAiAnalysisDesc": "Samu cikakken kimantawar haɗarin raunukan fatar jikinka da AI ɗinmu na zamani, wanda aka ƙarfafa da Bio-LLM na musamman.",
+    "performNewAnalysis": "Yi Sabon Bincike",
+    "analyses": "Bincike-bincike",
+    "low": "Ƙasa",
+    "avgRisk": "Matsakaicin Haɗari",
+    "avgConfidence": "Matsakaicin Kwarin Gwiwa",
+    "newSkinAnalysis": "Sabon Binciken Fata",
+    "newSkinAnalysisDesc": "Loda hoto don samun kimantawar haɗari da AI ke yi.",
+    "askBioLLM": "Tambayi Bio-LLM",
+    "askBioLLMDesc": "Kana da tambaya? AI ɗinmu na likitanci zai iya taimakawa.",
+    "uvEnvironment": "UV & Muhalli",
+    "uvEnvironmentDesc": "Duba maki haɗarin fata na ainihin lokaci dangane da wurinka.",
+    "teleDermHub": "Cibiyar Tele-Derm",
+    "teleDermHubDesc": "Haɗu da ƙwararrun likitocin fata nan take.",
+    "geneticRiskAnalyzer": "Mai Nazarin Haɗarin Gado",
+    "geneticRiskAnalyzerDesc": "Hasashen yiwuwar kamuwarka da cutar melanoma ta gado.",
+    "dermatologyDigitalTwin": "Tagwayen Dijital na Fata",
+    "dermatologyDigitalTwinDesc": "Duba samfurin kama-da-wane na lafiyar fatar jikinka a kan lokaci.",
+    "yes": "Eh",
+    "no": "A'a",
+    "sometimes": "Wani lokaci",
+    "unsure": "Ban tabbata ba",
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "skinAnalysis": "Binciken Fata",
+        "recommendations": "Shawarwari",
+        "askBioLLM": "Tambayi Bio-LLM",
+        "oncoConnect": "Onco-Connect",
+        "sparkFeatures": "Abubuwan Spark",
+        "uvEnvironment": "UV & Muhalli",
+        "teleDermHub": "Cibiyar Tele-Derm",
+        "geneticRisk": "Haɗarin Gado",
+        "digitalTwin": "Tagwayen Dijital"
+    },
+    "analysis": {
+        "pageHeader": {
+            "title": "Binciken Raunin Fata",
+            "subtitle": "Loda hoto don samun kimantawar haɗari da AI ke yi.",
+            "newAnalysisButton": "Fara Sabon Bincike"
+        },
+        "upload": {
+            "title": "Loda Hotonka",
+            "description": "Danna ƙasa don zaɓar hoton raunin fata.",
+            "chooseFileButton": "Zaɓi Fayil",
+            "fileTypes": "Yana goyan bayan JPEG, PNG, WEBP. Don dalilai na ilimi kawai."
+        },
+        "analysisSection": {
+            "title": "Binciken AI",
+            "originalImage": "Hoton Asali",
+            "aiHeatmap": "Taswirar Zafi ta AI"
+        },
+        "results": {
+            "title": "Sakamakon Bincike",
+            "description": "Kimantawar da AI ke yi na hoton da aka bayar.",
+            "refinedAssessment": "Ingantaccen Kimantawa",
+            "rationale": "Dalili",
+            "initialAssessment": "Kimantawar Farko",
+            "confidenceScore": "Makin Kwarin Gwiwa",
+            "disclaimer": "Bayanin Kanun Labarai: Wannan kimantawa ce da AI ta samar don dalilai na ilimi kuma ba binciken likita ba ne. Koyaushe tuntubi ƙwararren likita."
+        },
+        "questionnaire": {
+            "triggerButton": "Inganta da Tambayoyi",
+            "title": "Tambayoyin Bincike",
+            "description": "Amsa waɗannan tambayoyin don taimakawa AI inganta kimantawarta.",
+            "durationLabel": "Tun yaushe raunin yake a jiki?",
+            "durationPlaceholder": "misali, watanni 2",
+            "sizeLabel": "Menene kimanin girmansa?",
+            "sizePlaceholder": "misali, 5mm ko 1/4 inch",
+            "bleedingLabel": "Yana zubar da jini?",
+            "itchingLabel": "Yana kaikayi?",
+            "colorChangeLabel": "Launinsa ya canza kwanan nan?",
+            "selectPlaceholder": "Zaɓi wani zaɓi",
+            "submitButton": "Inganta Kimantawa"
+        },
+        "readAloudButton": "Karanta da Murya",
+        "generateAudioPrompt": "Danna maballin don samar da karatun sauti na binciken.",
+        "audio": {
+            "loading": "Ana samar da sauti...",
+            "error": "Kuskure wajen samar da sauti."
+        },
+        "toast": {
+            "analysisFailedTitle": "Bincike Ya Gagara",
+            "analysisFailedDesc": "Ba a iya samar da bayanin AI ba. Da fatan za a sake gwadawa.",
+            "assessmentRefinedTitle": "An Inganta Kimantawa",
+            "assessmentRefinedDesc": "An sabunta kimantawar haɗarin ku dangane da amsoshinku.",
+            "refinementFailedTitle": "Ingantawa Ta Gagara",
+            "refinementFailedDesc": "Ba a iya inganta kimantawar ba. Da fatan za a sake gwadawa."
+        }
+    },
+    "askAi": {
+        "pageHeader": {
+            "title": "Tambayi Bio-LLM na Likitancinmu",
+            "subtitle": "Samu amsoshin tambayoyinku na fata daga AI ɗinmu na musamman."
+        },
+        "cardTitle": "Tambaya da Amsa na Fata",
+        "emptyState": {
+            "title": "Yi tambaya don fara tattaunawa.",
+            "example": "misali, \"Menene alamomin cutar eczema?\""
+        },
+        "thinking": "Yana tunani...",
+        "inputPlaceholder": "Rubuta tambayarka anan...",
+        "recommendationPrefix": "Shawara",
+        "toast": {
+            "errorTitle": "An Samu Kuskure",
+            "errorDesc": "An kasa samun amsa daga AI. Da fatan za a sake gwadawa."
+        }
+    },
+    "digitalTwin": {
+        "pageHeader": {
+            "title": "Tagwayen Dijital na Fata",
+            "subtitle": "Samfurin kama-da-wane na fatar jikinka wanda ke sabuntawa da kowane sikan."
+        },
+        "userCard": {
+            "title": "Tagwayen Dijital na Gabriel",
+            "lastUpdated": "An sabunta ƙarshe: Yau",
+            "scans": "Sikan-sikan",
+            "lesionsTracked": "Raunukan da Aka Bibiya"
+        },
+        "metricsCard": {
+            "title": "Ma'aunai Masu Mahimmanci",
+            "uvScore": "Taragon Makin UV",
+            "uvScoreValue": "78/100 (Mai Girma)",
+            "agingPrediction": "Hasashen Tsufan Fata",
+            "agingPredictionValue": "shekaru +3 (kimanin shekaru 5)",
+            "nextScan": "Sikan na gaba da aka bada shawara",
+            "nextScanValue": "A cikin watanni 3"
+        },
+        "evolutionCard": {
+            "title": "Juyin Halittar Rauni & Lalacewar Rana",
+            "description": "Yana nuna tarin lalacewar rana da hasashen bayyanar gaba.",
+            "predictionTitle": "Hasashen Bayyanar Rauni a cikin shekara 1",
+            "current": "Yanzu",
+            "predicted": "Hasashe"
+        },
+        "chart": {
+            "sunDamage": "Lalacewar Rana",
+            "uvExposure": "Fuskantar UV"
+        }
+    },
+    "geneticRisk": {
+        "pageHeader": {
+            "title": "Mai Nazarin Haɗarin Gado",
+            "subtitle": "Hasashen yiwuwar kamuwarka da cutar melanoma ta gado ta amfani da tsarin haɗari na Bayesian."
+        },
+        "formCard": {
+            "title": "Bayananka",
+            "description": "Ana amfani da wannan bayanan don lissafa makin haɗarinka."
+        },
+        "form": {
+            "age": "Shekaru",
+            "skinPhenotype": "Nau'in Fata (Sikelin Fitzpatrick)",
+            "lesionRecurrence": "Maimaita Rauni",
+            "sunExposure": "Fuskantar Rana na yau da kullun",
+            "familyHistory": "Tarihin Iyali na Ciwon Daji na Fata",
+            "geoLocation": "Wurin Yanki na Farko",
+            "geoLocationPlaceholder": "misali, Accra, Ghana",
+            "selectPlaceholder": "Zaɓi wani zaɓi",
+            "skinTypes": {
+                "I": "Nau'i I (Fari, koyaushe yana ƙonewa)",
+                "II": "Nau'i II (Fari kaɗan, yawanci yana ƙonewa)",
+                "III": "Nau'i III (Kalar ruwan ƙasa mai haske, wani lokaci yana ƙonewa)",
+                "IV": "Nau'i IV (Kalar ruwan ƙasa matsakaici, da wuya ya ƙone)",
+                "V": "Nau'i V (Kalar ruwan ƙasa mai duhu, da wuya ya ƙone)",
+                "VI": "Nau'i VI (Mai launin duhu sosai, baya ƙonewa)"
+            },
+            "sunExposureLevels": {
+                "low": "Ƙasa (Yawanci a cikin gida)",
+                "moderate": "Matsakaici (Wasu ayyukan waje)",
+                "high": "Mai Girma (Yana aiki a waje, yawan shanya rana)"
+            }
+        },
+        "analyzeButton": "Bincika Haɗarina",
+        "resultCard": {
+            "title": "Sakamakon Bincike",
+            "description": "Hasashen haɗarinka na gado na melanoma.",
+            "analyzing": "Ana bincika bayananka...",
+            "placeholder": "Sakamakonka zai bayyana anan.",
+            "disclaimer": "Wannan hasashe ne da aka dogara da tsarin kididdiga kuma ba binciken likita ba ne. Tuntubi likita don cikakken kimantawa.",
+            "prefix": "Hasashen yiwuwar kamuwarka da cutar melanoma ta gado shine: ",
+            "levels": {
+                "low": "Ƙasa",
+                "moderate": "Matsakaici",
+                "elevated": "Mai Girma"
+            }
+        }
+    },
+    "recommendations": {
+        "pageHeader": {
+            "title": "Shawarwari na Musamman",
+            "subtitle": "Cika fom ɗin da ke ƙasa don samun shawarwarin tsafta da salon rayuwa da AI ta tsara."
+        },
+        "detailsCard": {
+            "title": "Bayananka",
+            "description": "Bayar da wasu bayanai don samun gogewa ta musamman."
+        },
+        "form": {
+            "skinType": {
+                "label": "Nau'in Fata",
+                "placeholder": "Zaɓi nau'in fatarka",
+                "types": {
+                    "oily": "Mai Maiko",
+                    "dry": "Busasshe",
+                    "sensitive": "Mai laushi",
+                    "acneProne": "Mai Kuraje",
+                    "combination": "Haɗe-haɗe",
+                    "normal": "Na al'ada"
+                }
+            },
+            "age": {
+                "label": "Shekaru",
+                "placeholder": "misali, 25"
+            },
+            "lifestyle": {
+                "label": "Salon Rayuwa",
+                "placeholder": "Zaɓi salon rayuwarka",
+                "lifestyles": {
+                    "active": "Mai Motsi (Motsa jiki akai-akai)",
+                    "moderate": "Matsakaici",
+                    "sedentary": "Maras Motsi (Yawanci a cikin gida)"
+                }
+            },
+            "climate": {
+                "label": "Yanayi",
+                "placeholder": "Zaɓi yanayinka",
+                "climates": {
+                    "hot": "Zafi",
+                    "cold": "Sanyi",
+                    "humid": "Danshi",
+                    "dry": "Bushe",
+                    "temperate": "Matsakaici"
+                }
+            },
+            "concerns": {
+                "label": "Damuwa na Farko",
+                "placeholder": "misali, rigakafin tsufa, yankwancin fata, baƙaƙen tabo..."
+            }
+        },
+        "generateButton": "Samar da Shawarwari",
+        "planCard": {
+            "title": "Shirinka na Musamman",
+            "description": "Ga shawarwarin da AI ta samar dangane da bayananka.",
+            "placeholder": "Shawarwarinka zasu bayyana anan."
+        },
+        "toast": {
+            "failedTitle": "Samarwa Ya Gagara",
+            "failedDesc": "Ba a iya samar da shawarwari ba. Da fatan za a sake gwadawa."
+        }
+    },
+    "teleDerm": {
+        "pageHeader": {
+            "title": "Cibiyar Tele-Derm",
+            "subtitle": "Nemo kuma haɗu da ƙwararrun likitocin fata daga ko'ina cikin duniya."
+        },
+        "searchPlaceholder": "Bincika da suna, fannin ƙwarewa, ko ƙasa...",
+        "searchButton": "Nemo Likita",
+        "reviews": "sake dubawa",
+        "price": "{{price}} / shawarwari na {{duration}}",
+        "startConsultButton": "Fara Shawarwari Ƙanana"
+    },
+    "triage": {
+        "pageHeader": {
+            "title": "Tsarin Triage na Onco-Connect",
+            "subtitle": "Gadar ka tsakanin binciken AI da kulawar likita na ƙwararru."
+        },
+        "referralCard": {
+            "title": "Katin Turawa na Dijital",
+            "description": "Nuna wannan ga ƙwararren likita don takaitaccen bayani na bincikenka.",
+            "patientId": "ID na Mara Lafiya",
+            "analysisDate": "Ranar Bincike",
+            "aiAssessment": "Kimantawar AI",
+            "assessmentValue": "Ba mai haɗari ba (Nevus)",
+            "confidence": "Kwarin Gwiwa",
+            "printButton": "Buga Kati",
+            "downloadButton": "Sauke"
+        },
+        "map": {
+            "title": "Cibiyoyin Ciwon Daji da Aka Tabbatar da su a Kusa",
+            "description": "Shigar da wurinka don nemo cibiyoyin da aka tabbatar da su a kusa da kai.",
+            "searchPlaceholder": "misali, garinku ko lambar zip",
+            "searchButton": "Bincika",
+            "center1": "Babban Asibitin Gari",
+            "center2": "Likitancin Fata na Cikin Gari",
+            "center3": "Cibiyar Ciwon Daji ta Kudu"
+        }
+    },
+    "uvRisk": {
+        "pageHeader": {
+            "title": "Haɗarin UV & Muhalli",
+            "subtitle": "Samu maki haɗarin fata na ainihin lokaci don wurinka."
+        },
+        "searchPlaceholder": "misali, Lagos, Nairobi, ko Kabul",
+        "checkRiskButton": "Duba Haɗari",
+        "levels": {
+            "extreme": "Matsanancin Ma'aunin UV",
+            "veryHigh": "Ma'aunin UV Mai Girma"
+        },
+        "recommendations": {
+            "lagos": "Kada ka wuce minti 8 a cikin rana kai tsaye. Shafa SPF 30+ kowane sa'o'i 2.",
+            "kabul": "Yi minti 10-15 a cikin rana kai tsaye. Shafa SPF 30+.",
+            "nairobi": "Rage fuskantar rana tsakanin karfe 10 na safe zuwa 4 na yamma. Saka tufafi masu kariya."
+        },
+        "metrics": {
+            "airPollution": "Gurbatar Yanayi",
+            "heatExposure": "Fuskantar Zafi",
+            "humidity": "Danshi",
+            "melanomaRisk": "Haɗarin Melanoma"
+        },
+        "riskLevels": {
+            "high": "Mai Girma",
+            "moderate": "Matsakaici"
+        }
+    },
+    "months": {
+        "jan": "Jan",
+        "feb": "Fab",
+        "mar": "Mar",
+        "apr": "Afi",
+        "may": "May",
+        "jun": "Yun",
+        "jul": "Yul",
+        "aug": "Agu",
+        "sep": "Sat",
+        "oct": "Okt",
+        "nov": "Nuw",
+        "dec": "Dis"
+    },
+    "auth": {
+      "login": {
+        "title": "Shiga",
+        "subtitle": "Shigar da imel ɗinka a ƙasa don shiga asusunka.",
+        "buttonText": "Shiga",
+        "noAccount": "Ba ka da asusu?",
+        "signUpLink": "Yi rajista",
+        "toast": {
+          "successTitle": "An yi nasarar shiga",
+          "successDescription": "Barka da dawowa!",
+          "errorTitle": "Shiga Ya Gagara",
+          "errorDescription": "An samu kuskure. Da fatan za a sake gwadawa.",
+          "invalidCredentials": "Bayanin shiga ba daidai ba. Da fatan za a duba imel da kalmar sirri."
+        }
+      },
+      "signup": {
+        "title": "Ƙirƙiri asusu",
+        "subtitle": "Shigar da imel ɗinka a ƙasa don ƙirƙirar asusunka.",
+        "buttonText": "Yi rajista",
+        "haveAccount": "Ka riga ka na da asusu?",
+        "loginLink": "Shiga",
+         "toast": {
+          "successTitle": "An ƙirƙiri asusu",
+          "successDescription": "Barka da zuwa Dermaflow AI!",
+          "errorTitle": "Rajista Ya Gagara",
+          "errorDescription": "An samu kuskure. Da fatan za a sake gwadawa.",
+          "emailInUse": "An riga an yi amfani da wannan imel. Da fatan za a gwada wani."
+        }
+      },
+      "logout": {
+        "buttonText": "Fita",
+        "toast": {
+          "successTitle": "An fita daga asusunka."
+        }
+      },
+      "form": {
+        "emailLabel": "Imel",
+        "passwordLabel": "Kalmar sirri",
+        "confirmPasswordLabel": "Tabbatar da Kalmar sirri"
+      }
+    }
+}

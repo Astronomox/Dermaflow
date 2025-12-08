@@ -1,0 +1,116 @@
+/**
+ * # Firestore Security Rules
+ *
+ * ## Core Philosophy
+ * This ruleset enforces a strict user-ownership model where all user-specific
+ * data is stored in a dedicated document accessible only by that user. The
+ * primary goal is to ensure that a user's data is completely isolated and
+ * cannot be accessed, modified, or even discovered by any other user.
+ *
+ * ## Data Structure
+ * The data is organized under a single top-level collection: `/users`. Each user's
+ * profile and related data are stored in a document where the document ID matches
+ * the user's Firebase Authentication UID (e.g., `/users/{userId}`).
+ *
+ * ## Key Security Decisions
+ * - **User Data Isolation**: A user can only read, write, and delete their own
+ *   document within the `/users` collection.
+ * - **No User Enumeration**: Listing all documents in the `/users` collection is
+ *   explicitly disallowed. This is a critical privacy and security feature to
+ *   prevent malicious actors from scraping a list of all application users.
+ * - **Path-Based Security**: Authorization is based on the document's path,
+ *   comparing the `{userId}` wildcard to the authenticated user's UID. This
+ *   is efficient and avoids costly database reads (`get` calls) within rules.
+ * - **Owner-Only Writes**: All write operations (create, update, delete) are
+ *   strictly limited to the document owner. There are no public or shared
+ *   write capabilities.
+ *
+ * ## Denormalization for Authorization
+ * The chosen structure `/users/{userId}` is an ideal example of denormalization
+ * for authorization. By using the user's UID as the document ID, we create a
+ * direct and performant link between the data and its owner, which can be checked
+ * instantly in security rules without needing extra fields or document reads.
+ *
+ * ## Structural Segregation
+ * This ruleset does not currently manage separate public and private data, as
+ * all user data is considered private and isolated within their own document.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ----------------------------------------------------------------------
+    // Helper Functions
+    // ----------------------------------------------------------------------
+
+    /**
+     * Checks if the user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Checks if the requesting user's UID matches the provided userId.
+     * This is the fundamental check for document ownership.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * Ensures an operation is performed by the owner on an existing document.
+     * Crucial for safe update and delete operations.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+    /**
+     * Validates a user is creating their own document and that the
+     * internal 'id' field matches their UID for relational integrity.
+     */
+    function isCreatingSelf(userId) {
+      return isOwner(userId) && request.resource.data.id == userId;
+    }
+    
+    /**
+     * Validates a user is updating their own document and that the
+     * internal 'id' field remains unchanged.
+     */
+    function isUpdatingSelf(userId) {
+      // Check ownership on the existing resource.
+      // Enforce immutability of the 'id' field during the update.
+      return isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+    }
+
+    // ----------------------------------------------------------------------
+    // Collection Rules
+    // ----------------------------------------------------------------------
+
+    /**
+     * @description
+     *   Governs access to a user's own profile document. This rule ensures
+     *   that users can only manage their own data and cannot see or interact
+     *   with anyone else's information.
+     * @path
+     *   /users/{userId}
+     * @allow
+     *   (get, update, delete) A signed-in user (UID 'user123') can read or modify their own document at `/users/user123`.
+     *   (create) A signed-in user (UID 'user123') can create their profile at `/users/user123` as long as the document body contains `'id': 'user123'`.
+     * @deny
+     *   (list) No user can list all documents in the `/users` collection to prevent user enumeration.
+     *   (get, create, update, delete) User 'user123' cannot access or modify the document at `/users/user456`.
+     * @principle
+     *   Restricts access to a user's own data tree and enforces relational
+     *   integrity by ensuring the document ID matches the path UID.
+     */
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false; // Deny listing to prevent user enumeration
+      allow create: if isCreatingSelf(userId);
+      allow update: if isUpdatingSelf(userId);
+      allow delete: if isExistingOwner(userId);
+    }
+  }
+}

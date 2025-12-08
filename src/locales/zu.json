@@ -1,0 +1,372 @@
+{
+    "welcomeBack": "Siyakwamukela futhi, Gabriel!",
+    "dashboardSubtitle": "Naku ukubuka konke okusheshayo komsizi wakho wezempilo yesikhumba.",
+    "advancedAiAnalysis": "Ukuhlaziya Okuthuthukile Kwe-AI",
+    "advancedAiAnalysisDesc": "Thola ukuhlolwa okunemininingwane yobungozi bezilonda zesikhumba sakho nge-AI yethu yesimanje, exhaswe yi-Bio-LLM ekhethekile.",
+    "performNewAnalysis": "Yenza Ukuhlaziya Okusha",
+    "analyses": "Ukuhlaziya",
+    "low": "Phansi",
+    "avgRisk": "Isilinganiso Sobungozi",
+    "avgConfidence": "Isilinganiso Sokuzethemba",
+    "newSkinAnalysis": "Ukuhlaziya Okusha Kwesikhumba",
+    "newSkinAnalysisDesc": "Layisha isithombe ukuze uthole ukuhlolwa kobungozi okuxhaswe yi-AI.",
+    "askBioLLM": "Buza i-Bio-LLM",
+    "askBioLLMDesc": "Unombuzo? I-AI yethu yezokwelapha ingasiza.",
+    "uvEnvironment": "I-UV & Imvelo",
+    "uvEnvironmentDesc": "Hlola isikolo sobungozi besikhumba sangempela esisekelwe endaweni yakho.",
+    "teleDermHub": "Isikhungo Se-Tele-Derm",
+    "teleDermHubDesc": "Xhuma nodokotela besikhumba abaqinisekisiwe ngokushesha.",
+    "geneticRiskAnalyzer": "Isihlaziyi Sobungozi Bofuzo",
+    "geneticRiskAnalyzerDesc": "Bika amathuba akho okuthola i-melanoma yofuzo.",
+    "dermatologyDigitalTwin": "Iwele Ledijithali Lesikhumba",
+    "dermatologyDigitalTwinDesc": "Buka imodeli ebonakalayo yempilo yesikhumba sakho ngokuhamba kwesikhathi.",
+    "yes": "Yebo",
+    "no": "Cha",
+    "sometimes": "Ngesinye isikhathi",
+    "unsure": "Angiqiniseki",
+    "sidebar": {
+        "dashboard": "Ideshibhodi",
+        "skinAnalysis": "Ukuhlaziya Kwesikhumba",
+        "recommendations": "Izincomo",
+        "askBioLLM": "Buza i-Bio-LLM",
+        "oncoConnect": "Onco-Connect",
+        "sparkFeatures": "Izici ze-Spark",
+        "uvEnvironment": "I-UV & Imvelo",
+        "teleDermHub": "Isikhungo Se-Tele-Derm",
+        "geneticRisk": "Ingozi Yofuzo",
+        "digitalTwin": "Iwele Ledijithali"
+    },
+    "analysis": {
+        "pageHeader": {
+            "title": "Ukuhlaziya Isilonda Sesikhumba",
+            "subtitle": "Layisha isithombe ukuze uthole ukuhlolwa kobungozi okuxhaswe yi-AI.",
+            "newAnalysisButton": "Qala Ukuhlaziya Okusha"
+        },
+        "upload": {
+            "title": "Layisha Isithombe Sakho",
+            "description": "Chofoza ngezansi ukuze ukhethe isithombe sesilonda sesikhumba.",
+            "chooseFileButton": "Khetha Ifayela",
+            "fileTypes": "Isekela i-JPEG, PNG, WEBP. Ngezinjongo zokufundisa kuphela."
+        },
+        "analysisSection": {
+            "title": "Ukuhlaziya Kwe-AI",
+            "originalImage": "Isithombe Sokuqala",
+            "aiHeatmap": "Imephu Yokushisa Ye-AI"
+        },
+        "results": {
+            "title": "Imiphumela Yokuhlaziya",
+            "description": "Ukuhlolwa okuxhaswe yi-AI kwesithombe esinikeziwe.",
+            "refinedAssessment": "Ukuhlolwa Okucwengisisiwe",
+            "rationale": "Isizathu",
+            "initialAssessment": "Ukuhlolwa Kokuqala",
+            "confidenceScore": "Isikolo Sokuzethemba",
+            "disclaimer": "Ukuzihlangula: Lokhu ukuhlolwa okwenziwe yi-AI ngezinjongo zokufundisa futhi akukhona ukuxilongwa kwezokwelapha. Hlala uthintana nochwepheshe bezempilo oqeqeshiwe."
+        },
+        "questionnaire": {
+            "triggerButton": "Cwengisisa Ngemibuzo",
+            "title": "Imibuzo Yokuxilonga",
+            "description": "Phendula le mibuzo ukuze usize i-AI icwengisise ukuhlolwa kwayo.",
+            "durationLabel": "Isilonda sibe khona isikhathi esingakanani?",
+            "durationPlaceholder": "isb., izinyanga ezi-2",
+            "sizeLabel": "Ingakanani cishe ngobukhulu?",
+            "sizePlaceholder": "isb., 5mm noma 1/4 inch",
+            "bleedingLabel": "Ingabe iyopha?",
+            "itchingLabel": "Ingabe iyaluma?",
+            "colorChangeLabel": "Umbala wayo usushintshile muva nje?",
+            "selectPlaceholder": "Khetha inketho",
+            "submitButton": "Cwengisisa Ukuhlolwa"
+        },
+        "readAloudButton": "Funda Ngokuzwakalayo",
+        "generateAudioPrompt": "Chofoza inkinobho ukuze ukhiqize ukufundwa komsindo kokuhlaziya.",
+        "audio": {
+            "loading": "Iyakha umsindo...",
+            "error": "Iphutha ekwakheni umsindo."
+        },
+        "toast": {
+            "analysisFailedTitle": "Ukuhlaziya Kuhlulekile",
+            "analysisFailedDesc": "Ayikwazanga ukukhiqiza incazelo ye-AI. Sicela uzame futhi.",
+            "assessmentRefinedTitle": "Ukuhlolwa Kucwengisisiwe",
+            "assessmentRefinedDesc": "Ukuhlolwa kwakho kobungozi kubuyekeziwe ngokusekelwe ezimpendulo zakho.",
+            "refinementFailedTitle": "Ukucwengisisa Kuhlulekile",
+            "refinementFailedDesc": "Ayikwazanga ukucwengisisa ukuhlolwa. Sicela uzame futhi."
+        }
+    },
+    "askAi": {
+        "pageHeader": {
+            "title": "Buza i-Bio-LLM Yethu Yezokwelapha",
+            "subtitle": "Thola izimpendulo zemibuzo yakho yesikhumba ku-AI yethu ekhethekile."
+        },
+        "cardTitle": "Imibuzo Nezimpendulo Zesikhumba",
+        "emptyState": {
+            "title": "Buza umbuzo ukuze uqale ingxoxo.",
+            "example": "isb., \"Yiziphi izimpawu ezivamile ze-eczema?\""
+        },
+        "thinking": "Iyacabanga...",
+        "inputPlaceholder": "Bhala umbuzo wakho lapha...",
+        "recommendationPrefix": "Isincomo",
+        "toast": {
+            "errorTitle": "Kube nephutha",
+            "errorDesc": "Kuhlulekile ukuthola impendulo ku-AI. Sicela uzame futhi."
+        }
+    },
+    "digitalTwin": {
+        "pageHeader": {
+            "title": "Iwele Ledijithali Lesikhumba",
+            "subtitle": "Imodeli ebonakalayo yesikhumba sakho ebuyekezwa ngakho konke ukuskena."
+        },
+        "userCard": {
+            "title": "Iwele Ledijithali likaGabriel",
+            "lastUpdated": "Igcine ukubuyekezwa: Namuhla",
+            "scans": "Ukuskena",
+            "lesionsTracked": "Izilonda Ezilandelwayo"
+        },
+        "metricsCard": {
+            "title": "Amamethrikhi Abalulekile",
+            "uvScore": "Isikolo Esihlanganisiwe Se-UV",
+            "uvScoreValue": "78/100 (Phezulu)",
+            "agingPrediction": "Isibikezelo Sokuguga Kwesikhumba",
+            "agingPredictionValue": "iminyaka +3 (isilinganiso seminyaka emi-5)",
+            "nextScan": "Ukuskena Okunconyiwe Okulandelayo",
+            "nextScanValue": "Ezinyangeni ezi-3"
+        },
+        "evolutionCard": {
+            "title": "Ukuziphendukela Kwesilonda & Ukulimala Kwelanga",
+            "description": "Ibonisa ukuqoqeka kokulimala kwelanga nokubukeka kwesikhathi esizayo okubikezelwe.",
+            "predictionTitle": "Ukubukeka Kwesilonda Okubikezelwe Ngonyaka o-1",
+            "current": "Okwamanje",
+            "predicted": "Okubikezelwe"
+        },
+        "chart": {
+            "sunDamage": "Ukulimala Kwelanga",
+            "uvExposure": "Ukuvezwa yi-UV"
+        }
+    },
+    "geneticRisk": {
+        "pageHeader": {
+            "title": "Isihlaziyi Sobungozi Bofuzo",
+            "subtitle": "Bika amathuba akho okuthola i-melanoma yofuzo usebenzisa imodeli yobungozi ye-Bayesian."
+        },
+        "formCard": {
+            "title": "Ulwazi Lwakho",
+            "description": "Le datha isetshenziselwa ukubala isikolo sakho sobungozi."
+        },
+        "form": {
+            "age": "Iminyaka",
+            "skinPhenotype": "Uhlobo Lwesikhumba (Isikali sikaFitzpatrick)",
+            "lesionRecurrence": "Ukuphindeka Kwesilonda",
+            "sunExposure": "Ukuvezwa Kwelanga Okuvamile",
+            "familyHistory": "Umlando Womndeni Womdlavuza Wesikhumba",
+            "geoLocation": "Indawo Eyinhloko",
+            "geoLocationPlaceholder": "isb., Accra, Ghana",
+            "selectPlaceholder": "Khetha inketho",
+            "skinTypes": {
+                "I": "Uhlobo I (Luphaphathekile, luhlala lusha)",
+                "II": "Uhlobo II (Lukhanyana, luvame ukusha)",
+                "III": "Uhlobo III (Lunsundu ngokukhanyayo, ngezinye izikhathi luyasha)",
+                "IV": "Uhlobo IV (Lunsundu ngokulingene, akuvamile ukusha)",
+                "V": "Uhlobo V (Lunsundu kakhulu, akuvamile neze ukusha)",
+                "VI": "Uhlobo VI (Lunombala omnyama kakhulu, alushi neze)"
+            },
+            "sunExposureLevels": {
+                "low": "Phansi (Iningi endlini)",
+                "moderate": "Ngokulingene (Omunye umsebenzi wangaphandle)",
+                "high": "Phezulu (Usebenza ngaphandle, ukuphuma elangeni njalo)"
+            }
+        },
+        "analyzeButton": "Hlaziya Ingozi Yami",
+        "resultCard": {
+            "title": "Umphumela Wokuhlaziya",
+            "description": "Ingozi yakho yofuzo ebikezelwe ye-melanoma.",
+            "analyzing": "Ihlaziya iphrofayili yakho...",
+            "placeholder": "Imiphumela yakho izovela lapha.",
+            "disclaimer": "Lokhu kuyisibikezelo esisekelwe kumamodeli wezibalo hhayi ukuxilongwa okusemthethweni. Thintana nomhlinzeki wezempilo ukuze uthole ukuhlolwa okuphelele.",
+            "prefix": "Amathuba akho okuthola i-melanoma yofuzo angama: ",
+            "levels": {
+                "low": "Phansi",
+                "moderate": "Ngokulingene",
+                "elevated": "Phezulu"
+            }
+        }
+    },
+    "recommendations": {
+        "pageHeader": {
+            "title": "Izincomo Ezenziwe Zaba Ngezakho",
+            "subtitle": "Gcwalisa ifomu elingezansi ukuze uthole amathiphu enhlanzeko nendlela yokuphila enziwe yi-AI."
+        },
+        "detailsCard": {
+            "title": "Imininingwane Yakho",
+            "description": "Nikeza ulwazi oluthile ukuze uthole ulwazi olwenzelwe wena."
+        },
+        "form": {
+            "skinType": {
+                "label": "Uhlobo Lwesikhumba",
+                "placeholder": "Khetha uhlobo lwesikhumba sakho",
+                "types": {
+                    "oily": "Linamafutha",
+                    "dry": "Lomile",
+                    "sensitive": "Luzwela",
+                    "acneProne": "Lunezinduna",
+                    "combination": "Luyingxube",
+                    "normal": "Luvamile"
+                }
+            },
+            "age": {
+                "label": "Iminyaka",
+                "placeholder": "isb., 25"
+            },
+            "lifestyle": {
+                "label": "Indlela Yokuphila",
+                "placeholder": "Khetha indlela yakho yokuphila",
+                "lifestyles": {
+                    "active": "Iyasebenza (Ukuzivocavoca njalo)",
+                    "moderate": "Ngokulingene",
+                    "sedentary": "Ayisebenzi (Iningi endlini)"
+                }
+            },
+            "climate": {
+                "label": "Isimo Sezulu",
+                "placeholder": "Khetha isimo sezulu sakho",
+                "climates": {
+                    "hot": "Kuyashisa",
+                    "cold": "Kuyabanda",
+                    "humid": "Kunomswakama",
+                    "dry": "Komile",
+                    "temperate": "Kulingene"
+                }
+            },
+            "concerns": {
+                "label": "Ukukhathazeka Okuyinhloko",
+                "placeholder": "isb., ukulwa nokuguga, imibimbi, amabala amnyama..."
+            }
+        },
+        "generateButton": "Khiqiza Amathiphu",
+        "planCard": {
+            "title": "Uhlelo Lwakho Olwenziwe Lwaba Ngolwakho",
+            "description": "Nanka amathiphu akhiqizwe yi-AI ngokusekelwe kuphrofayili yakho.",
+            "placeholder": "Amathiphu akho azovela lapha."
+        },
+        "toast": {
+            "failedTitle": "Ukukhiqiza Kuhlulekile",
+            "failedDesc": "Ayikwazanga ukukhiqiza izincomo. Sicela uzame futhi."
+        }
+    },
+    "teleDerm": {
+        "pageHeader": {
+            "title": "Isikhungo Se-Tele-Derm",
+            "subtitle": "Thola futhi uxhumane nodokotela besikhumba abaqinisekisiwe abavela emhlabeni wonke."
+        },
+        "searchPlaceholder": "Sesha ngegama, ubuchwepheshe, noma izwe...",
+        "searchButton": "Thola Udokotela",
+        "reviews": "izibuyekezo",
+        "price": "{{price}} / ukubonisana kwe-{{duration}}",
+        "startConsultButton": "Qala Ukubonisana Okuncane"
+    },
+    "triage": {
+        "pageHeader": {
+            "title": "Uhlelo Lwe-Onco-Connect Triage",
+            "subtitle": "Ibhuloho lakho phakathi kokuhlaziywa kwe-AI nokunakekelwa kwezempilo kochwepheshe."
+        },
+        "referralCard": {
+            "title": "Ikhadi Lokudlulisela Ledijithali",
+            "description": "Khombisa lokhu kuchwepheshe wezempilo ukuze uthole isifinyezo esisheshayo sokuhlaziya kwakho.",
+            "patientId": "I-ID Yesiguli",
+            "analysisDate": "Usuku Lokuhlaziya",
+            "aiAssessment": "Ukuhlolwa Kwe-AI",
+            "assessmentValue": "Akunangozi (Nevus)",
+            "confidence": "Ukuzethemba",
+            "printButton": "Phrinta Ikhadi",
+            "downloadButton": "Dawuniloda"
+        },
+        "map": {
+            "title": "Izikhungo Ze-Oncology Eziqinisekisiwe Eziseduze",
+            "description": "Faka indawo yakho ukuze uthole izikhungo eziqinisekisiwe eduze nawe.",
+            "searchPlaceholder": "isb., idolobha lakho noma ikhodi yeposi",
+            "searchButton": "Sesha",
+            "center1": "Isibhedlela Esikhulu Sedolobha",
+            "center2": "I-Dermatology Yasedolobheni",
+            "center3": "Isikhungo Somdlavuza saseSouthside"
+        }
+    },
+    "uvRisk": {
+        "pageHeader": {
+            "title": "Ingozi ye-UV & Imvelo",
+            "subtitle": "Thola isikolo sobungozi besikhumba sangempela sendawo yakho."
+        },
+        "searchPlaceholder": "isb., Lagos, Nairobi, noma Kabul",
+        "checkRiskButton": "Hlola Ingozi",
+        "levels": {
+            "extreme": "Izinga Eliphezulu Kakhulu Le-UV",
+            "veryHigh": "Izinga Eliphezulu Le-UV"
+        },
+        "recommendations": {
+            "lagos": "Chitha imizuzu engaphansi kweyi-8 elangeni eliqondile. Gcoba i-SPF 30+ njalo ngamahora ama-2.",
+            "kabul": "Chitha imizuzu eyi-10-15 elangeni eliqondile. Gcoba i-SPF 30+.",
+            "nairobi": "Nciphisa ukuphuma elangeni phakathi kuka-10 ekuseni no-4 ntambama. Gqoka izingubo ezivikelayo."
+        },
+        "metrics": {
+            "airPollution": "Ukungcoliswa Komoya",
+            "heatExposure": "Ukuvezwa Ukushisa",
+            "humidity": "Umswakama",
+            "melanomaRisk": "Ingozi Ye-Melanoma"
+        },
+        "riskLevels": {
+            "high": "Phezulu",
+            "moderate": "Ngokulingene"
+        }
+    },
+    "months": {
+        "jan": "Jan",
+        "feb": "Feb",
+        "mar": "Mas",
+        "apr": "Eph",
+        "may": "Mey",
+        "jun": "Jun",
+        "jul": "Jul",
+        "aug": "Aga",
+        "sep": "Sep",
+        "oct": "Okt",
+        "nov": "Nov",
+        "dec": "Dis"
+    },
+    "auth": {
+      "login": {
+        "title": "Ngena",
+        "subtitle": "Faka i-imeyili yakho ngezansi ukuze ungene ku-akhawunti yakho.",
+        "buttonText": "Ngena",
+        "noAccount": "Awunayo i-akhawunti?",
+        "signUpLink": "Bhalisa",
+        "toast": {
+          "successTitle": "Ungene Ngempumelelo",
+          "successDescription": "Siyakwamukela futhi!",
+          "errorTitle": "Ukungena Kuhlulekile",
+          "errorDescription": "Kube nephutha elingalindelekile. Sicela uzame futhi.",
+          "invalidCredentials": "Imininingwane yokungena ayilungile. Sicela uhlole i-imeyili nephasiwedi yakho."
+        }
+      },
+      "signup": {
+        "title": "Dala i-akhawunti",
+        "subtitle": "Faka i-imeyili yakho ngezansi ukuze udale i-akhawunti yakho.",
+        "buttonText": "Bhalisa",
+        "haveAccount": "Usuvele unayo i-akhawunti?",
+        "loginLink": "Ngena",
+         "toast": {
+          "successTitle": "I-akhawunti idaliwe",
+          "successDescription": "Siyakwamukela ku-Dermaflow AI!",
+          "errorTitle": "Ukubhalisa Kuhlulekile",
+          "errorDescription": "Kube nephutha elingalindelekile. Sicela uzame futhi.",
+          "emailInUse": "Le imeyili isivele isetshenziswa. Sicela uzame enye."
+        }
+      },
+      "logout": {
+        "buttonText": "Phuma",
+        "toast": {
+          "successTitle": "Uphumile."
+        }
+      },
+      "form": {
+        "emailLabel": "I-imeyili",
+        "passwordLabel": "Iphasiwedi",
+        "confirmPasswordLabel": "Qinisekisa Iphasiwedi"
+      }
+    }
+}

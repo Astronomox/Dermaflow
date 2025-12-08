@@ -1,0 +1,372 @@
+{
+  "welcomeBack": "Welcome Back, Gabriel!",
+  "dashboardSubtitle": "Here's a quick overview of your personal skin health companion.",
+  "advancedAiAnalysis": "Advanced AI Analysis",
+  "advancedAiAnalysisDesc": "Get a detailed risk assessment of your skin lesions with our state-of-the-art AI, powered by a specialized Bio-LLM.",
+  "performNewAnalysis": "Perform New Analysis",
+  "analyses": "Analyses",
+  "low": "Low",
+  "avgRisk": "Avg. Risk",
+  "avgConfidence": "Avg. Confidence",
+  "newSkinAnalysis": "New Skin Analysis",
+  "newSkinAnalysisDesc": "Upload an image to get an AI-powered risk assessment.",
+  "askBioLLM": "Ask a Bio-LLM",
+  "askBioLLMDesc": "Have a question? Our medical AI can help.",
+  "uvEnvironment": "UV & Environment",
+  "uvEnvironmentDesc": "Check real-time skin risk score based on your location.",
+  "teleDermHub": "Tele-Derm Hub",
+  "teleDermHubDesc": "Connect with verified dermatologists instantly.",
+  "geneticRiskAnalyzer": "Genetic Risk Analyzer",
+  "geneticRiskAnalyzerDesc": "Predict your genetic melanoma susceptibility.",
+  "dermatologyDigitalTwin": "Dermatology Digital Twin",
+  "dermatologyDigitalTwinDesc": "View a virtual model of your skin's health over time.",
+  "yes": "Yes",
+  "no": "No",
+  "sometimes": "Sometimes",
+  "unsure": "Unsure",
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "skinAnalysis": "Skin Analysis",
+    "recommendations": "Recommendations",
+    "askBioLLM": "Ask Bio-LLM",
+    "oncoConnect": "Onco-Connect",
+    "sparkFeatures": "Spark Features",
+    "uvEnvironment": "UV & Environment",
+    "teleDermHub": "Tele-Derm Hub",
+    "geneticRisk": "Genetic Risk",
+    "digitalTwin": "Digital Twin"
+  },
+  "analysis": {
+    "pageHeader": {
+      "title": "Skin Lesion Analysis",
+      "subtitle": "Upload an image to get an AI-powered risk assessment.",
+      "newAnalysisButton": "Start New Analysis"
+    },
+    "upload": {
+      "title": "Upload Your Image",
+      "description": "Click below to select a photo of a skin lesion.",
+      "chooseFileButton": "Choose File",
+      "fileTypes": "Supports JPEG, PNG, WEBP. For educational purposes only."
+    },
+    "analysisSection": {
+      "title": "AI Analysis",
+      "originalImage": "Original Image",
+      "aiHeatmap": "AI Heatmap"
+    },
+    "results": {
+      "title": "Analysis Results",
+      "description": "AI-powered assessment of the provided image.",
+      "refinedAssessment": "Refined Assessment",
+      "rationale": "Rationale",
+      "initialAssessment": "Initial Assessment",
+      "confidenceScore": "Confidence Score",
+      "disclaimer": "Disclaimer: This is an AI-generated assessment for educational purposes and is not a medical diagnosis. Always consult a qualified healthcare professional."
+    },
+    "questionnaire": {
+      "triggerButton": "Refine with Questionnaire",
+      "title": "Diagnostic Questionnaire",
+      "description": "Answer these questions to help the AI refine its assessment.",
+      "durationLabel": "How long has the lesion been present?",
+      "durationPlaceholder": "e.g., 2 months",
+      "sizeLabel": "What is the approximate size?",
+      "sizePlaceholder": "e.g., 5mm or 1/4 inch",
+      "bleedingLabel": "Does it bleed?",
+      "itchingLabel": "Does it itch?",
+      "colorChangeLabel": "Has the color changed recently?",
+      "selectPlaceholder": "Select an option",
+      "submitButton": "Refine Assessment"
+    },
+    "readAloudButton": "Read Aloud",
+    "generateAudioPrompt": "Click the button to generate an audio read-aloud of the analysis.",
+    "audio": {
+      "loading": "Generating audio...",
+      "error": "Error generating audio."
+    },
+    "toast": {
+      "analysisFailedTitle": "Analysis Failed",
+      "analysisFailedDesc": "Could not generate AI explanation. Please try again.",
+      "assessmentRefinedTitle": "Assessment Refined",
+      "assessmentRefinedDesc": "Your risk assessment has been updated based on your answers.",
+      "refinementFailedTitle": "Refinement Failed",
+      "refinementFailedDesc": "Could not refine the assessment. Please try again."
+    }
+  },
+  "askAi": {
+    "pageHeader": {
+      "title": "Ask Our Medical Bio-LLM",
+      "subtitle": "Get answers to your dermatology questions from our specialized AI."
+    },
+    "cardTitle": "Dermatology Q&A",
+    "emptyState": {
+      "title": "Ask a question to start the conversation.",
+      "example": "e.g., \"What are the common symptoms of eczema?\""
+    },
+    "thinking": "Thinking...",
+    "inputPlaceholder": "Type your question here...",
+    "recommendationPrefix": "Recommendation",
+    "toast": {
+      "errorTitle": "An Error Occurred",
+      "errorDesc": "Failed to get a response from the AI. Please try again."
+    }
+  },
+  "digitalTwin": {
+    "pageHeader": {
+      "title": "Dermatology Digital Twin",
+      "subtitle": "A virtual model of your skin that updates with every scan."
+    },
+    "userCard": {
+      "title": "Gabriel's Digital Twin",
+      "lastUpdated": "Last updated: Today",
+      "scans": "Scans",
+      "lesionsTracked": "Lesions Tracked"
+    },
+    "metricsCard": {
+      "title": "Key Metrics",
+      "uvScore": "Cumulative UV Score",
+      "uvScoreValue": "78/100 (High)",
+      "agingPrediction": "Skin Aging Prediction",
+      "agingPredictionValue": "+3 years (5-year estimate)",
+      "nextScan": "Next Recommended Scan",
+      "nextScanValue": "In 3 months"
+    },
+    "evolutionCard": {
+      "title": "Lesion Evolution & Sun Damage",
+      "description": "Shows sun damage accumulation and predicted future appearance.",
+      "predictionTitle": "Predicted Lesion Appearance in 1 Year",
+      "current": "Current",
+      "predicted": "Predicted"
+    },
+    "chart": {
+        "sunDamage": "Sun Damage",
+        "uvExposure": "UV Exposure"
+    }
+  },
+  "geneticRisk": {
+    "pageHeader": {
+      "title": "Genetic Risk Analyzer",
+      "subtitle": "Predict your genetic melanoma susceptibility using a Bayesian risk model."
+    },
+    "formCard": {
+      "title": "Your Information",
+      "description": "This data is used to calculate your risk score."
+    },
+    "form": {
+      "age": "Age",
+      "skinPhenotype": "Skin Phenotype (Fitzpatrick Scale)",
+      "lesionRecurrence": "Lesion Recurrence",
+      "sunExposure": "Typical Sun Exposure",
+      "familyHistory": "Family History of Skin Cancer",
+      "geoLocation": "Primary Geo-Location",
+      "geoLocationPlaceholder": "e.g., Accra, Ghana",
+      "selectPlaceholder": "Select an option",
+      "skinTypes": {
+        "I": "Type I (Pale, always burns)",
+        "II": "Type II (Fair, usually burns)",
+        "III": "Type III (Light brown, sometimes burns)",
+        "IV": "Type IV (Moderate brown, rarely burns)",
+        "V": "Type V (Dark brown, very rarely burns)",
+        "VI": "Type VI (Deeply pigmented, never burns)"
+      },
+      "sunExposureLevels": {
+        "low": "Low (Mostly indoors)",
+        "moderate": "Moderate (Some outdoor activity)",
+        "high": "High (Works outdoors, frequent sunbathing)"
+      }
+    },
+    "analyzeButton": "Analyze My Risk",
+    "resultCard": {
+      "title": "Analysis Result",
+      "description": "Your predicted genetic risk for melanoma.",
+      "analyzing": "Analyzing your profile...",
+      "placeholder": "Your results will appear here.",
+      "disclaimer": "This is a prediction based on statistical models and not a formal diagnosis. Consult a healthcare provider for a comprehensive evaluation.",
+      "prefix": "Your predicted genetic melanoma susceptibility is: ",
+      "levels": {
+          "low": "Low",
+          "moderate": "Moderate",
+          "elevated": "Elevated"
+      }
+    }
+  },
+  "recommendations": {
+    "pageHeader": {
+      "title": "Personalized Recommendations",
+      "subtitle": "Fill out the form below to get AI-tailored hygiene and lifestyle tips."
+    },
+    "detailsCard": {
+      "title": "Your Details",
+      "description": "Provide some information for a tailored experience."
+    },
+    "form": {
+      "skinType": {
+        "label": "Skin Type",
+        "placeholder": "Select your skin type",
+        "types": {
+          "oily": "Oily",
+          "dry": "Dry",
+          "sensitive": "Sensitive",
+          "acneProne": "Acne-Prone",
+          "combination": "Combination",
+          "normal": "Normal"
+        }
+      },
+      "age": {
+        "label": "Age",
+        "placeholder": "e.g., 25"
+      },
+      "lifestyle": {
+        "label": "Lifestyle",
+        "placeholder": "Select your lifestyle",
+        "lifestyles": {
+          "active": "Active (Regular exercise)",
+          "moderate": "Moderate",
+          "sedentary": "Sedentary (Mostly indoors)"
+        }
+      },
+      "climate": {
+        "label": "Climate",
+        "placeholder": "Select your climate",
+        "climates": {
+          "hot": "Hot",
+          "cold": "Cold",
+          "humid": "Humid",
+          "dry": "Dry",
+          "temperate": "Temperate"
+        }
+      },
+      "concerns": {
+        "label": "Primary Concerns",
+        "placeholder": "e.g., anti-aging, wrinkles, dark spots..."
+      }
+    },
+    "generateButton": "Generate Tips",
+    "planCard": {
+      "title": "Your Personalized Plan",
+      "description": "Here are the AI-generated tips based on your profile.",
+      "placeholder": "Your tips will appear here."
+    },
+    "toast": {
+      "failedTitle": "Generation Failed",
+      "failedDesc": "Could not generate recommendations. Please try again."
+    }
+  },
+  "teleDerm": {
+    "pageHeader": {
+        "title": "Tele-Derm Hub",
+        "subtitle": "Find and connect with verified dermatologists from around the world."
+    },
+    "searchPlaceholder": "Search by name, specialty, or country...",
+    "searchButton": "Find a Doctor",
+    "reviews": "reviews",
+    "price": "{{price}} / {{duration}} consult",
+    "startConsultButton": "Start Micro-Consult"
+  },
+  "triage": {
+    "pageHeader": {
+      "title": "Onco-Connect Triage System",
+      "subtitle": "Your bridge between AI analysis and professional medical care."
+    },
+    "referralCard": {
+      "title": "Digital Referral Card",
+      "description": "Show this to a healthcare professional for a quick summary of your analysis.",
+      "patientId": "Patient ID",
+      "analysisDate": "Analysis Date",
+      "aiAssessment": "AI Assessment",
+      "assessmentValue": "Benign (Nevus)",
+      "confidence": "Confidence",
+      "printButton": "Print Card",
+      "downloadButton": "Download"
+    },
+    "map": {
+      "title": "Nearby Verified Oncology Centers",
+      "description": "Enter your location to find verified centers near you.",
+      "searchPlaceholder": "e.g., your city or zip code",
+      "searchButton": "Search",
+      "center1": "City General Hospital",
+      "center2": "Downtown Dermatology",
+      "center3": "Southside Cancer Center"
+    }
+  },
+  "uvRisk": {
+    "pageHeader": {
+      "title": "UV & Environment Risk",
+      "subtitle": "Get a real-time skin risk score for your location."
+    },
+    "searchPlaceholder": "e.g., Lagos, Nairobi, or Kabul",
+    "checkRiskButton": "Check Risk",
+    "levels": {
+      "extreme": "Extreme UV Index",
+      "veryHigh": "Very High UV Index"
+    },
+    "recommendations": {
+      "lagos": "Spend less than 8 minutes in direct sunlight. Apply SPF 30+ every 2 hours.",
+      "kabul": "Spend 10-15 minutes in direct sunlight. Apply SPF 30+.",
+      "nairobi": "Limit sun exposure between 10 a.m. and 4 p.m. Wear protective clothing."
+    },
+    "metrics": {
+      "airPollution": "Air Pollution",
+      "heatExposure": "Heat Exposure",
+      "humidity": "Humidity",
+      "melanomaRisk": "Melanoma Risk"
+    },
+    "riskLevels": {
+        "high": "High",
+        "moderate": "Moderate"
+    }
+  },
+  "months": {
+    "jan": "Jan",
+    "feb": "Feb",
+    "mar": "Mar",
+    "apr": "Apr",
+    "may": "May",
+    "jun": "Jun",
+    "jul": "Jul",
+    "aug": "Aug",
+    "sep": "Sep",
+    "oct": "Oct",
+    "nov": "Nov",
+    "dec": "Dec"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Enter your email below to login to your account.",
+      "buttonText": "Login",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up",
+      "toast": {
+        "successTitle": "Login Successful",
+        "successDescription": "Welcome back!",
+        "errorTitle": "Login Failed",
+        "errorDescription": "An unexpected error occurred. Please try again.",
+        "invalidCredentials": "Invalid credentials. Please check your email and password."
+      }
+    },
+    "signup": {
+      "title": "Create an account",
+      "subtitle": "Enter your email below to create your account.",
+      "buttonText": "Sign Up",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Login",
+       "toast": {
+        "successTitle": "Account Created",
+        "successDescription": "Welcome to Dermaflow AI!",
+        "errorTitle": "Signup Failed",
+        "errorDescription": "An unexpected error occurred. Please try again.",
+        "emailInUse": "This email is already in use. Please try another one."
+      }
+    },
+    "logout": {
+      "buttonText": "Log out",
+      "toast": {
+        "successTitle": "You have been logged out."
+      }
+    },
+    "form": {
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "confirmPasswordLabel": "Confirm Password"
+    }
+  }
+}

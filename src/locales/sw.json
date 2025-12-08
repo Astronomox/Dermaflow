@@ -1,0 +1,372 @@
+{
+    "welcomeBack": "Karibu Tena, Gabriel!",
+    "dashboardSubtitle": "Huu ni muhtasari wa haraka wa msaidizi wako wa afya ya ngozi.",
+    "advancedAiAnalysis": "Uchambuzi wa Hali ya Juu wa AI",
+    "advancedAiAnalysisDesc": "Pata tathmini ya kina ya hatari ya vidonda vyako vya ngozi na AI yetu ya kisasa, inayoendeshwa na Bio-LLM maalum.",
+    "performNewAnalysis": "Fanya Uchambuzi Mpya",
+    "analyses": "Uchambuzi",
+    "low": "Chini",
+    "avgRisk": "Hatari ya Wastani",
+    "avgConfidence": "Ujasiri wa Wastani",
+    "newSkinAnalysis": "Uchambuzi Mpya wa Ngozi",
+    "newSkinAnalysisDesc": "Pakia picha ili kupata tathmini ya hatari inayoendeshwa na AI.",
+    "askBioLLM": "Uliza Bio-LLM",
+    "askBioLLMDesc": "Una swali? AI yetu ya matibabu inaweza kusaidia.",
+    "uvEnvironment": "Mionzi ya UV & Mazingira",
+    "uvEnvironmentDesc": "Angalia alama ya hatari ya ngozi kwa wakati halisi kulingana na eneo lako.",
+    "teleDermHub": "Kituo cha Tele-Derm",
+    "teleDermHubDesc": "Ungana na madaktari wa ngozi waliothibitishwa papo hapo.",
+    "geneticRiskAnalyzer": "Kichanganuzi cha Hatari ya Kinasaba",
+    "geneticRiskAnalyzerDesc": "Bashiri uwezekano wako wa kupata melanoma ya kinasaba.",
+    "dermatologyDigitalTwin": "Pacha wa Kidijitali wa Ngozi",
+    "dermatologyDigitalTwinDesc": "Tazama mfano halisi wa afya ya ngozi yako kwa wakati.",
+    "yes": "Ndiyo",
+    "no": "Hapana",
+    "sometimes": "Wakati mwingine",
+    "unsure": "Sina hakika",
+    "sidebar": {
+        "dashboard": "Dashibodi",
+        "skinAnalysis": "Uchambuzi wa Ngozi",
+        "recommendations": "Mapendekezo",
+        "askBioLLM": "Uliza Bio-LLM",
+        "oncoConnect": "Onco-Connect",
+        "sparkFeatures": "Vipengele vya Spark",
+        "uvEnvironment": "Mionzi ya UV & Mazingira",
+        "teleDermHub": "Kituo cha Tele-Derm",
+        "geneticRisk": "Hatari ya Kinasaba",
+        "digitalTwin": "Pacha wa Kidijitali"
+    },
+    "analysis": {
+        "pageHeader": {
+            "title": "Uchambuzi wa Kidonda cha Ngozi",
+            "subtitle": "Pakia picha ili kupata tathmini ya hatari inayoendeshwa na AI.",
+            "newAnalysisButton": "Anza Uchambuzi Mpya"
+        },
+        "upload": {
+            "title": "Pakia Picha Yako",
+            "description": "Bofya hapa chini kuchagua picha ya kidonda cha ngozi.",
+            "chooseFileButton": "Chagua Faili",
+            "fileTypes": "Inasaidia JPEG, PNG, WEBP. Kwa madhumuni ya kielimu pekee."
+        },
+        "analysisSection": {
+            "title": "Uchambuzi wa AI",
+            "originalImage": "Picha Halisi",
+            "aiHeatmap": "Ramani ya Joto ya AI"
+        },
+        "results": {
+            "title": "Matokeo ya Uchambuzi",
+            "description": "Tathmini inayoendeshwa na AI ya picha iliyotolewa.",
+            "refinedAssessment": "Tathmini Iliyoboreshwa",
+            "rationale": "Sababu",
+            "initialAssessment": "Tathmini ya Awali",
+            "confidenceScore": "Alama ya Ujasiri",
+            "disclaimer": "Kanusho: Hii ni tathmini iliyotolewa na AI kwa madhumuni ya kielimu na si utambuzi wa kimatibabu. Daima wasiliana na mtaalamu wa afya aliyehitimu."
+        },
+        "questionnaire": {
+            "triggerButton": "Boresha na Hojaji",
+            "title": "Hojaji ya Utambuzi",
+            "description": "Jibu maswali haya kusaidia AI kuboresha tathmini yake.",
+            "durationLabel": "Kidonda kimekuwepo kwa muda gani?",
+            "durationPlaceholder": "k.m., miezi 2",
+            "sizeLabel": "Ukubwa wake ni takriban gani?",
+            "sizePlaceholder": "k.m., 5mm au inchi 1/4",
+            "bleedingLabel": "Huwa kinatoa damu?",
+            "itchingLabel": "Huwa kinawasha?",
+            "colorChangeLabel": "Rangi yake imebadilika hivi karibuni?",
+            "selectPlaceholder": "Chagua chaguo",
+            "submitButton": "Boresha Tathmini"
+        },
+        "readAloudButton": "Soma kwa Sauti",
+        "generateAudioPrompt": "Bofya kitufe ili kutoa usomaji wa sauti wa uchambuzi.",
+        "audio": {
+            "loading": "Inatengeneza sauti...",
+            "error": "Kosa la kutengeneza sauti."
+        },
+        "toast": {
+            "analysisFailedTitle": "Uchambuzi Umeshindikana",
+            "analysisFailedDesc": "Haikuweza kutoa maelezo ya AI. Tafadhali jaribu tena.",
+            "assessmentRefinedTitle": "Tathmini Imeboreshwa",
+            "assessmentRefinedDesc": "Tathmini yako ya hatari imesasishwa kulingana na majibu yako.",
+            "refinementFailedTitle": "Uboreshaji Umeshindikana",
+            "refinementFailedDesc": "Haikuweza kuboresha tathmini. Tafadhali jaribu tena."
+        }
+    },
+    "askAi": {
+        "pageHeader": {
+            "title": "Uliza Bio-LLM Yetu ya Matibabu",
+            "subtitle": "Pata majibu ya maswali yako ya ngozi kutoka kwa AI yetu maalum."
+        },
+        "cardTitle": "Maswali na Majibu ya Ngozi",
+        "emptyState": {
+            "title": "Uliza swali ili kuanzisha mazungumzo.",
+            "example": "k.m., \"Dalili za kawaida za ukurutu ni zipi?\""
+        },
+        "thinking": "Inafikiri...",
+        "inputPlaceholder": "Andika swali lako hapa...",
+        "recommendationPrefix": "Pendekezo",
+        "toast": {
+            "errorTitle": "Kosa Limetokea",
+            "errorDesc": "Imeshindwa kupata jibu kutoka kwa AI. Tafadhali jaribu tena."
+        }
+    },
+    "digitalTwin": {
+        "pageHeader": {
+            "title": "Pacha wa Kidijitali wa Ngozi",
+            "subtitle": "Mfano halisi wa ngozi yako unaosasishwa na kila skanisho."
+        },
+        "userCard": {
+            "title": "Pacha wa Kidijitali wa Gabriel",
+            "lastUpdated": "Imesasishwa mwisho: Leo",
+            "scans": "Skanisho",
+            "lesionsTracked": "Vidonda Vinavyofuatiliwa"
+        },
+        "metricsCard": {
+            "title": "Vipimo Muhimu",
+            "uvScore": "Alama ya Jumla ya Mionzi ya UV",
+            "uvScoreValue": "78/100 (Juu)",
+            "agingPrediction": "Utabiri wa Kuzeeka kwa Ngozi",
+            "agingPredictionValue": "miaka +3 (makadirio ya miaka 5)",
+            "nextScan": "Skanisho Inayofuata Iliyopendekezwa",
+            "nextScanValue": "Katika miezi 3"
+        },
+        "evolutionCard": {
+            "title": "Mageuzi ya Kidonda & Uharibifu wa Jua",
+            "description": "Inaonyesha mkusanyiko wa uharibifu wa jua na muonekano wa baadaye uliotabiriwa.",
+            "predictionTitle": "Muonekano wa Kidonda Uliotabiriwa katika Mwaka 1",
+            "current": "Sasa",
+            "predicted": "Iliyotabiriwa"
+        },
+        "chart": {
+            "sunDamage": "Uharibifu wa Jua",
+            "uvExposure": "Mfiduo wa UV"
+        }
+    },
+    "geneticRisk": {
+        "pageHeader": {
+            "title": "Kichanganuzi cha Hatari ya Kinasaba",
+            "subtitle": "Bashiri uwezekano wako wa kupata melanoma ya kinasaba kwa kutumia mfumo wa hatari wa Bayesian."
+        },
+        "formCard": {
+            "title": "Taarifa Zako",
+            "description": "Data hii inatumika kukokotoa alama yako ya hatari."
+        },
+        "form": {
+            "age": "Umri",
+            "skinPhenotype": "Aina ya Ngozi (Kipimo cha Fitzpatrick)",
+            "lesionRecurrence": "Kujirudia kwa Kidonda",
+            "sunExposure": "Mfiduo wa Kawaida wa Jua",
+            "familyHistory": "Historia ya Saratani ya Ngozi katika Familia",
+            "geoLocation": "Eneo Kuu la Kijiografia",
+            "geoLocationPlaceholder": "k.m., Accra, Ghana",
+            "selectPlaceholder": "Chagua chaguo",
+            "skinTypes": {
+                "I": "Aina I (Nyeupe, huungua kila wakati)",
+                "II": "Aina II (Nyeupe kiasi, huungua mara nyingi)",
+                "III": "Aina III (Kahawia isiyokolea, huungua wakati mwingine)",
+                "IV": "Aina IV (Kahawia ya wastani, huungua mara chache)",
+                "V": "Aina V (Kahawia iliyokolea, huungua mara chache sana)",
+                "VI": "Aina VI (Nyeusi sana, haiungui kamwe)"
+            },
+            "sunExposureLevels": {
+                "low": "Chini (Zaidi ndani ya nyumba)",
+                "moderate": "Wastani (Shughuli za nje kiasi)",
+                "high": "Juu (Hufanya kazi nje, huota jua mara kwa mara)"
+            }
+        },
+        "analyzeButton": "Changanua Hatari Yangu",
+        "resultCard": {
+            "title": "Matokeo ya Uchambuzi",
+            "description": "Hatari yako ya kinasaba ya melanoma iliyotabiriwa.",
+            "analyzing": "Inachanganua wasifu wako...",
+            "placeholder": "Matokeo yako yataonekana hapa.",
+            "disclaimer": "Huu ni utabiri unaotegemea mifumo ya takwimu na si utambuzi rasmi. Wasiliana na mtoa huduma wa afya kwa tathmini kamili.",
+            "prefix": "Uwezekano wako wa kupata melanoma ya kinasaba ni: ",
+            "levels": {
+                "low": "Chini",
+                "moderate": "Wastani",
+                "elevated": "Juu"
+            }
+        }
+    },
+    "recommendations": {
+        "pageHeader": {
+            "title": "Mapendekezo Yanayokufaa",
+            "subtitle": "Jaza fomu hapa chini ili kupata vidokezo vya usafi na mtindo wa maisha vilivyobinafsishwa na AI."
+        },
+        "detailsCard": {
+            "title": "Maelezo Yako",
+            "description": "Toa taarifa fulani kwa ajili ya uzoefu unaokufaa."
+        },
+        "form": {
+            "skinType": {
+                "label": "Aina ya Ngozi",
+                "placeholder": "Chagua aina ya ngozi yako",
+                "types": {
+                    "oily": "Yenye mafuta",
+                    "dry": "Kavu",
+                    "sensitive": "Nyororo",
+                    "acneProne": "Yenye chunusi",
+                    "combination": "Mchanganyiko",
+                    "normal": "Kawaida"
+                }
+            },
+            "age": {
+                "label": "Umri",
+                "placeholder": "k.m., 25"
+            },
+            "lifestyle": {
+                "label": "Mtindo wa Maisha",
+                "placeholder": "Chagua mtindo wako wa maisha",
+                "lifestyles": {
+                    "active": "Mchangamfu (Mazoezi ya mara kwa mara)",
+                    "moderate": "Wastani",
+                    "sedentary": "Mvivu (Zaidi ndani ya nyumba)"
+                }
+            },
+            "climate": {
+                "label": "Hali ya Hewa",
+                "placeholder": "Chagua hali ya hewa yako",
+                "climates": {
+                    "hot": "Joto",
+                    "cold": "Baridi",
+                    "humid": "Unyevu",
+                    "dry": "Kavu",
+                    "temperate": "Wastani"
+                }
+            },
+            "concerns": {
+                "label": "Hoja Kuu",
+                "placeholder": "k.m., kuzuia kuzeeka, mikunjo, madoa meusi..."
+            }
+        },
+        "generateButton": "Toa Vidokezo",
+        "planCard": {
+            "title": "Mpango Wako Uliobinafsishwa",
+            "description": "Hivi ni vidokezo vilivyotolewa na AI kulingana na wasifu wako.",
+            "placeholder": "Vidokezo vyako vitaonekana hapa."
+        },
+        "toast": {
+            "failedTitle": "Utoaji Umeshindikana",
+            "failedDesc": "Haikuweza kutoa mapendekezo. Tafadhali jaribu tena."
+        }
+    },
+    "teleDerm": {
+        "pageHeader": {
+            "title": "Kituo cha Tele-Derm",
+            "subtitle": "Tafuta na ungana na madaktari wa ngozi waliothibitishwa kutoka kote ulimwenguni."
+        },
+        "searchPlaceholder": "Tafuta kwa jina, utaalamu, au nchi...",
+        "searchButton": "Tafuta Daktari",
+        "reviews": "hakiki",
+        "price": "{{price}} / ushauri wa {{duration}}",
+        "startConsultButton": "Anza Ushauri Mdogo"
+    },
+    "triage": {
+        "pageHeader": {
+            "title": "Mfumo wa Triage wa Onco-Connect",
+            "subtitle": "Daraja lako kati ya uchambuzi wa AI na huduma ya kitaalamu ya matibabu."
+        },
+        "referralCard": {
+            "title": "Kadi ya Rufaa ya Kidijitali",
+            "description": "Monyeshe mtaalamu wa afya hii kwa muhtasari wa haraka wa uchambuzi wako.",
+            "patientId": "Kitambulisho cha Mgonjwa",
+            "analysisDate": "Tarehe ya Uchambuzi",
+            "aiAssessment": "Tathmini ya AI",
+            "assessmentValue": "Si hatari (Nevus)",
+            "confidence": "Ujasiri",
+            "printButton": "Chapisha Kadi",
+            "downloadButton": "Pakua"
+        },
+        "map": {
+            "title": "Vituo vya Saratani Vilivyothibitishwa Vilivyo Karibu",
+            "description": "Weka eneo lako ili kupata vituo vilivyothibitishwa karibu nawe.",
+            "searchPlaceholder": "k.m., jiji lako au msimbo wa posta",
+            "searchButton": "Tafuta",
+            "center1": "Hospitali Kuu ya Jiji",
+            "center2": "Dermatology ya Kati ya Mji",
+            "center3": "Kituo cha Saratani cha Southside"
+        }
+    },
+    "uvRisk": {
+        "pageHeader": {
+            "title": "Hatari ya Mionzi ya UV & Mazingira",
+            "subtitle": "Pata alama ya hatari ya ngozi kwa wakati halisi kwa eneo lako."
+        },
+        "searchPlaceholder": "k.m., Lagos, Nairobi, au Kabul",
+        "checkRiskButton": "Angalia Hatari",
+        "levels": {
+            "extreme": "Kiwango cha Juu Sana cha Mionzi ya UV",
+            "veryHigh": "Kiwango cha Juu cha Mionzi ya UV"
+        },
+        "recommendations": {
+            "lagos": "Tumia chini ya dakika 8 kwenye jua moja kwa moja. Paka SPF 30+ kila masaa 2.",
+            "kabul": "Tumia dakika 10-15 kwenye jua moja kwa moja. Paka SPF 30+.",
+            "nairobi": "Punguza mfiduo wa jua kati ya saa 10 asubuhi na 4 jioni. Vaa nguo za kujikinga."
+        },
+        "metrics": {
+            "airPollution": "Uchafuzi wa Hewa",
+            "heatExposure": "Mfiduo wa Joto",
+            "humidity": "Unyevu",
+            "melanomaRisk": "Hatari ya Melanoma"
+        },
+        "riskLevels": {
+            "high": "Juu",
+            "moderate": "Wastani"
+        }
+    },
+    "months": {
+        "jan": "Jan",
+        "feb": "Feb",
+        "mar": "Mac",
+        "apr": "Apr",
+        "may": "Mei",
+        "jun": "Jun",
+        "jul": "Jul",
+        "aug": "Ago",
+        "sep": "Sep",
+        "oct": "Okt",
+        "nov": "Nov",
+        "dec": "Des"
+    },
+    "auth": {
+      "login": {
+        "title": "Ingia",
+        "subtitle": "Ingiza barua pepe yako hapa chini ili kuingia kwenye akaunti yako.",
+        "buttonText": "Ingia",
+        "noAccount": "Huna akaunti?",
+        "signUpLink": "Jisajili",
+        "toast": {
+          "successTitle": "Umefanikiwa Kuingia",
+          "successDescription": "Karibu tena!",
+          "errorTitle": "Kuingia Kumeshindikana",
+          "errorDescription": "Kosa lisilotarajiwa limetokea. Tafadhali jaribu tena.",
+          "invalidCredentials": "Taarifa za kuingia si sahihi. Tafadhali angalia barua pepe na nenosiri lako."
+        }
+      },
+      "signup": {
+        "title": "Fungua akaunti",
+        "subtitle": "Ingiza barua pepe yako hapa chini ili kufungua akaunti yako.",
+        "buttonText": "Jisajili",
+        "haveAccount": "Tayari una akaunti?",
+        "loginLink": "Ingia",
+         "toast": {
+          "successTitle": "Akaunti Imefunguliwa",
+          "successDescription": "Karibu kwenye Dermaflow AI!",
+          "errorTitle": "Kujisajili Kumeshindikana",
+          "errorDescription": "Kosa lisilotarajiwa limetokea. Tafadhali jaribu tena.",
+          "emailInUse": "Barua pepe hii tayari inatumika. Tafadhali jaribu nyingine."
+        }
+      },
+      "logout": {
+        "buttonText": "Toka",
+        "toast": {
+          "successTitle": "Umetoka kwenye akaunti yako."
+        }
+      },
+      "form": {
+        "emailLabel": "Barua pepe",
+        "passwordLabel": "Nenosiri",
+        "confirmPasswordLabel": "Thibitisha Nenosiri"
+      }
+    }
+}

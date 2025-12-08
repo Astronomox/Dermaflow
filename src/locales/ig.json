@@ -1,0 +1,372 @@
+{
+    "welcomeBack": "Nnọọ, Gabriel!",
+    "dashboardSubtitle": "Nke a bụ nchịkọta dị nkenke nke onye enyemaka ahụike akpụkpọ ahụ gị.",
+    "advancedAiAnalysis": "Nnyocha AI dị elu",
+    "advancedAiAnalysisDesc": "Nweta nyocha ihe egwu dị omimi nke ọnya akpụkpọ gị na AI anyị kachasị ọhụrụ, nke Bio-LLM pụrụ iche kwadoro.",
+    "performNewAnalysis": "Mee Nnyocha Ọhụrụ",
+    "analyses": "Nnyocha",
+    "low": "Dị ala",
+    "avgRisk": "Nkezi ihe egwu",
+    "avgConfidence": "Nkezi ntụkwasị obi",
+    "newSkinAnalysis": "Nnyocha Akpụkpọ ahụ Ọhụrụ",
+    "newSkinAnalysisDesc": "Bulite foto iji nweta nyocha ihe egwu nke AI kwadoro.",
+    "askBioLLM": "Jụọ Bio-LLM",
+    "askBioLLMDesc": "Ị nwere ajụjụ? AI ahụike anyị nwere ike inyere aka.",
+    "uvEnvironment": "UV & Gburugburu",
+    "uvEnvironmentDesc": "Lelee akara ihe egwu akpụkpọ ahụ n'oge n'ezie dabere na ebe ị nọ.",
+    "teleDermHub": "Ebe Tele-Derm",
+    "teleDermHubDesc": "Jikọọ na ndị dọkịta akpụkpọ ahụ a kwadoro ozugbo.",
+    "geneticRiskAnalyzer": "Onye Nnyocha Ihe Egwu Jenetik",
+    "geneticRiskAnalyzerDesc": "Buo amụma gbasara ohere ị nwere ike ibute ọrịa melanoma nke jenetik.",
+    "dermatologyDigitalTwin": "Ejima Dijital nke Akpụkpọ ahụ",
+    "dermatologyDigitalTwinDesc": "Lelee ihe atụ nke ahụike akpụkpọ ahụ gị ka oge na-aga.",
+    "yes": "Ee",
+    "no": "Mba",
+    "sometimes": "Mgbe ụfọdụ",
+    "unsure": "Amaghị m",
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "skinAnalysis": "Nnyocha Akpụkpọ ahụ",
+        "recommendations": "Nkwanye",
+        "askBioLLM": "Jụọ Bio-LLM",
+        "oncoConnect": "Onco-Connect",
+        "sparkFeatures": "Atụmatụ Spark",
+        "uvEnvironment": "UV & Gburugburu",
+        "teleDermHub": "Ebe Tele-Derm",
+        "geneticRisk": "Ihe Egwu Jenetik",
+        "digitalTwin": "Ejima Dijital"
+    },
+    "analysis": {
+        "pageHeader": {
+            "title": "Nnyocha Ọnya Akpụkpọ ahụ",
+            "subtitle": "Bulite foto iji nweta nyocha ihe egwu nke AI kwadoro.",
+            "newAnalysisButton": "Malite Nnyocha Ọhụrụ"
+        },
+        "upload": {
+            "title": "Bulite Foto Gị",
+            "description": "Pịa n'okpuru iji họrọ foto ọnya akpụkpọ ahụ.",
+            "chooseFileButton": "Họrọ failị",
+            "fileTypes": "Na-akwado JPEG, PNG, WEBP. Maka ebumnuche mmụta naanị."
+        },
+        "analysisSection": {
+            "title": "Nnyocha AI",
+            "originalImage": "Foto Mbụ",
+            "aiHeatmap": "Maapụ Okpomọkụ AI"
+        },
+        "results": {
+            "title": "Nsonaazụ Nnyocha",
+            "description": "Nnyocha nke AI kwadoro nke foto e nyere.",
+            "refinedAssessment": "Nnyocha a nụchara anụcha",
+            "rationale": "Ihe kpatara ya",
+            "initialAssessment": "Nnyocha Mbụ",
+            "confidenceScore": "Akara Ntụkwasị Obi",
+            "disclaimer": "Nkwupụta: Nke a bụ nnyocha AI mepụtara maka ebumnuche mmụta ma abụghị nchọpụta ahụike. Gakwuru dọkịta ahụike ruru eru mgbe niile."
+        },
+        "questionnaire": {
+            "triggerButton": "Jiri Akwụkwọ Ajụjụ nụchaa",
+            "title": "Akwụkwọ Ajụjụ Nchọpụta",
+            "description": "Zaa ajụjụ ndị a iji nyere AI aka inụcha nnyocha ya.",
+            "durationLabel": "Ogologo oge ole ka ọnya ahụ dịrịla?",
+            "durationPlaceholder": "d.g., ọnwa 2",
+            "sizeLabel": "Gịnị bụ ihe dịka nha ya?",
+            "sizePlaceholder": "d.g., 5mm ma ọ bụ 1/4 inch",
+            "bleedingLabel": "Ọ na-agba ọbara?",
+            "itchingLabel": "Ọ na-akọ gị?",
+            "colorChangeLabel": "Àgwà ya agbanweela n'oge na-adịbeghị anya?",
+            "selectPlaceholder": "Họrọ nhọrọ",
+            "submitButton": "Nụchaa Nnyocha"
+        },
+        "readAloudButton": "Gụpụta ya",
+        "generateAudioPrompt": "Pịa bọtịnụ iji mepụta ọgụgụ ọdịyo nke nyocha ahụ.",
+        "audio": {
+            "loading": "Na-emepụta ụda...",
+            "error": "Njehie n'emepụta ụda."
+        },
+        "toast": {
+            "analysisFailedTitle": "Nnyocha Akụọla",
+            "analysisFailedDesc": "Enweghị ike iwepụta nkọwa AI. Biko nwaa ọzọ.",
+            "assessmentRefinedTitle": "Nnyocha Anụchaala",
+            "assessmentRefinedDesc": "Emelitela nyocha ihe egwu gị dabere na azịza gị.",
+            "refinementFailedTitle": "Nnụcha Akụọla",
+            "refinementFailedDesc": "Enweghị ike inụcha nnyocha ahụ. Biko nwaa ọzọ."
+        }
+    },
+    "askAi": {
+        "pageHeader": {
+            "title": "Jụọ Bio-LLM Ahụike Anyị",
+            "subtitle": "Nweta azịza ajụjụ akpụkpọ ahụ gị site na AI anyị pụrụ iche."
+        },
+        "cardTitle": "Ajụjụ na Azịza Akpụkpọ ahụ",
+        "emptyState": {
+            "title": "Jụọ ajụjụ iji malite mkparịta ụka.",
+            "example": "d.g., \"Gịnị bụ ihe mgbaàmà eczema na-ahụkarị?\""
+        },
+        "thinking": "Na-eche echiche...",
+        "inputPlaceholder": "Pịnye ajụjụ gị ebe a...",
+        "recommendationPrefix": "Nkwanye",
+        "toast": {
+            "errorTitle": "Njehie Emetela",
+            "errorDesc": "Enweghị ike inweta azịza site na AI. Biko nwaa ọzọ."
+        }
+    },
+    "digitalTwin": {
+        "pageHeader": {
+            "title": "Ejima Dijital nke Akpụkpọ ahụ",
+            "subtitle": "Ihe atụ nke akpụkpọ ahụ gị nke na-emelite na nyocha ọ bụla."
+        },
+        "userCard": {
+            "title": "Ejima Dijital nke Gabriel",
+            "lastUpdated": "Emelitere ikpeazụ: Taa",
+            "scans": "Nyocha",
+            "lesionsTracked": "Ọnya a na-enyocha"
+        },
+        "metricsCard": {
+            "title": "Nkezi Ihe Nlereanya",
+            "uvScore": "Nchikọta Akara UV",
+            "uvScoreValue": "78/100 (Dị elu)",
+            "agingPrediction": "Amụma Nka Akpụkpọ ahụ",
+            "agingPredictionValue": "afọ +3 (atụmatụ afọ 5)",
+            "nextScan": "Nyocha A Kwadoro na-esote",
+            "nextScanValue": "N'ime ọnwa 3"
+        },
+        "evolutionCard": {
+            "title": "Mgbanwe Ọnya & Mmebi Anyanwụ",
+            "description": "Na-egosi nchikọta mmebi anyanwụ na ọdịdị a bu amụma maka ọdịnihu.",
+            "predictionTitle": "Ọdịdị Ọnya a Bu Amụma n'ime Afọ 1",
+            "current": "Ugbu a",
+            "predicted": "Nke a bu amụma"
+        },
+        "chart": {
+            "sunDamage": "Mmebi Anyanwụ",
+            "uvExposure": "Ngosipụta UV"
+        }
+    },
+    "geneticRisk": {
+        "pageHeader": {
+            "title": "Onye Nnyocha Ihe Egwu Jenetik",
+            "subtitle": "Buo amụma gbasara ohere ị nwere ike ibute ọrịa melanoma nke jenetik site na iji usoro akara ihe egwu Bayesian."
+        },
+        "formCard": {
+            "title": "Ozi Gị",
+            "description": "A na-eji data a agbakọ akara ihe egwu gị."
+        },
+        "form": {
+            "age": "Afọ ndụ",
+            "skinPhenotype": "Ụdị Akpụkpọ ahụ (Skala Fitzpatrick)",
+            "lesionRecurrence": "Nlọghachi Ọnya",
+            "sunExposure": "Nkezi Ngosipụta Anyanwụ",
+            "familyHistory": "Akụkọ Ezinụlọ nke Ọrịa Kansa Akpụkpọ ahụ",
+            "geoLocation": "Ebe Obibi Mbụ",
+            "geoLocationPlaceholder": "d.g., Accra, Ghana",
+            "selectPlaceholder": "Họrọ nhọrọ",
+            "skinTypes": {
+                "I": "Ụdị I (Na-acha ọcha, na-ere ọkụ mgbe niile)",
+                "II": "Ụdị II (Dị mma, na-ere ọkụ mgbe mgbe)",
+                "III": "Ụdị III (Na-acha nchara nchara, na-ere ọkụ mgbe ụfọdụ)",
+                "IV": "Ụdị IV (Na-acha nchara nchara, anaghị ere ọkụ mgbe mgbe)",
+                "V": "Ụdị V (Na-acha nchara nchara, anaghị ere ọkụ nke ukwuu)",
+                "VI": "Ụdị VI (Nke gbara ọchịchịrị, anaghị ere ọkụ ma ọlị)"
+            },
+            "sunExposureLevels": {
+                "low": "Dị ala (Imekarị n'ime ụlọ)",
+                "moderate": "Dị nwayọọ (Ụfọdụ mmega ahụ n'èzí)",
+                "high": "Dị elu (Na-arụ ọrụ n'èzí, na-anọkarị n'anyanwụ)"
+            }
+        },
+        "analyzeButton": "Nyochaa Ihe Egwu M",
+        "resultCard": {
+            "title": "Nsonaazụ Nnyocha",
+            "description": "Ihe egwu jenetik gị a bu amụma maka ọrịa melanoma.",
+            "analyzing": "Na-enyocha profaịlụ gị...",
+            "placeholder": "Nsonaazụ gị ga-apụta ebe a.",
+            "disclaimer": "Nke a bụ amụma dabeere na usoro ndekọ ma abụghị nchọpụta ahụike. Gakwuru onye na-ahụ maka ahụike maka nnyocha zuru ezu.",
+            "prefix": "Ohere ị nwere ike ibute ọrịa melanoma nke jenetik bụ: ",
+            "levels": {
+                "low": "Dị ala",
+                "moderate": "Dị nwayọọ",
+                "elevated": "Dị elu"
+            }
+        }
+    },
+    "recommendations": {
+        "pageHeader": {
+            "title": "Nkwanye Pụrụ Iche",
+            "subtitle": "Dejupụta fọm dị n'okpuru iji nweta ndụmọdụ ịdị ọcha na ụdị ndụ nke AI chepụtara."
+        },
+        "detailsCard": {
+            "title": "Nkọwa Gị",
+            "description": "Nye ozi ụfọdụ maka ahụmahụ ahaziri ahazi."
+        },
+        "form": {
+            "skinType": {
+                "label": "Ụdị Akpụkpọ ahụ",
+                "placeholder": "Họrọ ụdị akpụkpọ ahụ gị",
+                "types": {
+                    "oily": "Mmanu mmanu",
+                    "dry": "Akọrọ",
+                    "sensitive": "Dị nro",
+                    "acneProne": "Nke na-epu ihe otutu",
+                    "combination": "Ngwakọta",
+                    "normal": "Nke nkịtị"
+                }
+            },
+            "age": {
+                "label": "Afọ ndụ",
+                "placeholder": "d.g., 25"
+            },
+            "lifestyle": {
+                "label": "Ụdị Ndụ",
+                "placeholder": "Họrọ ụdị ndụ gị",
+                "lifestyles": {
+                    "active": "Na-arụsi ọrụ ike (Mmega ahụ mgbe niile)",
+                    "moderate": "Dị nwayọọ",
+                    "sedentary": "Anaghị arụsi ọrụ ike (Imekarị n'ime ụlọ)"
+                }
+            },
+            "climate": {
+                "label": "Ihu igwe",
+                "placeholder": "Họrọ ihu igwe gị",
+                "climates": {
+                    "hot": "Ọkụ",
+                    "cold": "Oyi",
+                    "humid": "Mmiri",
+                    "dry": "Akọrọ",
+                    "temperate": "Dị nwayọọ"
+                }
+            },
+            "concerns": {
+                "label": "Nchegbu Mbụ",
+                "placeholder": "d.g., igbochi nka, mkpọchi, ntụpọ ojii..."
+            }
+        },
+        "generateButton": "Mepụta Ndụmọdụ",
+        "planCard": {
+            "title": "Atụmatụ Gị Pụrụ Iche",
+            "description": "Ndị a bụ ndụmọdụ AI mepụtara dabere na profaịlụ gị.",
+            "placeholder": "Ndụmọdụ gị ga-apụta ebe a."
+        },
+        "toast": {
+            "failedTitle": "Mmepụta Akụọla",
+            "failedDesc": "Enweghị ike iwepụta nkwanye. Biko nwaa ọzọ."
+        }
+    },
+    "teleDerm": {
+        "pageHeader": {
+            "title": "Ebe Tele-Derm",
+            "subtitle": "Chọta ma jikọọ na ndị dọkịta akpụkpọ ahụ a kwadoro si n'akụkụ ụwa niile."
+        },
+        "searchPlaceholder": "Jiri aha, ọpụrụiche, ma ọ bụ obodo chọọ...",
+        "searchButton": "Chọta Dọkịta",
+        "reviews": "nlebanya",
+        "price": "{{price}} / ndụmọdụ {{duration}}",
+        "startConsultButton": "Malite Obere Ndụmọdụ"
+    },
+    "triage": {
+        "pageHeader": {
+            "title": "Usoro Nlekọta Onco-Connect",
+            "subtitle": "Àkwà mmiri gị n'etiti nnyocha AI na nlekọta ahụike ọkachamara."
+        },
+        "referralCard": {
+            "title": "Kaadị Ntụnye Dijital",
+            "description": "Gosi onye ọrụ ahụike nke a maka nchịkọta dị nkenke nke nnyocha gị.",
+            "patientId": "ID Onye Ọrịa",
+            "analysisDate": "Ụbọchị Nnyocha",
+            "aiAssessment": "Nnyocha AI",
+            "assessmentValue": "Adịghị egwu (Nevus)",
+            "confidence": "Ntụkwasị obi",
+            "printButton": "Bipụta Kaadị",
+            "downloadButton": "Budata"
+        },
+        "map": {
+            "title": "Ebe Nlekọta Ọrịa Kansa A Kwadoro Dị Nso",
+            "description": "Tinye ebe ị nọ iji chọta ebe nlekọta a kwadoro dị gị nso.",
+            "searchPlaceholder": "d.g., obodo gị ma ọ bụ koodu zip",
+            "searchButton": "Chọọ",
+            "center1": "Ụlọ Ọgwụ Izugbe Obodo",
+            "center2": "Nlekọta Akpụkpọ ahụ Etiti Obodo",
+            "center3": "Ebe Nlekọta Ọrịa Kansa Southside"
+        }
+    },
+    "uvRisk": {
+        "pageHeader": {
+            "title": "Ihe Egwu UV & Gburugburu",
+            "subtitle": "Nweta akara ihe egwu akpụkpọ ahụ n'oge n'ezie maka ebe ị nọ."
+        },
+        "searchPlaceholder": "d.g., Lagos, Nairobi, ma ọ bụ Kabul",
+        "checkRiskButton": "Lelee Ihe Egwu",
+        "levels": {
+            "extreme": "Nkezi Ihe Nlereanya UV dị oke elu",
+            "veryHigh": "Nkezi Ihe Nlereanya UV dị elu"
+        },
+        "recommendations": {
+            "lagos": "Anọla ihe karịrị nkeji 8 n'anyanwụ. Tinye SPF 30+ kwa awa 2.",
+            "kabul": "Nọọ nkeji 10-15 n'anyanwụ. Tinye SPF 30+.",
+            "nairobi": "Belata ịnọ n'anyanwụ n'etiti 10 nke ụtụtụ na 4 nke ehihie. Yiri uwe nchedo."
+        },
+        "metrics": {
+            "airPollution": "Mmetọ Ikuku",
+            "heatExposure": "Ngosipụta Okpomọkụ",
+            "humidity": "Mmiri",
+            "melanomaRisk": "Ihe Egwu Melanoma"
+        },
+        "riskLevels": {
+            "high": "Dị elu",
+            "moderate": "Dị nwayọọ"
+        }
+    },
+    "months": {
+        "jan": "Jen",
+        "feb": "Feb",
+        "mar": "Maa",
+        "apr": "Epr",
+        "may": "Mee",
+        "jun": "Jun",
+        "jul": "Jul",
+        "aug": "Ọgọ",
+        "sep": "Sep",
+        "oct": "Ọkt",
+        "nov": "Nov",
+        "dec": "Dis"
+    },
+    "auth": {
+      "login": {
+        "title": "Banye",
+        "subtitle": "Tinye email gị n'okpuru iji banye na akaụntụ gị.",
+        "buttonText": "Banye",
+        "noAccount": "Ị nweghị akaụntụ?",
+        "signUpLink": "Debanye aha",
+        "toast": {
+          "successTitle": "Ị banyela nke ọma",
+          "successDescription": "Nnọọ!",
+          "errorTitle": "Nbanye Akụọla",
+          "errorDescription": "Njehie emetela. Biko nwaa ọzọ.",
+          "invalidCredentials": "Ozi nbanye ezighi ezi. Biko lelee email na okwuntughe gị."
+        }
+      },
+      "signup": {
+        "title": "Mepụta akaụntụ",
+        "subtitle": "Tinye email gị n'okpuru iji mepụta akaụntụ gị.",
+        "buttonText": "Debanye aha",
+        "haveAccount": "Ị nweelarị akaụntụ?",
+        "loginLink": "Banye",
+         "toast": {
+          "successTitle": "E mepụtala akaụntụ",
+          "successDescription": "Nnọọ na Dermaflow AI!",
+          "errorTitle": "Ndebanye aha Akụọla",
+          "errorDescription": "Njehie emetela. Biko nwaa ọzọ.",
+          "emailInUse": "A na-eji email a eme ihe. Biko nwaa nke ọzọ."
+        }
+      },
+      "logout": {
+        "buttonText": "Pụọ",
+        "toast": {
+          "successTitle": "Ị pụọla."
+        }
+      },
+      "form": {
+        "emailLabel": "Email",
+        "passwordLabel": "Okwuntughe",
+        "confirmPasswordLabel": "Kwenye Okwuntughe"
+      }
+    }
+}
