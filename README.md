@@ -31,7 +31,7 @@ This is the feature I'm most proud of. If your analysis suggests something that 
 
 ## Why I Built This
 
-Skin cancer and serious skin conditions are underdiagnosed in West Africa. Not because people don't care, but because access is a barrier. I'm a CS student at UNILAG, not a doctor — but I know how to build tools. So I built one.
+Skin cancer and serious skin conditions are underdiagnosed in West Africa. Not because people don't care, but because access is a barrier. I'm a Data Science student at UNILAG, not a doctor — but I know how to build tools. So I built one.
 
 This project is not a finished product. It's a starting point. Feedback, contributions, and brutal honesty are all welcome.
 
