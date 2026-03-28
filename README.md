@@ -59,11 +59,6 @@ Dermaflow is for informational purposes only. It is not a substitute for profess
 
 ---
 
-Built by [Astronomox](https://github.com/Astronomox) — a CS student who got tired of problems having no solutions.
+Built by [Astronomox](https://github.com/Astronomox) — A Data Science student who got tired of problems having no solutions.
 
------
-**Built by [YASINLASISI](https://github.com/YASINLASISI)**
 
----------------------------------------------------------------------
-
-**Re-built and Maintained by [Astronomox](https://www.google.com/search?q=https://github.com/Astronomox)**
