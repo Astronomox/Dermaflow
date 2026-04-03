@@ -181,26 +181,26 @@ export default function RecommendationsPage() {
       {/* ✅ MAIN GRID */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* LEFT: FORM */}
-        <Card className="lg:col-span-1 shadow-lg">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+        <Card className="lg:col-span-1 shadow-xl border-border bg-card">
+          <CardHeader className="border-b bg-secondary/30 pb-4">
+            <CardTitle className="font-headline text-lg flex items-center gap-2">
               <Sparkles className="size-5 text-primary" />
-              Your Profile
+              Patient Profile
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-xs">
               {t('recommendations.detailsCard.description')}
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                 {/* Skin Condition */}
                 <FormField control={form.control} name="skinCondition" render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-semibold">{t('recommendations.form.skinType.label')}</FormLabel>
+                    <FormLabel className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">{t('recommendations.form.skinType.label')}</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12 shadow-sm rounded-xl border-border">
                           <SelectValue placeholder={t('recommendations.form.skinType.placeholder')} />
                         </SelectTrigger>
                       </FormControl>
@@ -217,48 +217,51 @@ export default function RecommendationsPage() {
                   </FormItem>
                 )}/>
 
-                {/* Age */}
-                <FormField control={form.control} name="age" render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-semibold">{t('recommendations.form.age.label')}</FormLabel>
-                    <FormControl>
-                      <Input 
-                        type="number" 
-                        placeholder="e.g., 28" 
-                        {...field} 
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}/>
-
-                {/* Lifestyle */}
-                <FormField control={form.control} name="lifestyle" render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-semibold">{t('recommendations.form.lifestyle.label')}</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Age */}
+                  <FormField control={form.control} name="age" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">{t('recommendations.form.age.label')}</FormLabel>
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={t('recommendations.form.lifestyle.placeholder')} />
-                        </SelectTrigger>
+                        <Input
+                          type="number"
+                          placeholder="e.g., 28"
+                          className="h-12 shadow-sm rounded-xl border-border"
+                          {...field}
+                        />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="active">Active (Regular exercise)</SelectItem>
-                        <SelectItem value="moderate">Moderate (Some activity)</SelectItem>
-                        <SelectItem value="sedentary">Sedentary (Low activity)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}/>
+                      <FormMessage />
+                    </FormItem>
+                  )}/>
+
+                  {/* Lifestyle */}
+                  <FormField control={form.control} name="lifestyle" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">{t('recommendations.form.lifestyle.label')}</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="h-12 shadow-sm rounded-xl border-border">
+                            <SelectValue placeholder={t('recommendations.form.lifestyle.placeholder')} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="active">Active (Regular exercise)</SelectItem>
+                          <SelectItem value="moderate">Moderate (Some activity)</SelectItem>
+                          <SelectItem value="sedentary">Sedentary (Low activity)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}/>
+                </div>
 
                 {/* Climate */}
                 <FormField control={form.control} name="climate" render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-semibold">{t('recommendations.form.climate.label')}</FormLabel>
+                    <FormLabel className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">{t('recommendations.form.climate.label')}</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12 shadow-sm rounded-xl border-border">
                           <SelectValue placeholder={t('recommendations.form.climate.placeholder')} />
                         </SelectTrigger>
                       </FormControl>
@@ -277,11 +280,11 @@ export default function RecommendationsPage() {
                 {/* Concerns */}
                 <FormField control={form.control} name="concerns" render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-semibold">{t('recommendations.form.concerns.label')}</FormLabel>
+                    <FormLabel className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">{t('recommendations.form.concerns.label')}</FormLabel>
                     <FormControl>
                       <Textarea 
                         placeholder="e.g., Sensitivity to sunscreen, hyperpigmentation, texture issues..."
-                        className="min-h-24 resize-none"
+                        className="min-h-24 resize-none shadow-sm rounded-xl border-border"
                         {...field} 
                       />
                     </FormControl>
@@ -291,14 +294,14 @@ export default function RecommendationsPage() {
 
                 <Button 
                   type="submit" 
-                  className="w-full gap-2" 
+                  className="w-full gap-2 h-12 rounded-xl font-semibold shadow-md"
                   size="lg"
                   disabled={isGenerating}
                 >
                   {isGenerating ? (
                     <>
                       <TypingAnimation />
-                      <span>Generating...</span>
+                      <span>Generating Protocol...</span>
                     </>
                   ) : (
                     <>
@@ -313,17 +316,17 @@ export default function RecommendationsPage() {
         </Card>
 
         {/* RIGHT: RECOMMENDATIONS */}
-        <Card className="lg:col-span-2 shadow-lg">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+        <Card className="lg:col-span-2 shadow-xl border-border bg-card">
+          <CardHeader className="border-b bg-secondary/30 pb-4">
+            <CardTitle className="font-headline text-lg flex items-center gap-2">
               <Lightbulb className="size-5 text-primary" />
-              Your Skincare Routine
+              Clinical Care Protocol
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-xs">
               {t('recommendations.planCard.description')}
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             {isGenerating ? (
               <div className="flex flex-col items-center justify-center py-24 space-y-4">
                 <TypingAnimation />

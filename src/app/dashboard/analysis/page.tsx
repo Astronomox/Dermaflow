@@ -639,77 +639,98 @@ export default function AnalysisPage() {
           </div>
 
           {/* RIGHT: RESULTS */}
-          <Card className="flex flex-col shadow-lg">
-            <CardHeader>
-              <CardTitle className="font-headline text-xl flex items-center gap-2">
-                <Sparkles className="size-5 text-primary" />
-                Analysis Results
-              </CardTitle>
+          <Card className="flex flex-col shadow-xl border-border bg-card">
+            <CardHeader className="pb-4 border-b">
+              <div className="flex items-center justify-between">
+                <CardTitle className="font-headline text-xl flex items-center gap-2">
+                  <Sparkles className="size-5 text-primary" />
+                  Diagnostic Report
+                </CardTitle>
+                <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-secondary/50 border text-xs font-medium text-muted-foreground">
+                  <div className={`size-2 rounded-full ${isAnalyzing ? 'bg-amber-500 animate-pulse' : 'bg-green-500'}`} />
+                  {isAnalyzing ? 'Processing' : 'Ready'}
+                </div>
+              </div>
               <CardDescription>
                 AI-powered assessment with explainable predictions
               </CardDescription>
             </CardHeader>
-            <CardContent className="flex-1 space-y-4">
+            <CardContent className="flex-1 space-y-6 pt-6">
               {isAnalyzing || !analysis ? (
-                <div className="space-y-4 pt-4">
-                  <Skeleton className="h-8 w-3/4" />
-                  <Skeleton className="h-6 w-1/2" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-full" />
+                <div className="space-y-6">
+                  <Skeleton className="h-24 w-full rounded-xl" />
+                  <div className="space-y-3">
+                    <Skeleton className="h-5 w-1/3" />
+                    <Skeleton className="h-3 w-full rounded-full" />
+                  </div>
+                  <Skeleton className="h-16 w-full rounded-xl" />
                 </div>
               ) : (
-                <>
+                <div className="space-y-6">
+                  {/* Results Display */}
                   {analysis.refinedResult ? (
-                    <div className="space-y-4 rounded-lg border-2 border-green-200 dark:border-green-900/50 bg-green-50 dark:bg-green-950/30 p-4">
-                      <h3 className="font-semibold text-lg flex items-center gap-2 text-green-900 dark:text-green-200">
-                        <CheckCircle className="size-5" />
+                    <div className="space-y-4 rounded-xl border border-primary/20 bg-primary/5 p-5">
+                      <h3 className="font-semibold text-sm flex items-center gap-2 text-primary uppercase tracking-wider">
+                        <CheckCircle className="size-4" />
                         Refined Assessment
                       </h3>
-                      <p className="text-2xl font-bold text-green-700 dark:text-green-300">
+                      <p className="text-2xl font-headline font-bold text-foreground">
                         {analysis.refinedResult.refinedAssessment}
                       </p>
-                      <p className="text-sm text-green-800 dark:text-green-300">
-                        <strong>Rationale:</strong> {analysis.refinedResult.rationale}
-                      </p>
+                      <div className="pt-3 border-t border-primary/10">
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          <strong className="text-foreground">Clinical Rationale:</strong> {analysis.refinedResult.rationale}
+                        </p>
+                      </div>
                     </div>
                   ) : (
-                    <div className="space-y-4 rounded-lg border-2 border-blue-200 dark:border-blue-900/50 bg-blue-50 dark:bg-blue-950/30 p-4">
-                      <h3 className="font-semibold text-lg flex items-center gap-2 text-blue-900 dark:text-blue-200">
-                        <Sparkles className="size-5" />
+                    <div className="space-y-5 rounded-xl border bg-card p-5 shadow-sm">
+                      <h3 className="font-semibold text-sm flex items-center gap-2 text-muted-foreground uppercase tracking-wider">
+                        <Sparkles className="size-4" />
                         Initial Assessment
                       </h3>
-                      <p className="text-2xl font-bold text-blue-700 dark:text-blue-300">
+                      <p className="text-2xl font-headline font-bold text-foreground">
                         {analysis.initialAssessment}
                       </p>
-                      <div className="space-y-2">
-                        <p className="text-sm text-blue-800 dark:text-blue-300">
-                          <strong>Confidence Score:</strong>
-                        </p>
-                        <div className="w-full bg-blue-200 dark:bg-blue-900/50 rounded-full h-3 overflow-hidden">
+
+                      {/* Premium Confidence Bar */}
+                      <div className="space-y-3 pt-3">
+                        <div className="flex justify-between items-end">
+                          <p className="text-sm font-medium text-muted-foreground">
+                            AI Confidence Score
+                          </p>
+                          <p className="text-xl font-bold text-primary">
+                            {analysis.confidence}%
+                          </p>
+                        </div>
+                        <div className="w-full bg-secondary rounded-full h-2.5 overflow-hidden ring-1 ring-inset ring-black/5 dark:ring-white/5">
                           <div
-                            className="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all"
+                            className="h-full bg-primary transition-all duration-1000 ease-out"
                             style={{ width: `${analysis.confidence}%` }}
                           />
                         </div>
-                        <p className="text-xs text-blue-700 dark:text-blue-400 font-semibold">
-                          {analysis.confidence}%
-                        </p>
                       </div>
                     </div>
                   )}
 
-                  <p className="text-xs text-muted-foreground p-3 rounded-lg bg-secondary/50">
-                    {t('analysis.results.disclaimer')}
-                  </p>
-                </>
+                  {/* Medical Disclaimer Panel */}
+                  <div className="flex items-start gap-3 p-4 rounded-lg bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/30">
+                    <AlertCircle className="size-5 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
+                    <p className="text-xs text-amber-800 dark:text-amber-200/80 leading-relaxed">
+                      <span className="font-semibold text-amber-900 dark:text-amber-100">Disclaimer: </span>
+                      {t('analysis.results.disclaimer')}
+                    </p>
+                  </div>
+                </div>
               )}
             </CardContent>
-            <CardFooter className="flex-col items-start gap-4 border-t">
+
+            <CardFooter className="flex-col items-start gap-3 border-t bg-secondary/20 pt-6">
               {!analysis?.refinedResult && (
                 <Dialog open={isQuestionnaireOpen} onOpenChange={setQuestionnaireOpen}>
                   <DialogTrigger asChild>
-                    <Button disabled={isAnalyzing || !analysis} className="w-full gap-2" size="lg">
-                      <Plus className="size-4" />
+                    <Button disabled={isAnalyzing || !analysis} className="w-full gap-2 h-12 text-md font-medium" size="lg">
+                      <Plus className="size-5" />
                       Refine Assessment
                     </Button>
                   </DialogTrigger>

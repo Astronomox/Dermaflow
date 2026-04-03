@@ -55,29 +55,48 @@ const explainableAIFlow = ai.defineFlow(
                   }
               },
               {
-                  text: 'Analyze the skin lesion image. Provide a brief assessment of the skin condition (e.g., Benign Nevus, Melanoma, Basal Cell Carcinoma, etc) and a confidence score between 0 and 100.'
+                  text: 'Analyze the skin lesion image. Provide a brief assessment of the skin condition (e.g., Benign Nevus, Melanoma, Basal Cell Carcinoma, etc) and a confidence score between 0 and 100. Also identify the main lesion and provide its bounding box in [ymin, xmin, ymax, xmax] format where values are between 0 and 1000.'
               }
           ],
           output: {
             schema: z.object({
               assessment: z.string(),
-              confidence: z.number()
+              confidence: z.number(),
+              boundingBox: z.array(z.number()).describe('Bounding box of the lesion [ymin, xmin, ymax, xmax] from 0 to 1000').optional()
             })
           }
       });
 
-      const { assessment, confidence } = res.output || { assessment: 'Unknown condition', confidence: 0 };
+      const { assessment, confidence, boundingBox } = res.output || { assessment: 'Unknown condition', confidence: 0, boundingBox: undefined };
 
-      // Since Gemini flash text model does not support returning an image directly,
-      // and gemini-2.5-flash-image-preview might not be generally available or reliable to just return a heatmap.
-      // We will return the original image with a semi-transparent colored box or effect or just the image itself.
-      // Or we can request an svg to overlay. Let's return the original image as the heatmap and add assessment.
+      let heatmapOverlay = input.lesionImage;
 
-      // Ideally here we would call an endpoint that draws the heatmap. Let's use the original image for now.
-      // We'll update the frontend to use these dynamic results.
+      if (boundingBox && boundingBox.length === 4) {
+          const [ymin, xmin, ymax, xmax] = boundingBox;
+
+          // Generate an SVG overlay combining the original image and a highlight box
+          // We use viewBox 0 0 1000 1000 because coordinates are normalized to 1000
+          const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+            <image href="${input.lesionImage}" x="0" y="0" width="1000" height="1000" preserveAspectRatio="none" />
+            <rect x="${xmin}" y="${ymin}" width="${Math.max(10, xmax - xmin)}" height="${Math.max(10, ymax - ymin)}" fill="rgba(239, 68, 68, 0.4)" stroke="rgba(239, 68, 68, 0.8)" stroke-width="8" rx="20" />
+
+            <defs>
+              <filter id="blur">
+                <feGaussianBlur stdDeviation="15" />
+              </filter>
+            </defs>
+            <ellipse cx="${(xmin + xmax) / 2}" cy="${(ymin + ymax) / 2}" rx="${(xmax - xmin) / 2 + 30}" ry="${(ymax - ymin) / 2 + 30}" fill="rgba(239, 68, 68, 0.3)" filter="url(#blur)" pointer-events="none" />
+          </svg>`;
+
+          if (typeof window === 'undefined') {
+              heatmapOverlay = `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
+          } else {
+              heatmapOverlay = `data:image/svg+xml;base64,${btoa(svg)}`;
+          }
+      }
 
       return {
-        heatmapOverlay: input.lesionImage, // Stub: returning the original image as heatmap
+        heatmapOverlay,
         assessment,
         confidence
       };
