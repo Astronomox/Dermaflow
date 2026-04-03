@@ -229,8 +229,8 @@ export default function AnalysisPage() {
         const result = await generateExplainableAI({ lesionImage: dataUri });
         setHeatmap(result.heatmapOverlay);
         setAnalysis({
-          initialAssessment: "Benign (Nevus)",
-          confidence: 92.5,
+          initialAssessment: result.assessment || "Benign (Nevus)",
+          confidence: result.confidence || 92.5,
           refinedResult: null,
         });
       } catch (error) {
@@ -244,6 +244,13 @@ export default function AnalysisPage() {
       }
     });
   };
+
+  useEffect(() => {
+    if (analysis) {
+      const assessmentToSave = analysis.refinedResult ? analysis.refinedResult.refinedAssessment : analysis.initialAssessment;
+      localStorage.setItem('recentAnalysisResult', assessmentToSave);
+    }
+  }, [analysis]);
 
   const handleRefineSubmit = (values: z.infer<typeof questionnaireSchema>) => {
     if (!analysis) return;

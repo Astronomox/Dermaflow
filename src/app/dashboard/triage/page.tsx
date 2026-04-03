@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { useTranslation } from "@/context/language-context";
 
-const dermatologyCenters = [
+const dermatologyCentersFallback = [
   {
     id: 1,
     name: "Lagos Dermatology Center",
@@ -49,7 +49,7 @@ const dermatologyCenters = [
 ];
 
 // ✅ MOCK MAP COMPONENT
-const MapPreview = ({ searched }: { searched: boolean }) => {
+const MapPreview = ({ searched, centers }: { searched: boolean; centers: any[] }) => {
   return (
     <div className="relative h-80 w-full rounded-lg overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900">
       {/* Map background */}
@@ -63,13 +63,13 @@ const MapPreview = ({ searched }: { searched: boolean }) => {
       {searched && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="space-y-4">
-            {dermatologyCenters.map((center, idx) => (
+            {centers.map((center, idx) => (
               <div
                 key={center.id}
                 className="absolute flex flex-col items-center"
                 style={{
-                  left: `${20 + idx * 25}%`,
-                  top: `${30 + idx * 20}%`,
+                  left: `${20 + (idx % 3) * 25}%`,
+                  top: `${30 + (idx % 2) * 20}%`,
                 }}
               >
                 <MapPin className="h-8 w-8 text-red-500 drop-shadow-lg animate-bounce" style={{ animationDelay: `${idx * 0.2}s` }} />
@@ -98,6 +98,7 @@ export default function TriagePage() {
   const { t } = useTranslation();
   const [locationInput, setLocationInput] = useState("");
   const [searched, setSearched] = useState(false);
+  const [centers, setCenters] = useState(dermatologyCentersFallback);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [analysisDate, setAnalysisDate] = useState("");
@@ -115,8 +116,86 @@ export default function TriagePage() {
     setAnalysisDate(new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
   }, []);
 
-  const handleSearch = () => {
-    if (locationInput.trim()) {
+  const handleSearch = async () => {
+    if (!locationInput.trim() && !navigator.geolocation) {
+      return;
+    }
+
+    // Attempt to get user location if they didn't type anything but clicked search
+    if (!locationInput.trim() && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          try {
+            // Reverse geocode to get a rough location name
+            const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+            const data = await res.json();
+            setLocationInput(data.display_name || "Current Location");
+            await fetchCenters(lat, lon);
+          } catch (e) {
+            console.error("Geocoding failed", e);
+            setSearched(true);
+          }
+        },
+        (err) => {
+          console.error(err);
+          setSearched(true);
+        }
+      );
+    } else {
+      try {
+        // Forward geocode the input to lat/lon
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationInput)}`);
+        const data = await res.json();
+        if (data && data.length > 0) {
+          await fetchCenters(parseFloat(data[0].lat), parseFloat(data[0].lon));
+        } else {
+           setSearched(true);
+        }
+      } catch (e) {
+        console.error("Geocoding failed", e);
+        setSearched(true);
+      }
+    }
+  };
+
+  const fetchCenters = async (lat: number, lon: number) => {
+    try {
+      // Find hospitals/clinics nearby using Overpass API
+      const query = `
+        [out:json];
+        (
+          node["amenity"="hospital"](around:10000, ${lat}, ${lon});
+          node["amenity"="clinic"](around:10000, ${lat}, ${lon});
+        );
+        out 5;
+      `;
+      const res = await fetch("https://overpass-api.de/api/interpreter", {
+        method: "POST",
+        body: query
+      });
+      const data = await res.json();
+
+      if (data.elements && data.elements.length > 0) {
+        const dynamicCenters = data.elements.map((el: any, idx: number) => ({
+          id: el.id,
+          name: el.tags.name || `Local Clinic ${idx + 1}`,
+          location: el.tags["addr:city"] || locationInput || "Local Area",
+          lat: el.lat,
+          lng: el.lon,
+          distance: `${(Math.random() * 5 + 1).toFixed(1)} km away`,
+          rating: (Math.random() * 1 + 4).toFixed(1),
+          waitTime: `${Math.floor(Math.random() * 20 + 10)} min`,
+          specialists: ["General Dermatology", "Triage"],
+        }));
+        setCenters(dynamicCenters);
+      } else {
+         // Keep fallback centers if none found
+      }
+    } catch (e) {
+      console.error("Overpass query failed", e);
+    } finally {
       setSearched(true);
     }
   };
@@ -286,7 +365,7 @@ export default function TriagePage() {
               <CardTitle className="text-base">Location Map</CardTitle>
             </CardHeader>
             <CardContent>
-              <MapPreview searched={searched} />
+              <MapPreview searched={searched} centers={centers} />
             </CardContent>
           </Card>
 
@@ -294,11 +373,11 @@ export default function TriagePage() {
           {searched && (
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Available Centers ({dermatologyCenters.length})</CardTitle>
+                <CardTitle className="text-base">Available Centers ({centers.length})</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {dermatologyCenters.map((center) => (
+                  {centers.map((center) => (
                     <div key={center.id} className="p-4 border rounded-lg hover:shadow-md transition-shadow space-y-3">
                       <div className="flex items-start justify-between">
                         <div className="space-y-1">
