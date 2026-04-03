@@ -19,6 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 import { PageHeader } from "@/components/page-header";
 import { useTranslation } from '@/context/language-context';
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 
 const recommendationSchema = z.object({
   skinCondition: z.enum(["oily", "dry", "sensitive", "acne-prone", "combination", "normal"]),
@@ -101,26 +102,74 @@ export default function RecommendationsPage() {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    const loadRecommendation = async () => {
+      if (currentUser) {
+        try {
+          const db = getFirestore();
+          const recRef = doc(db, 'users', currentUser.uid, 'data', 'latestRecommendation');
+          const recSnap = await getDoc(recRef);
+          if (recSnap.exists()) {
+            const data = recSnap.data();
+            if (data.recommendation) {
+              setRecommendation({ hygieneTips: data.recommendation });
+              setFormValues(data.profile);
+            }
+          }
+        } catch (error) {
+          console.error("Failed to load recommendation from Firestore", error);
+        }
+      }
+    };
+    loadRecommendation();
+  }, [currentUser]);
+
   const onSubmit = (values: z.infer<typeof recommendationSchema>) => {
     setRecommendation(null);
     setFormValues(values);
     startGenerationTransition(async () => {
       try {
-        // Add language support
+        let recentAnalysisResult = undefined;
+        if (currentUser) {
+          try {
+            const db = getFirestore();
+            const analysisRef = doc(db, 'users', currentUser.uid, 'data', 'latestAnalysis');
+            const analysisSnap = await getDoc(analysisRef);
+            if (analysisSnap.exists()) {
+              recentAnalysisResult = analysisSnap.data().assessment;
+            }
+          } catch (e) {
+            console.error("Failed to fetch recent analysis from Firestore", e);
+          }
+        }
+
         const currentLanguage = localStorage.getItem('language') || 'en';
-        const recentAnalysisResult = localStorage.getItem('recentAnalysisResult') || undefined;
         const result = await personalizedHygieneTips({ 
           ...values, 
           analysisResult: recentAnalysisResult,
           language: currentLanguage 
         });
         setRecommendation(result);
-      } catch (error) {
+
+        if (currentUser && result.hygieneTips) {
+          try {
+            const db = getFirestore();
+            const recRef = doc(db, 'users', currentUser.uid, 'data', 'latestRecommendation');
+            await setDoc(recRef, {
+              profile: values,
+              recommendation: result.hygieneTips,
+              timestamp: new Date().toISOString()
+            }, { merge: true });
+          } catch (e) {
+            console.error("Failed to save recommendation to Firestore", e);
+          }
+        }
+      } catch (error: any) {
         console.error("Failed to generate recommendations:", error);
         toast({
           variant: "destructive",
           title: t('recommendations.toast.failedTitle'),
-          description: t('recommendations.toast.failedDesc'),
+          description: error.message || t('recommendations.toast.failedDesc'),
         });
       }
     });

@@ -12,7 +12,7 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // If loading is finished and there's no user, redirect to login.
     if (!isUserLoading && !user) {
-      console.log('No user found, redirecting to login');
+
       router.replace("/login");
     }
   }, [user, isUserLoading, router]);

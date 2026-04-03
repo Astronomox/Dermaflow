@@ -46,28 +46,9 @@ export default function DashboardLayout({
 }) {
   const { user } = useUser();
 
-  // 🔍 DEBUG: Log user state changes
-  useEffect(() => {
-    console.log('🔍 [DASHBOARD] Current user state:', {
-      displayName: user?.displayName || 'No displayName',
-      email: user?.email || 'No email',
-      uid: user?.uid || 'No uid',
-      photoURL: user?.photoURL || 'No photoURL',
-      isLoading: user === undefined, // undefined = loading
-      userExists: !!user
-    });
-  }, [user]);
-
   const userAvatar = user?.photoURL || PlaceHolderImages.find((p) => p.id === 'user-avatar')?.imageUrl;
-  const userName = user?.displayName || 'Gabriel Idahosa'; // ✅ Real Firebase username
-  const userEmail = user?.email || 'gabriel.idahosa@example.com';
-
-  // 🔍 DEBUG: Log final display values
-  console.log('📊 [DASHBOARD] Display values:', {
-    finalUserName: userName,
-    finalUserEmail: userEmail,
-    finalUserAvatar: userAvatar ? '✅ Has avatar' : '❌ No avatar'
-  });
+  const userName = user?.displayName || 'Guest';
+  const userEmail = user?.email || 'Unknown';
 
   return (
     <AuthLayout>

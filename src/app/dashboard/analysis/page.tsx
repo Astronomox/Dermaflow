@@ -68,6 +68,7 @@ import { useToast } from "@/hooks/use-toast";
 import { PageHeader } from "@/components/page-header";
 import { useTranslation } from "@/context/language-context";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 type AnalysisState = {
   initialAssessment: string;
@@ -246,11 +247,24 @@ export default function AnalysisPage() {
   };
 
   useEffect(() => {
-    if (analysis) {
-      const assessmentToSave = analysis.refinedResult ? analysis.refinedResult.refinedAssessment : analysis.initialAssessment;
-      localStorage.setItem('recentAnalysisResult', assessmentToSave);
-    }
-  }, [analysis]);
+    const saveAnalysisToFirestore = async () => {
+      if (analysis && currentUser) {
+        const assessmentToSave = analysis.refinedResult ? analysis.refinedResult.refinedAssessment : analysis.initialAssessment;
+        try {
+          const db = getFirestore();
+          const userDocRef = doc(db, 'users', currentUser.uid, 'data', 'latestAnalysis');
+          await setDoc(userDocRef, {
+            assessment: assessmentToSave,
+            confidence: analysis.confidence,
+            timestamp: new Date().toISOString()
+          }, { merge: true });
+        } catch (error) {
+          console.error("Failed to save analysis to Firestore:", error);
+        }
+      }
+    };
+    saveAnalysisToFirestore();
+  }, [analysis, currentUser]);
 
   const handleRefineSubmit = (values: z.infer<typeof questionnaireSchema>) => {
     if (!analysis) return;

@@ -134,9 +134,9 @@ export default function AskAiPage() {
       if (snapshot.exists()) {
         const data = snapshot.data();
         setMessages(data.messages || []);
-        console.log('✅ [CHAT-HISTORY] Loaded', data.messages?.length || 0, 'messages');
+
       } else {
-        console.log('📝 [CHAT-HISTORY] No history found, starting fresh');
+
       }
     } catch (error) {
       console.error('💥 [CHAT-HISTORY] Load error:', error);
@@ -160,7 +160,7 @@ export default function AskAiPage() {
         totalMessages: updatedMessages.length,
       }, { merge: true });
 
-      console.log('✅ [CHAT-HISTORY] Saved', updatedMessages.length, 'messages to Firestore');
+
     } catch (error) {
       console.error('💥 [CHAT-HISTORY] Save error:', error);
       toast({
@@ -195,7 +195,7 @@ export default function AskAiPage() {
                 await deleteDoc(chatRef);
                 setMessages([]);
                 
-                console.log('✅ [CHAT-HISTORY] Deleted all messages');
+
                 dismiss();
                 toast({
                   title: "✓ Chat Cleared",

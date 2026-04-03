@@ -43,12 +43,6 @@ export function initializeFirebase() {
   return getSdks(getApp());
 }
 
-console.log('🧪 [DERMAFLOW-FIREBASE] Config check:', {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? '✓ Loaded' : '✗ Missing',
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ? '✓ Loaded' : '✗ Missing',
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ? '✓ Loaded' : '✗ Missing',
-});
-
 export function getSdks(firebaseApp: FirebaseApp) {
   app = firebaseApp;
   auth = getAuth(firebaseApp);
@@ -78,27 +72,21 @@ export const initiateEmailSignUp = async (
   onError: (error: any) => void
 ) => {
   try {
-    console.log('🧪 [DERMAFLOW-SIGNUP] Starting signup with:', { email, username });
-    
     // Step 1: Create user account
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-    console.log('✅ [DERMAFLOW-SIGNUP] User created:', user.uid);
 
     // Step 2: Update Auth profile with display name
-    console.log('📝 [DERMAFLOW-SIGNUP] Setting displayName in Auth profile...');
     try {
       await updateProfile(user, {
         displayName: username
       });
-      console.log('✅ [DERMAFLOW-SIGNUP] Auth displayName set:', username);
     } catch (profileError) {
-      console.error('💥 [DERMAFLOW-SIGNUP] updateProfile failed:', profileError);
+      console.error('💥 updateProfile failed:', profileError);
       throw new Error('Failed to update profile with username');
     }
 
     // Step 3: Also save to Firestore for redundancy
-    console.log('📝 [DERMAFLOW-SIGNUP] Saving username to Firestore...');
     try {
       await setDoc(doc(db, 'users', user.uid), {
         uid: user.uid,
@@ -107,36 +95,27 @@ export const initiateEmailSignUp = async (
         createdAt: new Date().toISOString(),
         lastUpdated: new Date().toISOString()
       }, { merge: true });
-      console.log('✅ [DERMAFLOW-SIGNUP] Firestore user profile saved');
     } catch (firestoreError) {
-      console.error('⚠️ [DERMAFLOW-SIGNUP] Firestore save warning (non-critical):', firestoreError);
+      console.error('⚠️ Firestore save warning (non-critical):', firestoreError);
       // Don't fail signup if Firestore fails, Auth is primary
     }
 
     // Step 4: Force refresh auth state
-    console.log('🔄 [DERMAFLOW-SIGNUP] Refreshing auth state...');
     try {
       await user.reload();
-      console.log('✅ [DERMAFLOW-SIGNUP] Auth state refreshed. Display name:', user.displayName);
     } catch (reloadError) {
-      console.error('⚠️ [DERMAFLOW-SIGNUP] Reload warning:', reloadError);
+      console.error('⚠️ Reload warning:', reloadError);
     }
 
     // Step 5: Verify username was set
     if (!user.displayName) {
-      console.error('❌ [DERMAFLOW-SIGNUP] CRITICAL: displayName not set after update');
+      console.error('❌ CRITICAL: displayName not set after update');
       throw new Error('Username was not properly saved');
     }
 
-    console.log('🎉 [DERMAFLOW-SIGNUP] Signup complete:', {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName
-    });
-
     onSuccess();
   } catch (error: any) {
-    console.error('💥 [DERMAFLOW-ERROR-🚨SIGNUP-001🚨] Signup error:', {
+    console.error('💥 Signup error:', {
       code: error.code,
       message: error.message,
       timestamp: new Date().toISOString()
@@ -152,20 +131,14 @@ export const initiateEmailSignIn = async (
   onError: (error: any) => void
 ) => {
   try {
-    console.log('🧪 [DERMAFLOW-LOGIN] Signing in:', email);
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     
     // Reload to ensure latest profile data
     await userCredential.user.reload();
     
-    console.log('✅ [DERMAFLOW-LOGIN] Signed in:', {
-      uid: userCredential.user.uid,
-      email: userCredential.user.email,
-      displayName: userCredential.user.displayName
-    });
     onSuccess();
   } catch (error: any) {
-    console.error('💥 [DERMAFLOW-ERROR-🚨LOGIN-001🚨] Login error:', error);
+    console.error('💥 Login error:', error);
     onError(error);
   }
 };
@@ -173,9 +146,8 @@ export const initiateEmailSignIn = async (
 export const signOut = async () => {
   try {
     await firebaseSignOut(auth);
-    console.log('✅ [DERMAFLOW-LOGOUT] User signed out');
   } catch (error) {
-    console.error('💥 [DERMAFLOW-ERROR-🚨LOGOUT-001🚨] Sign out error:', error);
+    console.error('💥 Sign out error:', error);
   }
 };
 

@@ -30,7 +30,15 @@ const MedicalQuestionAnsweringOutputSchema = z.object({
 export type MedicalQuestionAnsweringOutput = z.infer<typeof MedicalQuestionAnsweringOutputSchema>;
 
 export async function medicalQuestionAnswering(input: MedicalQuestionAnsweringInput): Promise<MedicalQuestionAnsweringOutput> {
-  return medicalQuestionAnsweringFlow(input);
+  try {
+    const validatedInput = MedicalQuestionAnsweringInputSchema.parse(input);
+    return await medicalQuestionAnsweringFlow(validatedInput);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new Error(`Validation failed: ${error.errors.map(e => e.message).join(', ')}`);
+    }
+    throw error;
+  }
 }
 
 const medicalQuestionAnsweringFlow = ai.defineFlow(
@@ -40,31 +48,40 @@ const medicalQuestionAnsweringFlow = ai.defineFlow(
     outputSchema: MedicalQuestionAnsweringOutputSchema,
   },
   async input => {
-    // We will build the chat history manually to inject into a standard ai.generate call
-    // because definePrompt with a simple template doesn't easily iterate over the dynamic history array
-    // without custom partials or formatting.
+    try {
+      // We will build the chat history manually to inject into a standard ai.generate call
+      // because definePrompt with a simple template doesn't easily iterate over the dynamic history array
+      // without custom partials or formatting.
 
-    let historyText = "";
-    if (input.history && input.history.length > 0) {
-      historyText = "Conversation History:\n" + input.history.map(msg => `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.text}`).join("\n") + "\n\n";
-    }
-
-    const res = await ai.generate({
-      model: 'googleai/gemini-2.5-flash',
-      prompt: `You are a highly qualified medical expert specializing in dermatology.
-Provide medically verified answers to questions related to skin conditions, with citations to medical guidelines if applicable.
-Always suggest users seek in-person consultation for a proper diagnosis or if uncertain.
-
-Please respond in the following language: ${input.language || 'English'} (default to English if not specified).
-
-${historyText}
-User Question: ${input.question}
-`,
-      output: {
-        schema: MedicalQuestionAnsweringOutputSchema
+      let historyText = "";
+      if (input.history && input.history.length > 0) {
+        historyText = "Conversation History:\n" + input.history.map(msg => `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.text}`).join("\n") + "\n\n";
       }
-    });
 
-    return res.output || { answer: "I could not generate an answer.", recommendation: "Consult a professional." };
+      const res = await ai.generate({
+        model: 'googleai/gemini-2.5-flash',
+        prompt: `You are a highly qualified medical expert specializing in dermatology.
+  Provide medically verified answers to questions related to skin conditions, with citations to medical guidelines if applicable.
+  Always suggest users seek in-person consultation for a proper diagnosis or if uncertain.
+
+  Please respond in the following language: ${input.language || 'English'} (default to English if not specified).
+
+  ${historyText}
+  User Question: ${input.question}
+  `,
+        output: {
+          schema: MedicalQuestionAnsweringOutputSchema
+        }
+      });
+
+      if (!res.output) {
+        throw new Error("Model returned empty response.");
+      }
+
+      return res.output;
+    } catch (error: any) {
+      console.error('AI question answering failed in flow:', error);
+      throw new Error(error.message || 'Failed to process your medical question. Please try again.');
+    }
   }
 );

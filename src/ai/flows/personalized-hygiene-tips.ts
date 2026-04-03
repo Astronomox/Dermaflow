@@ -34,7 +34,15 @@ const PersonalizedHygieneTipsOutputSchema = z.object({
 export type PersonalizedHygieneTipsOutput = z.infer<typeof PersonalizedHygieneTipsOutputSchema>;
 
 export async function personalizedHygieneTips(input: PersonalizedHygieneTipsInput): Promise<PersonalizedHygieneTipsOutput> {
-  return personalizedHygieneTipsFlow(input);
+  try {
+    const validatedInput = PersonalizedHygieneTipsInputSchema.parse(input);
+    return await personalizedHygieneTipsFlow(validatedInput);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new Error(`Validation failed: ${error.errors.map(e => e.message).join(', ')}`);
+    }
+    throw error;
+  }
 }
 
 const prompt = ai.definePrompt({
@@ -62,7 +70,15 @@ const personalizedHygieneTipsFlow = ai.defineFlow(
     outputSchema: PersonalizedHygieneTipsOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
-    return output!;
+    try {
+      const {output} = await prompt(input);
+      if (!output) {
+        throw new Error("Model returned empty response.");
+      }
+      return output;
+    } catch (error: any) {
+      console.error('AI hygiene tips failed in flow:', error);
+      throw new Error(error.message || 'Failed to generate personalized hygiene tips. Please try again.');
+    }
   }
 );

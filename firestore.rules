@@ -106,11 +106,11 @@ service cloud.firestore {
      *   integrity by ensuring the document ID matches the path UID.
      */
     match /users/{userId} {
-      allow get: if isOwner(userId);
-      allow list: if false; // Deny listing to prevent user enumeration
-      allow create: if isCreatingSelf(userId);
-      allow update: if isUpdatingSelf(userId);
-      allow delete: if isExistingOwner(userId);
+      allow read, write: if isOwner(userId);
+
+      match /{document=**} {
+        allow read, write: if isOwner(userId);
+      }
     }
   }
 }

@@ -30,9 +30,16 @@ const ExplainableAIOutputSchema = z.object({
 export type ExplainableAIOutput = z.infer<typeof ExplainableAIOutputSchema>;
 
 export async function generateExplainableAI(input: ExplainableAIInput): Promise<ExplainableAIOutput> {
-  return explainableAIFlow(input);
+  try {
+    const validatedInput = ExplainableAIInputSchema.parse(input);
+    return await explainableAIFlow(validatedInput);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new Error(`Validation failed: ${error.errors.map(e => e.message).join(', ')}`);
+    }
+    throw error;
+  }
 }
-
 
 const explainableAIFlow = ai.defineFlow(
   {
@@ -42,6 +49,10 @@ const explainableAIFlow = ai.defineFlow(
   },
   async input => {
     try {
+      if (!input.lesionImage || !input.lesionImage.startsWith('data:image/')) {
+        throw new Error("Invalid image format. Expected a base64 encoded data URI.");
+      }
+
       // First, we generate a bounding box or assessment based on the image using text model
       // We will simulate the heatmap generation since standard text models cannot output image directly.
       // But we can generate an assessment and confidence.
@@ -101,9 +112,8 @@ const explainableAIFlow = ai.defineFlow(
         confidence
       };
     } catch (error: any) {
-        console.error('AI analysis failed:', error);
-        // Fallback
-        return { heatmapOverlay: input.lesionImage, assessment: "Analysis unavailable", confidence: 0 };
+        console.error('AI analysis failed in explainableAIFlow:', error);
+        throw new Error(error.message || 'Failed to generate explainable AI analysis. Please check your image and try again.');
     }
   }
 );

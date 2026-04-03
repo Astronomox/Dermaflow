@@ -56,19 +56,14 @@ export default function SignupPage() {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("🧪 [DERMAFLOW-SIGNUP] Form submitted:", {
-      email: values.email,
-      username: values.username,
-    });
-
     startTransition(() => {
       initiateEmailSignUp(
         values.email,
         values.password,
-        values.username, // ← Username passed here
+        values.username,
         () => {
           // onSuccess
-          console.log("✅ [DERMAFLOW-SIGNUP] Account created successfully");
+
           toast({
             title: "Account created!",
             description: "Welcome to Dermaflow AI. Redirecting to dashboard...",
