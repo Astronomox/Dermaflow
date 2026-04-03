@@ -36,10 +36,10 @@ const MedicalDisclaimer = () => (
 
 // ✅ TYPING ANIMATION FOR AI RESPONSE
 const TypingAnimation = () => (
-  <div className="flex items-center gap-1">
-    <div className="w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: '0s' }}></div>
-    <div className="w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-    <div className="w-2 h-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+  <div className="flex items-center gap-1.5 px-2 py-1">
+    <div className="w-2 h-2 rounded-full bg-primary/60 animate-pulse" style={{ animationDelay: '0s' }}></div>
+    <div className="w-2 h-2 rounded-full bg-primary/60 animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+    <div className="w-2 h-2 rounded-full bg-primary/60 animate-pulse" style={{ animationDelay: '0.4s' }}></div>
   </div>
 );
 
@@ -48,44 +48,44 @@ const AIMessage = ({ message, t }: { message: Message; t: any }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="flex items-start gap-3 justify-start">
-      <Avatar className="size-8 border flex-shrink-0">
-        <AvatarFallback className="bg-primary text-primary-foreground">
+    <div className="flex items-start gap-4 justify-start w-full">
+      <Avatar className="size-10 border border-primary/20 shadow-sm flex-shrink-0 mt-1">
+        <AvatarFallback className="bg-card text-primary font-bold">
           <Bot className="size-5" />
         </AvatarFallback>
       </Avatar>
-      <div className="max-w-2xl space-y-2">
+      <div className="max-w-[85%] space-y-2">
         {/* Main Answer */}
-        <div className="bg-secondary rounded-lg px-4 py-3">
-          <p className="whitespace-pre-wrap text-sm">
+        <div className="bg-card border shadow-sm rounded-2xl rounded-tl-sm px-5 py-4">
+          <p className="whitespace-pre-wrap text-[15px] leading-relaxed text-foreground">
             {message.answer || message.text}
           </p>
         </div>
 
         {/* ✅ Collapsible Recommendation Section */}
         {message.recommendation && (
-          <div className="bg-blue-50 dark:bg-blue-950/30 rounded-lg border border-blue-200 dark:border-blue-900/50 overflow-hidden">
+          <div className="bg-primary/5 rounded-xl border border-primary/20 overflow-hidden shadow-sm transition-all duration-200">
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="w-full px-4 py-3 flex items-center justify-between hover:bg-blue-100/50 dark:hover:bg-blue-900/40 transition-colors"
+              className="w-full px-4 py-3 flex items-center justify-between hover:bg-primary/10 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <Sparkles className="size-4 text-blue-600 dark:text-blue-400" />
-                <span className="text-sm font-semibold text-blue-900 dark:text-blue-200">
-                  {t('askAi.recommendationPrefix') || 'Recommendations'}
+                <Sparkles className="size-4 text-primary" />
+                <span className="text-sm font-medium text-primary">
+                  {t('askAi.recommendationPrefix') || 'Clinical Recommendation'}
                 </span>
               </div>
               <ChevronDown
                 className={cn(
-                  "size-4 text-blue-600 dark:text-blue-400 transition-transform duration-300",
+                  "size-4 text-primary transition-transform duration-300",
                   isExpanded && "rotate-180"
                 )}
               />
             </button>
 
             {isExpanded && (
-              <div className="px-4 py-3 border-t border-blue-200 dark:border-blue-900/50 bg-blue-50/50 dark:bg-blue-950/20">
-                <p className="text-sm text-blue-900 dark:text-blue-100 whitespace-pre-wrap">
+              <div className="px-4 py-4 border-t border-primary/10 bg-background/50">
+                <p className="text-[14px] text-foreground/90 whitespace-pre-wrap leading-relaxed">
                   {message.recommendation}
                 </p>
               </div>
@@ -313,20 +313,25 @@ export default function AskAiPage() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-10rem)] flex-col space-y-8">
+    <div className="flex h-[calc(100vh-8rem)] flex-col space-y-4">
       <PageHeader
         title={t('askAi.pageHeader.title')}
         subtitle={t('askAi.pageHeader.subtitle')}
       />
-      <Card className="flex flex-1 flex-col">
-        <CardHeader>
+      <Card className="flex flex-1 flex-col shadow-xl border-border bg-card overflow-hidden">
+        <CardHeader className="border-b bg-secondary/30 pb-4">
           <div className="flex items-center justify-between">
-            <CardTitle className="font-headline flex items-center gap-2">
-              <Sparkles className="text-primary" />
-              {t('askAi.cardTitle')}
+            <CardTitle className="font-headline text-lg flex items-center gap-3">
+              <div className="p-2 bg-primary/10 rounded-md">
+                <Bot className="size-5 text-primary" />
+              </div>
+              <div className="flex flex-col gap-0.5">
+                <span>{t('askAi.cardTitle')}</span>
+                <span className="text-xs font-normal text-muted-foreground">Medical Assistant powered by AI</span>
+              </div>
               {isSaving && (
-                <span className="ml-auto text-xs text-muted-foreground flex items-center gap-1">
-                  <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-primary"></div>
+                <span className="ml-4 text-xs font-medium text-muted-foreground flex items-center gap-1.5 bg-background px-2 py-1 rounded-full border shadow-sm">
+                  <div className="animate-spin rounded-full h-2 w-2 border-b-2 border-primary"></div>
                   Saving...
                 </span>
               )}
@@ -334,48 +339,53 @@ export default function AskAiPage() {
             {/* ✅ DELETE CHAT BUTTON */}
             {messages.length > 0 && (
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
                 onClick={handleDeleteChat}
                 disabled={isDeleting}
-                className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                className="text-destructive border-destructive/20 hover:text-destructive hover:bg-destructive/10"
               >
                 <Trash2 className="size-4 mr-2" />
-                {isDeleting ? "Deleting..." : "Clear Chat"}
+                {isDeleting ? "Clearing..." : "Clear Chat"}
               </Button>
             )}
           </div>
         </CardHeader>
 
-        <CardContent className="flex-1 overflow-hidden">
-          <ScrollArea className="h-full" ref={scrollAreaRef}>
-            <div className="space-y-6 pr-4">
+        <CardContent className="flex-1 overflow-hidden p-0">
+          <ScrollArea className="h-full px-6 py-6" ref={scrollAreaRef}>
+            <div className="space-y-8 pb-4">
               {messages.length === 0 ? (
-                <div className="flex flex-col items-center justify-center pt-20 text-center space-y-4">
-                  <Bot className="size-16 text-muted-foreground/50" />
+                <div className="flex flex-col items-center justify-center pt-24 text-center space-y-6">
+                  <div className="p-4 rounded-full bg-primary/10 mb-2">
+                    <Bot className="size-12 text-primary opacity-80" />
+                  </div>
                   <div>
-                    <p className="font-medium text-muted-foreground">
+                    <h3 className="font-headline text-xl font-semibold text-foreground">
                       {t('askAi.emptyState.title')}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    </h3>
+                    <p className="text-sm text-muted-foreground mt-2 max-w-md mx-auto">
                       {t('askAi.emptyState.example')}
                     </p>
                   </div>
-                  <div className="w-full max-w-md">
+                  <div className="w-full max-w-md mt-8">
                     <MedicalDisclaimer />
                   </div>
                 </div>
               ) : (
                 <>
+                  <div className="mb-8 w-full max-w-xl mx-auto opacity-75">
+                    <MedicalDisclaimer />
+                  </div>
                   {messages.map((message, index) => (
-                    <div key={index}>
+                    <div key={index} className="flex flex-col w-full">
                       {message.role === "user" ? (
-                        <div className="flex items-start gap-3 justify-end">
-                          <div className="max-w-xl rounded-lg px-4 py-3 bg-primary text-primary-foreground">
-                            <p className="whitespace-pre-wrap text-sm">{message.text}</p>
+                        <div className="flex items-start gap-4 justify-end w-full">
+                          <div className="max-w-[75%] rounded-2xl rounded-tr-sm px-5 py-3 bg-primary text-primary-foreground shadow-md">
+                            <p className="whitespace-pre-wrap text-[15px] leading-relaxed">{message.text}</p>
                           </div>
-                          <Avatar className="size-8 border flex-shrink-0">
-                            <AvatarFallback>
+                          <Avatar className="size-10 border-2 border-primary/20 shadow-sm flex-shrink-0 mt-1">
+                            <AvatarFallback className="bg-background text-primary">
                               <User className="size-5" />
                             </AvatarFallback>
                           </Avatar>
@@ -388,42 +398,40 @@ export default function AskAiPage() {
 
                   {/* ✅ GENERATING ANIMATION */}
                   {isGenerating && (
-                    <div className="flex items-start gap-3 justify-start">
-                      <Avatar className="size-8 border flex-shrink-0">
-                        <AvatarFallback className="bg-primary text-primary-foreground">
+                    <div className="flex items-start gap-4 justify-start w-full">
+                      <Avatar className="size-10 border border-primary/20 shadow-sm flex-shrink-0 mt-1">
+                        <AvatarFallback className="bg-card text-primary font-bold">
                           <Bot className="size-5" />
                         </AvatarFallback>
                       </Avatar>
-                      <div className="max-w-xl rounded-lg px-4 py-3 bg-secondary flex items-center gap-2">
+                      <div className="bg-card border shadow-sm rounded-2xl rounded-tl-sm px-5 py-4 flex items-center gap-3">
                         <TypingAnimation />
-                        <span className="text-sm text-muted-foreground">Generating response...</span>
+                        <span className="text-[14px] text-muted-foreground font-medium">Analyzing medical guidelines...</span>
                       </div>
                     </div>
                   )}
-
-                  <div className="mt-6 pt-4 border-t">
-                    <MedicalDisclaimer />
-                  </div>
                 </>
               )}
             </div>
           </ScrollArea>
         </CardContent>
 
-        <CardFooter className="border-t pt-6">
-          <div className="relative w-full">
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSend()}
-              placeholder={t('askAi.inputPlaceholder')}
-              className="pr-12"
-              disabled={isGenerating}
-            />
+        <CardFooter className="border-t bg-secondary/10 p-4">
+          <div className="relative w-full max-w-4xl mx-auto flex items-end gap-2">
+            <div className="relative flex-1">
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                placeholder={t('askAi.inputPlaceholder')}
+                className="pr-12 py-6 text-md rounded-xl bg-background border-input shadow-sm focus-visible:ring-primary"
+                disabled={isGenerating}
+              />
+            </div>
             <Button
               type="submit"
               size="icon"
-              className="absolute right-1 top-1/2 -translate-y-1/2"
+              className="h-12 w-12 rounded-xl shrink-0 shadow-md transition-transform active:scale-95"
               onClick={handleSend}
               disabled={isGenerating || input.trim() === ""}
             >
