@@ -245,8 +245,12 @@ export default function AskAiPage() {
       // ✅ GET CURRENT LANGUAGE AND PASS TO AI
       const currentLanguage = localStorage.getItem('language') || 'en';
       
+      // Pass the previous messages as history (limit to last 10 to avoid token limits)
+      const historyToPass = messages.slice(-10).map(m => ({ role: m.role, text: m.text }));
+
       const result = await medicalQuestionAnswering({ 
         question: input,
+        history: historyToPass,
         language: currentLanguage 
       });
 

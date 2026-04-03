@@ -108,8 +108,10 @@ export default function RecommendationsPage() {
       try {
         // Add language support
         const currentLanguage = localStorage.getItem('language') || 'en';
+        const recentAnalysisResult = localStorage.getItem('recentAnalysisResult') || undefined;
         const result = await personalizedHygieneTips({ 
           ...values, 
+          analysisResult: recentAnalysisResult,
           language: currentLanguage 
         });
         setRecommendation(result);
