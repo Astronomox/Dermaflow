@@ -23,6 +23,8 @@ const PersonalizedHygieneTipsInputSchema = z.object({
   concerns: z
     .string()
     .describe('The user concerns related to their skin, e.g., anti-aging, wrinkles, dark spots.'),
+  analysisResult: z.string().optional().describe('The recent AI skin analysis assessment to tailor the advice.'),
+  language: z.string().optional().describe('The language the answer should be provided in.'),
 });
 export type PersonalizedHygieneTipsInput = z.infer<typeof PersonalizedHygieneTipsInputSchema>;
 
@@ -39,15 +41,18 @@ const prompt = ai.definePrompt({
   name: 'personalizedHygieneTipsPrompt',
   input: {schema: PersonalizedHygieneTipsInputSchema},
   output: {schema: PersonalizedHygieneTipsOutputSchema},
-  prompt: `You are a helpful AI that provides personalized hygiene tips based on the user's skin condition, age, lifestyle, climate, and concerns.
+  prompt: `You are a helpful AI that provides personalized skincare and hygiene tips based on the user's profile.
+Please provide clear, actionable steps for a morning and evening routine, along with general advice.
+Respond in the following language: {{language}} (default to English if not specified).
 
-  Skin Condition: {{{skinCondition}}}
-  Age: {{{age}}}
-  Lifestyle: {{{lifestyle}}}
-  Climate: {{{climate}}}
-  Concerns: {{{concerns}}}
+Skin Condition: {{{skinCondition}}}
+Age: {{{age}}}
+Lifestyle: {{{lifestyle}}}
+Climate: {{{climate}}}
+Concerns: {{{concerns}}}
+Recent Skin Analysis Assessment: {{{analysisResult}}}
 
-  Provide personalized hygiene tips:`,
+Provide personalized hygiene tips:`,
 });
 
 const personalizedHygieneTipsFlow = ai.defineFlow(

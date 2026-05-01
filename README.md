@@ -1,99 +1,64 @@
-```markdown
-# Dermaflow 🩺✨
+# Dermaflow AI — Skin Health for People Who Can't Afford to Guess
 
-🔗 **Live Demo**: [https://dermaflow.vercel.app](https://dermaflow.vercel.app)
+I built Dermaflow because in Nigeria, the sun is unforgiving and dermatologist visits are expensive. Most people just live with skin conditions they don't understand, hoping it goes away. I wanted to change that.
 
-## Features
+Dermaflow puts AI-powered skin analysis in your hands. Upload a photo, get answers.
 
-- Next.js 14 (App Router + Server Components)
-- TypeScript ready
-- Tailwind CSS v3 (already configured)
-- Responsive mobile-first design
-- Dark/light mode toggle (built-in)
-- Optimized for Vercel & Firebase Hosting
-- SEO-friendly with Next.js metadata API
-- Easy to extend (perfect boilerplate)
+## What It Does
 
-## Quick Start
+**Instant Skin Analysis**
+Upload a photo of any skin concern and get an AI-powered risk assessment in seconds — no appointment, no waiting room, no bill.
 
-### 1. Clone & Install
+**Explainable AI (XAI)**
+We don't just give you a result and leave you confused. Dermaflow shows you heatmap visualizations that highlight the exact areas of concern, so you understand *why* the AI flagged something. You're in control of your own health information.
+
+**Personalized Care Plans**
+Based on your analysis, you get custom hygiene tips, dietary recommendations, and product suggestions tailored to your specific skin — not generic advice copied from Google.
+
+**Bio-LLM Chatbot**
+Have questions? Ask our medical-trained AI assistant anything about your skin. It pulls from verified dermatological knowledge, not random forums.
+
+**Onco-Connect Triage**
+This is the feature I'm most proud of. If your analysis suggests something that needs professional attention, Onco-Connect generates a digital referral card and finds verified oncology centers near you. The goal is to bridge the gap between getting a result on your phone and actually getting real help.
+
+## Tech Stack
+
+- **Framework:** Next.js
+- **Styling:** Tailwind CSS
+- **AI/ML:** Google Gemini API
+- **Auth & Database:** Firebase
+- **Hosting:** Vercel
+
+## Why I Built This
+
+Skin cancer and serious skin conditions are underdiagnosed in West Africa. Not because people don't care, but because access is a barrier. I'm a Data Science student at UNILAG, not a doctor — but I know how to build tools. So I built one.
+
+This project is not a finished product. It's a starting point. Feedback, contributions, and brutal honesty are all welcome.
+
+## Live Demo
+
+[dermaflow-zeta.vercel.app](https://dermaflow-zeta.vercel.app)
+
+## Getting Started
 ```bash
-git clone https://github.com/YASINLASISI/Dermaflow.git
+git clone https://github.com/Astronomox/Dermaflow.git
 cd Dermaflow
 npm install
-# or
-yarn install
-# or
-pnpm install
-```
-
-### 2. Set Up Firebase
-1. Go to [https://firebase.google.com](https://firebase.google.com) and create a new project.
-2. In your Firebase project → Project Settings → General → Your apps → Add Web App.
-3. Copy the config and create a `.env.local` file in the root:
-
-```env
-NEXT_PUBLIC_FIREBASE_API_KEY=your-api-key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=123456789
-NEXT_PUBLIC_FIREBASE_APP_ID=your-app-id
-```
-
-### 3. Run Locally
-```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### 4. Deploy (One-Click)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YASINLASISI/Dermaflow)
-
-Or connect your repo to Firebase Hosting:
-```bash
-npm install -g firebase-tools
-firebase login
-firebase init hosting
+Create a `.env.local` file and add your keys:
+```
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_GEMINI_API_KEY=
 ```
 
-## Project Structure
-```
-src/
-├── app/                → Next.js 14 App Router
-│   ├── layout.tsx      → Root layout (with dark mode & fonts)
-│   ├── page.tsx        → Home page (ready to customize)
-│   └── globals.css
-├── components/         → Reusable UI components
-├── lib/                → Firebase config & utilities
-├── public/             → Static assets
-└── hooks/              → Custom React hooks
-```
+## Disclaimer
 
-## Ideal For
-- Dermatology & skincare platforms
-- Telemedicine dashboards
-- Patient record systems
-- AI skin analysis tools
-- Health-tech startups & MVPs
-
-## Contributing
-Contributions are welcome! Feel free to:
-- Open issues
-- Submit pull requests
-- Suggest new features (especially healthcare-related!)
-
-## License
-This project is open-source and available under the [MIT License](LICENSE).
+Dermaflow is for informational purposes only. It is not a substitute for professional medical diagnosis or treatment. Always consult a qualified healthcare provider for serious concerns.
 
 ---
 
-**Made with ❤️ by [YASINLASISI](https://github.com/YASINLASISI)**  
-Turning ideas into beautiful, functional health-tech apps — faster.
-```
-```
+Built by [Astronomox](https://github.com/Astronomox) — A Data Science student who got tired of problems having no solutions.
 
-Just copy and paste this into your repo’s `README.md` (replace the old one).  
-It’s professional, SEO-friendly, and perfectly showcases Dermaflow as a serious starter template for health-tech projects. Want me to add a badge section, screenshots, or specific dermatology features later? Just say the word! 🚀
-```
+
