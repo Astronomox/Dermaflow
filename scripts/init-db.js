@@ -34,6 +34,18 @@ async function initDB() {
         data_throughput_mb_s NUMERIC(10, 2) NOT NULL,
         error_probability NUMERIC(5, 4) NOT NULL,
         anomaly_score NUMERIC(5, 4) NOT NULL,
+        timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        is_archived BOOLEAN DEFAULT FALSE
+      );
+    `);
+
+    // Heuristic Feedback Loop: Deep Trace Logs
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS deep_trace_logs (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        telemetry_id UUID REFERENCES telemetry(id) ON DELETE CASCADE,
+        user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+        trace_payload JSONB NOT NULL,
         timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
     `);
@@ -60,6 +72,21 @@ async function initDB() {
     // Create a unique index to allow refreshing concurrently
     await client.query(`
       CREATE UNIQUE INDEX IF NOT EXISTS idx_user_telemetry_stats ON user_telemetry_stats(user_id, scanner_type);
+    `);
+
+    // Backend-to-Graph Synergy: Pre-calculated Intelligence Blocks
+    await client.query(`
+      CREATE MATERIALIZED VIEW IF NOT EXISTS predictive_intelligence_blocks AS
+      SELECT
+        user_id,
+        (SUM(total_scans) * 0.1) + (MAX(avg_anomaly_score) * 5) as risk_growth_factor,
+        ((SUM(total_scans) / 30.0) * 30 * 1.5 * 5) as forecasted_data_volume_mb
+      FROM user_telemetry_stats
+      GROUP BY user_id;
+    `);
+
+    await client.query(`
+      CREATE UNIQUE INDEX IF NOT EXISTS idx_predictive_intelligence_blocks ON predictive_intelligence_blocks(user_id);
     `);
 
     await client.query('COMMIT');

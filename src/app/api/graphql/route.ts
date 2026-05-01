@@ -4,6 +4,8 @@ import { getUserIdentity } from '@/lib/user-storage';
 import { getTelemetryForUser } from '@/lib/telemetry-storage';
 import { getUserTelemetryStats, refreshMaterializedView } from '@/lib/materialized-view';
 import { generatePredictiveModel } from '@/lib/predictive-modeling';
+import { withErrorWrapping } from '@/lib/error-handler';
+import { UserId } from '@/types/architecture';
 
 const typeDefs = `
   type UserIdentity {
@@ -45,8 +47,19 @@ const typeDefs = `
     predictiveModel: PredictiveModel
   }
 
+  type SystemHealthNotification {
+    status: String!
+    message: String!
+    referenceId: String!
+  }
+
+  type UserProfileResponse {
+    data: UserProfile
+    error: SystemHealthNotification
+  }
+
   type Query {
-    userProfile(firebaseUid: String!): UserProfile
+    userProfile(firebaseUid: String!): UserProfileResponse
     refreshStats: Boolean
   }
 `;
@@ -59,16 +72,18 @@ const resolvers = {
         throw new Error('User not found');
       }
 
-      const telemetry = await getTelemetryForUser(identity.id);
-      const stats = await getUserTelemetryStats(identity.id);
-      const predictiveModel = await generatePredictiveModel(identity.id);
+      return await withErrorWrapping('fetchUserProfile', identity.id as UserId, async () => {
+        const telemetry = await getTelemetryForUser(identity.id);
+        const stats = await getUserTelemetryStats(identity.id);
+        const predictiveModel = await generatePredictiveModel(identity.id);
 
-      return {
-        identity,
-        telemetry,
-        stats,
-        predictiveModel
-      };
+        return {
+          identity,
+          telemetry,
+          stats,
+          predictiveModel
+        };
+      });
     },
     refreshStats: async () => {
       await refreshMaterializedView();

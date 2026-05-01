@@ -1,8 +1,8 @@
 import { query } from './db';
-import { TelemetryPayload } from '@/types/architecture';
+import { TelemetryPayload, UserId, TelemetryId } from '@/types/architecture';
 
 export async function insertTelemetry(
-  userId: string,
+  userId: UserId,
   telemetry: Omit<TelemetryPayload, 'id' | 'timestamp' | 'user_id'>
 ): Promise<TelemetryPayload | null> {
   try {
@@ -27,9 +27,24 @@ export async function insertTelemetry(
   }
 }
 
-export async function getTelemetryForUser(userId: string): Promise<TelemetryPayload[]> {
+export async function insertDeepTraceLog(
+  userId: UserId,
+  telemetryId: TelemetryId,
+  payload: any
+): Promise<void> {
   try {
-    const res = await query(`SELECT * FROM telemetry WHERE user_id = $1 ORDER BY timestamp DESC`, [userId]);
+    await query(
+      `INSERT INTO deep_trace_logs (user_id, telemetry_id, trace_payload) VALUES ($1, $2, $3)`,
+      [userId, telemetryId, JSON.stringify(payload)]
+    );
+  } catch (err) {
+    console.error('Failed to insert deep trace log', err);
+  }
+}
+
+export async function getTelemetryForUser(userId: UserId): Promise<TelemetryPayload[]> {
+  try {
+    const res = await query(`SELECT * FROM telemetry WHERE user_id = $1 AND is_archived = FALSE ORDER BY timestamp DESC`, [userId]);
     return res.rows as TelemetryPayload[];
   } catch (err) {
     console.error('Failed to fetch telemetry', err);

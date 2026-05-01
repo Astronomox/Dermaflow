@@ -10,7 +10,8 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { insertTelemetry } from '@/lib/telemetry-storage';
+import { insertTelemetry, insertDeepTraceLog } from '@/lib/telemetry-storage';
+import { UserId } from '@/types/architecture';
 import path from 'path';
 
 const ExplainableAIInputSchema = z.object({
@@ -39,7 +40,7 @@ try {
   // Mock fallback if running in environments where Piscina isn't available
 }
 
-export async function generateExplainableAI(input: ExplainableAIInput, userId?: string): Promise<ExplainableAIOutput> {
+export async function generateExplainableAI(input: ExplainableAIInput, userId?: UserId): Promise<ExplainableAIOutput> {
   const result = await explainableAIFlow(input);
 
   if (userId) {
@@ -63,10 +64,21 @@ export async function generateExplainableAI(input: ExplainableAIInput, userId?: 
         };
       }
 
-      await insertTelemetry(userId, {
+      const insertedTelemetry = await insertTelemetry(userId, {
         scanner_type: 'explainable-ai',
         ...telemetryData
       });
+
+      // Heuristic Feedback Loop
+      if (insertedTelemetry && insertedTelemetry.anomaly_score > 0.08) {
+        await insertDeepTraceLog(userId, insertedTelemetry.id, {
+          input_size_kb: input.lesionImage.length / 1024,
+          detected_anomaly: insertedTelemetry.anomaly_score,
+          output_confidence: result.confidence,
+          timestamp: new Date().toISOString()
+        });
+      }
+
     } catch (err) {
       console.error('Failed to run scanner worker for telemetry', err);
     }

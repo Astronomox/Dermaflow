@@ -9,7 +9,8 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { insertTelemetry } from '@/lib/telemetry-storage';
+import { insertTelemetry, insertDeepTraceLog } from '@/lib/telemetry-storage';
+import { UserId } from '@/types/architecture';
 import path from 'path';
 
 const RefineRiskAssessmentInputSchema = z.object({
@@ -46,7 +47,7 @@ try {
   // Mock fallback if running in environments where Piscina isn't available
 }
 
-export async function refineRiskAssessment(input: RefineRiskAssessmentInput, userId?: string): Promise<RefineRiskAssessmentOutput> {
+export async function refineRiskAssessment(input: RefineRiskAssessmentInput, userId?: UserId): Promise<RefineRiskAssessmentOutput> {
   const result = await refineRiskAssessmentFlow(input);
 
   if (userId) {
@@ -70,10 +71,21 @@ export async function refineRiskAssessment(input: RefineRiskAssessmentInput, use
         };
       }
 
-      await insertTelemetry(userId, {
+      const insertedTelemetry = await insertTelemetry(userId, {
         scanner_type: 'refine-risk-assessment',
         ...telemetryData
       });
+
+      // Heuristic Feedback Loop
+      if (insertedTelemetry && insertedTelemetry.anomaly_score > 0.08) {
+        await insertDeepTraceLog(userId, insertedTelemetry.id, {
+          input_size_kb: JSON.stringify(input).length / 1024,
+          detected_anomaly: insertedTelemetry.anomaly_score,
+          refined_assessment: result.refinedAssessment,
+          timestamp: new Date().toISOString()
+        });
+      }
+
     } catch (err) {
       console.error('Failed to run scanner worker for telemetry', err);
     }
