@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -8,9 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Search, Star, Video, MapPin, Clock, Award } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { useTranslation } from "@/context/language-context";
+import { useToast } from "@/hooks/use-toast";
 
 const dermatologists = [
   {
@@ -56,6 +57,7 @@ const dermatologists = [
 
 export default function TeleDermPage() {
   const { t } = useTranslation();
+  const { toast } = useToast();
   const [searchInput, setSearchInput] = useState("");
   const [filteredDerms, setFilteredDerms] = useState(dermatologists);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -226,7 +228,11 @@ export default function TeleDermPage() {
                       <span className="text-2xl font-bold">${derm.price}</span>
                       <span className="text-sm text-muted-foreground">/ 30 min</span>
                     </div>
-                    <Button className="w-full gap-2" size="lg">
+                    <Button
+                      className="w-full gap-2"
+                      size="lg"
+                      onClick={() => toast({ title: `Connecting to ${derm.name}`, description: `Your micro-consult request has been sent. Expected response: ${derm.responseTime}.` })}
+                    >
                       <Video className="size-4" />
                       Start Consultation
                     </Button>

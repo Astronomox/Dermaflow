@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { useTranslation } from "@/context/language-context";
+import { useToast } from "@/hooks/use-toast";
 
 const dermatologyCentersFallback = [
   {
@@ -96,6 +97,7 @@ const MapPreview = ({ searched, centers }: { searched: boolean; centers: any[] }
 
 export default function TriagePage() {
   const { t } = useTranslation();
+  const { toast } = useToast();
   const [locationInput, setLocationInput] = useState("");
   const [searched, setSearched] = useState(false);
   const [centers, setCenters] = useState(dermatologyCentersFallback);
@@ -115,6 +117,21 @@ export default function TriagePage() {
   useEffect(() => {
     setAnalysisDate(new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
   }, []);
+
+  const handlePrint = () => window.print();
+
+  const handlePdfDownload = () => {
+    toast({ title: "Preparing PDF", description: "Use 'Save as PDF' in the print dialog." });
+    setTimeout(() => window.print(), 300);
+  };
+
+  const handleGetDirections = (lat: number, lng: number) => {
+    window.open(
+      `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
+      '_blank',
+      'noopener,noreferrer'
+    );
+  };
 
   const handleSearch = async () => {
     if (!locationInput.trim() && !navigator.geolocation) {
@@ -316,11 +333,11 @@ export default function TriagePage() {
 
             {/* Action Buttons */}
             <div className="grid grid-cols-2 gap-3 pt-2">
-              <Button className="w-full gap-2 shadow-sm font-medium" variant="default">
+              <Button className="w-full gap-2 shadow-sm font-medium" variant="default" onClick={handlePrint}>
                 <Printer className="size-4" />
                 Print
               </Button>
-              <Button variant="outline" className="w-full gap-2 shadow-sm font-medium">
+              <Button variant="outline" className="w-full gap-2 shadow-sm font-medium" onClick={handlePdfDownload}>
                 <Download className="size-4" />
                 PDF
               </Button>
@@ -416,7 +433,11 @@ export default function TriagePage() {
                         </div>
                       </div>
 
-                      <Button className="w-full gap-2 rounded-lg font-medium shadow-sm transition-all" variant="secondary">
+                      <Button
+                        className="w-full gap-2 rounded-lg font-medium shadow-sm transition-all"
+                        variant="secondary"
+                        onClick={() => handleGetDirections(center.lat, center.lng)}
+                      >
                         <Navigation className="size-4" />
                         Get Directions
                       </Button>

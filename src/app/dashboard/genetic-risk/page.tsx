@@ -191,7 +191,7 @@ export default function GeneticRiskPage() {
   };
 
   const userName = currentUser?.displayName || "User";
-  const config = riskResult ? RiskIndicator(riskResult.level) : null;
+  const config = riskResult ? RiskIndicator({ level: riskResult.level }) : null;
 
   return (
     <div className="space-y-8">
@@ -206,7 +206,7 @@ export default function GeneticRiskPage() {
           <div className="flex items-start gap-4 md:gap-6">
             <Avatar className="size-16 border-4 border-primary/20 flex-shrink-0">
               {currentUser?.photoURL ? (
-                <img src={currentUser.photoURL} alt={userName} />
+                <AvatarImage src={currentUser.photoURL} alt={userName} />
               ) : (
                 <AvatarFallback className="text-lg font-bold">
                   {userName.charAt(0).toUpperCase()}
