@@ -15,6 +15,7 @@ import { useTranslation } from "@/context/language-context";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
 
 // ✅ REALISTIC SKIN HEALTH DATA (Monthly progression)
 const generateRealisticChartData = () => [
@@ -345,9 +346,4 @@ export default function DigitalTwinPage() {
       </Card>
     </div>
   );
-}
-
-// ✅ HELPER FUNCTION
-function cn(...classes: (string | undefined | null | false)[]) {
-  return classes.filter(Boolean).join(' ');
 }

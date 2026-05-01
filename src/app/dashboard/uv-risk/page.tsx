@@ -100,7 +100,8 @@ export default function UvRiskPage() {
 
   const handleCheckRisk = () => {
     const searchKey = locationInput.toLowerCase().trim();
-    const data = mockRiskData[searchKey] || mockRiskData.lagos;
+    const found = Object.keys(mockRiskData).find((key) => searchKey.includes(key));
+    const data = found ? mockRiskData[found] : mockRiskData.lagos;
     setRiskData(data);
   };
 
