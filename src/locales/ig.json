@@ -1,5 +1,5 @@
 {
-    "welcomeBack": "Nnọọ, Gabriel!",
+    "welcomeBack": "Nnọọ!",
     "dashboardSubtitle": "Nke a bụ nchịkọta dị nkenke nke onye enyemaka ahụike akpụkpọ ahụ gị.",
     "advancedAiAnalysis": "Nnyocha AI dị elu",
     "advancedAiAnalysisDesc": "Nweta nyocha ihe egwu dị omimi nke ọnya akpụkpọ gị na AI anyị kachasị ọhụrụ, nke Bio-LLM pụrụ iche kwadoro.",
@@ -115,7 +115,7 @@
             "subtitle": "Ihe atụ nke akpụkpọ ahụ gị nke na-emelite na nyocha ọ bụla."
         },
         "userCard": {
-            "title": "Ejima Dijital nke Gabriel",
+            "title": "Ejima Dijital Gị",
             "lastUpdated": "Emelitere ikpeazụ: Taa",
             "scans": "Nyocha",
             "lesionsTracked": "Ọnya a na-enyocha"

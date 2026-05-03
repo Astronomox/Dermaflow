@@ -1,5 +1,5 @@
 {
-  "welcomeBack": "Welcome Back, Gabriel!",
+  "welcomeBack": "Welcome Back!",
   "dashboardSubtitle": "Here's a quick overview of your personal skin health companion.",
   "advancedAiAnalysis": "Advanced AI Analysis",
   "advancedAiAnalysisDesc": "Get a detailed risk assessment of your skin lesions with our state-of-the-art AI, powered by a specialized Bio-LLM.",
@@ -115,7 +115,7 @@
       "subtitle": "A virtual model of your skin that updates with every scan."
     },
     "userCard": {
-      "title": "Gabriel's Digital Twin",
+      "title": "Your Digital Twin",
       "lastUpdated": "Last updated: Today",
       "scans": "Scans",
       "lesionsTracked": "Lesions Tracked"

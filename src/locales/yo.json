@@ -1,5 +1,5 @@
 {
-    "welcomeBack": "Kaabọ Pada, Gabriel!",
+    "welcomeBack": "Kaabọ Pada!",
     "dashboardSubtitle": "Eyi ni àkópọ̀ ìròyìn nípa alábàápín ìlera awọ ara rẹ.",
     "advancedAiAnalysis": "Ìtúpalẹ̀ AI tó Ga Títí",
     "advancedAiAnalysisDesc": "Gba ìtúpalẹ̀ ewu àwọn egbò awọ ara rẹ pẹ̀lú AI wa tó péye, tí a fún ní agbára pẹ̀lú Bio-LLM kan pàtàkì.",
@@ -115,7 +115,7 @@
             "subtitle": "Àwòkọ́ṣe fìrì-fọ́nrán ti awọ ara rẹ tí ó máa ń ṣe àtúnṣe pẹ̀lú ìṣàyẹ̀wò kọ̀ọ̀kan."
         },
         "userCard": {
-            "title": "Ìbejì Digita ti Gabriel",
+            "title": "Ìbejì Digita Rẹ",
             "lastUpdated": "Ìgbà ìkẹyìn tó ṣe àtúnṣe: Lónìí",
             "scans": "Àwọn Ìṣàyẹ̀wò",
             "lesionsTracked": "Àwọn Egbò Tí A Tọpinpin"

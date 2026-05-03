@@ -59,15 +59,8 @@ export default function DashboardLayout({
   }, [user]);
 
   const userAvatar = user?.photoURL || PlaceHolderImages.find((p) => p.id === 'user-avatar')?.imageUrl;
-  const userName = user?.displayName || 'Gabriel Idahosa'; // ✅ Real Firebase username
-  const userEmail = user?.email || 'gabriel.idahosa@example.com';
-
-  // 🔍 DEBUG: Log final display values
-  console.log('📊 [DASHBOARD] Display values:', {
-    finalUserName: userName,
-    finalUserEmail: userEmail,
-    finalUserAvatar: userAvatar ? '✅ Has avatar' : '❌ No avatar'
-  });
+  const userName = user?.displayName || 'User';
+  const userEmail = user?.email || '';
 
   return (
     <AuthLayout>

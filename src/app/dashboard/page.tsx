@@ -25,6 +25,7 @@ import { useTranslation } from '@/context/language-context';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { getScanStats } from '@/lib/scan-history';
 
 const primaryFeatures = [
   {
@@ -74,33 +75,12 @@ const secondaryFeatures = [
   },
 ];
 
-const statsData = [
-  {
-    label: 'Total Analyses',
-    value: '3',
-    subtext: 'This month',
-    icon: <TrendingUp className="size-4" />,
-    color: 'text-blue-600 dark:text-blue-400',
-  },
-  {
-    label: 'Avg. Risk Level',
-    value: 'Low',
-    subtext: 'Healthy range',
-    icon: <CheckCircle className="size-4" />,
-    color: 'text-green-600 dark:text-green-400',
-  },
-  {
-    label: 'Confidence Score',
-    value: '92.5%',
-    subtext: 'Very high accuracy',
-    icon: <Zap className="size-4" />,
-    color: 'text-amber-600 dark:text-amber-400',
-  },
-];
+// Stats are now dynamic — loaded from Firestore in the component
 
 export default function DashboardPage() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState({ totalScans: 0, avgConfidence: 0, avgRiskLevel: 'N/A' });
   const dashboardHero = PlaceHolderImages.find((p) => p.id === 'dashboard-hero');
   const { t } = useTranslation();
 
@@ -108,10 +88,20 @@ export default function DashboardPage() {
     let isMounted = true;
 
     const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (isMounted) {
         setCurrentUser(user);
         setLoading(false);
+
+        // Fetch real scan stats once user is authenticated
+        if (user) {
+          try {
+            const scanStats = await getScanStats();
+            if (isMounted) setStats(scanStats);
+          } catch (err) {
+            console.warn('[DERMAFLOW] Failed to load stats:', err);
+          }
+        }
       }
     });
 
@@ -120,6 +110,30 @@ export default function DashboardPage() {
       unsubscribe();
     };
   }, []);
+
+  const statsData = [
+    {
+      label: 'Total Analyses',
+      value: stats.totalScans > 0 ? String(stats.totalScans) : '0',
+      subtext: stats.totalScans > 0 ? 'All time' : 'Run your first scan',
+      icon: <TrendingUp className="size-4" />,
+      color: 'text-blue-600 dark:text-blue-400',
+    },
+    {
+      label: 'Avg. Risk Level',
+      value: stats.avgRiskLevel,
+      subtext: stats.avgRiskLevel === 'Low' ? 'Healthy range' : stats.avgRiskLevel === 'N/A' ? 'No data yet' : 'Monitor closely',
+      icon: <CheckCircle className="size-4" />,
+      color: stats.avgRiskLevel === 'Low' ? 'text-green-600 dark:text-green-400' : stats.avgRiskLevel === 'High' || stats.avgRiskLevel === 'Critical' ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400',
+    },
+    {
+      label: 'Confidence Score',
+      value: stats.avgConfidence > 0 ? `${stats.avgConfidence}%` : 'N/A',
+      subtext: stats.avgConfidence >= 90 ? 'Very high accuracy' : stats.avgConfidence >= 70 ? 'Good accuracy' : stats.avgConfidence > 0 ? 'Moderate accuracy' : 'No scans yet',
+      icon: <Zap className="size-4" />,
+      color: 'text-amber-600 dark:text-amber-400',
+    },
+  ];
 
   const userAvatar =
     currentUser?.photoURL ||

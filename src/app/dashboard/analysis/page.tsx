@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 
 import { generateExplainableAI } from "@/ai/flows/explainable-ai";
 import { refineRiskAssessment } from "@/ai/flows/refine-risk-assessment";
+import { saveScanResult } from "@/lib/scan-history";
 import type {
   RefineRiskAssessmentInput,
   RefineRiskAssessmentOutput,
@@ -229,16 +230,50 @@ export default function AnalysisPage() {
         const result = await generateExplainableAI({ lesionImage: dataUri });
         setHeatmap(result.heatmapOverlay);
         setAnalysis({
-          initialAssessment: result.assessment || "Benign (Nevus)",
-          confidence: result.confidence || 92.5,
+          initialAssessment: result.assessment,
+          confidence: result.confidence,
           refinedResult: null,
         });
-      } catch (error) {
+
+        // Save to Firestore (non-blocking — don't fail the UI if save fails)
+        saveScanResult({
+          assessment: result.assessment,
+          confidence: result.confidence,
+          imageSize: dataUri.length,
+        }).catch(err => console.warn('[DERMAFLOW] Scan save failed (non-critical):', err));
+
+      } catch (error: any) {
         console.error("Analysis failed:", error);
+
+        // Extract human-readable message from our structured errors
+        let errorTitle = t('analysis.toast.analysisFailedTitle');
+        let errorDesc = t('analysis.toast.analysisFailedDesc');
+
+        const msg = error?.message || '';
+        if (msg.includes('DERMAFLOW_API_ERROR')) {
+          errorTitle = 'API Configuration Error';
+          errorDesc = 'The AI service API key is missing or invalid. Please contact support.';
+        } else if (msg.includes('DERMAFLOW_RATE_LIMIT')) {
+          errorTitle = 'Service Temporarily Busy';
+          errorDesc = 'The AI service is overloaded. Please wait a moment and try again.';
+        } else if (msg.includes('DERMAFLOW_SAFETY_FILTER')) {
+          errorTitle = 'Image Rejected';
+          errorDesc = 'This image was blocked by the safety filter. Please upload a clear skin lesion photo.';
+        } else if (msg.includes('DERMAFLOW_NETWORK_ERROR')) {
+          errorTitle = 'Connection Error';
+          errorDesc = 'Could not reach the AI service. Check your internet connection.';
+        } else if (msg.includes('DERMAFLOW_INVALID_INPUT')) {
+          errorTitle = 'Invalid Image';
+          errorDesc = 'The image could not be processed. Please upload a clear JPEG or PNG.';
+        } else if (msg.includes('DERMAFLOW_AI_ERROR')) {
+          errorTitle = 'Analysis Failed';
+          errorDesc = msg.split('DERMAFLOW_AI_ERROR: ')[1] || 'The AI could not analyze this image. Try a different photo.';
+        }
+
         toast({
           variant: "destructive",
-          title: t('analysis.toast.analysisFailedTitle'),
-          description: t('analysis.toast.analysisFailedDesc'),
+          title: errorTitle,
+          description: errorDesc,
         });
         setImagePreview(null);
       }
@@ -249,6 +284,16 @@ export default function AnalysisPage() {
     if (analysis) {
       const assessmentToSave = analysis.refinedResult ? analysis.refinedResult.refinedAssessment : analysis.initialAssessment;
       localStorage.setItem('recentAnalysisResult', assessmentToSave);
+
+      // If we have a refined result, update the Firestore record too
+      if (analysis.refinedResult) {
+        saveScanResult({
+          assessment: analysis.initialAssessment,
+          confidence: analysis.confidence,
+          refinedAssessment: analysis.refinedResult.refinedAssessment,
+          rationale: analysis.refinedResult.rationale,
+        }).catch(err => console.warn('[DERMAFLOW] Refined save failed:', err));
+      }
     }
   }, [analysis]);
 

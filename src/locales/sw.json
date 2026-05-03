@@ -1,5 +1,5 @@
 {
-    "welcomeBack": "Karibu Tena, Gabriel!",
+    "welcomeBack": "Karibu Tena!",
     "dashboardSubtitle": "Huu ni muhtasari wa haraka wa msaidizi wako wa afya ya ngozi.",
     "advancedAiAnalysis": "Uchambuzi wa Hali ya Juu wa AI",
     "advancedAiAnalysisDesc": "Pata tathmini ya kina ya hatari ya vidonda vyako vya ngozi na AI yetu ya kisasa, inayoendeshwa na Bio-LLM maalum.",
@@ -115,7 +115,7 @@
             "subtitle": "Mfano halisi wa ngozi yako unaosasishwa na kila skanisho."
         },
         "userCard": {
-            "title": "Pacha wa Kidijitali wa Gabriel",
+            "title": "Pacha Yako wa Kidijitali",
             "lastUpdated": "Imesasishwa mwisho: Leo",
             "scans": "Skanisho",
             "lesionsTracked": "Vidonda Vinavyofuatiliwa"
