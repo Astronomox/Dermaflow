@@ -8,8 +8,31 @@ import { LanguageProvider } from '@/context/language-context';
 import { FirebaseClientProvider } from '@/firebase';
 
 export const metadata: Metadata = {
-  title: 'Dermaflow AI',
-  description: 'AI-powered skin health analysis and personalized care.',
+  title: 'DermaFlow AI — Your Skin, Understood',
+  description: 'AI-powered skin analysis, personalized care recommendations, and expert guidance. Upload a photo, get instant results with explainable AI heatmaps, and connect with verified oncology centers when it matters.',
+  metadataBase: new URL('https://dermaflow-zeta.vercel.app'),
+  openGraph: {
+    title: 'DermaFlow AI — Your Skin, Understood',
+    description: 'AI-powered skin analysis, personalized care, and expert guidance. Instant results with explainable heatmaps.',
+    url: 'https://dermaflow-zeta.vercel.app',
+    siteName: 'DermaFlow AI',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'DermaFlow AI — Your Skin, Understood',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'DermaFlow AI — Your Skin, Understood',
+    description: 'AI-powered skin analysis, personalized care, and expert guidance. Instant results with explainable heatmaps.',
+    images: ['/og-image.png'],
+  },
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -38,8 +61,6 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Bricolage Grotesque + Space Mono loaded via @import in dermaflow-animations.css */}
-        {/* DM Sans loaded via next/font/google above */}
       </head>
       <body className={cn('font-body antialiased', fontBody.variable)}>
         <FirebaseClientProvider>
