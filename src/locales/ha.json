@@ -1,5 +1,5 @@
 {
-    "welcomeBack": "Barka da dawowa, Gabriel!",
+    "welcomeBack": "Barka da dawowa!",
     "dashboardSubtitle": "Ga takaitaccen bayani kan abokin lafiyar fatar jikinka.",
     "advancedAiAnalysis": "Binciken AI na Gaba",
     "advancedAiAnalysisDesc": "Samu cikakken kimantawar haɗarin raunukan fatar jikinka da AI ɗinmu na zamani, wanda aka ƙarfafa da Bio-LLM na musamman.",
@@ -115,7 +115,7 @@
             "subtitle": "Samfurin kama-da-wane na fatar jikinka wanda ke sabuntawa da kowane sikan."
         },
         "userCard": {
-            "title": "Tagwayen Dijital na Gabriel",
+            "title": "Tagwayen Dijital Naka",
             "lastUpdated": "An sabunta ƙarshe: Yau",
             "scans": "Sikan-sikan",
             "lesionsTracked": "Raunukan da Aka Bibiya"

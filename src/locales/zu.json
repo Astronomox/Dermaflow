@@ -1,5 +1,5 @@
 {
-    "welcomeBack": "Siyakwamukela futhi, Gabriel!",
+    "welcomeBack": "Siyakwamukela futhi!",
     "dashboardSubtitle": "Naku ukubuka konke okusheshayo komsizi wakho wezempilo yesikhumba.",
     "advancedAiAnalysis": "Ukuhlaziya Okuthuthukile Kwe-AI",
     "advancedAiAnalysisDesc": "Thola ukuhlolwa okunemininingwane yobungozi bezilonda zesikhumba sakho nge-AI yethu yesimanje, exhaswe yi-Bio-LLM ekhethekile.",
@@ -115,7 +115,7 @@
             "subtitle": "Imodeli ebonakalayo yesikhumba sakho ebuyekezwa ngakho konke ukuskena."
         },
         "userCard": {
-            "title": "Iwele Ledijithali likaGabriel",
+            "title": "Iwele Lakho Ledijithali",
             "lastUpdated": "Igcine ukubuyekezwa: Namuhla",
             "scans": "Ukuskena",
             "lesionsTracked": "Izilonda Ezilandelwayo"
