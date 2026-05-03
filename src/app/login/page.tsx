@@ -1,11 +1,11 @@
 'use client';
 
 // src/app/login/page.tsx
-// DermaFlow V2 — Login page with claymorphism split layout
-// Preserves existing Firebase auth (initiateEmailSignIn)
+// DermaFlow V2 — Login page with photo split layout
 
-import { useState, useCallback, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -26,70 +26,11 @@ const formSchema = z.object({
   password: z.string().min(6, 'Password must be at least 6 characters.'),
 });
 
-// ── Shared sub-components ──
-function DecorCircle({ children, size, opacity }: { children: React.ReactNode; size: number; opacity: number }) {
-  return (
-    <div style={{
-      width: size, height: size, borderRadius: '50%',
-      background: `rgba(255,248,240,${opacity})`,
-      boxShadow: '6px 6px 14px rgba(0,0,0,0.15), -3px -3px 10px rgba(255,255,255,0.2), inset 1px 1px 2px rgba(255,255,255,0.3)',
-      border: '1px solid rgba(255,255,255,0.25)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-    }}>{children}</div>
-  );
-}
-
-function FloatingEl({ children, top, bottom, left, right, parallax, scale, delay }: {
-  children: React.ReactNode; top?: string; bottom?: string; left?: string; right?: string;
-  parallax: { x: number; y: number }; scale: number; delay: string;
-}) {
-  const posStyle: React.CSSProperties = {};
-  if (top) posStyle.top = top;
-  if (bottom) posStyle.bottom = bottom;
-  if (left) posStyle.left = left;
-  if (right) posStyle.right = right;
-  return (
-    <div style={{
-      position: 'absolute', ...posStyle,
-      transform: `translate(${-parallax.x * scale}px, ${-parallax.y * scale}px)`,
-      transition: 'transform 0.12s ease',
-      animation: `df-iconBob ${3.5 + parseFloat(delay)}s ${delay} ease-in-out infinite`,
-    }}>{children}</div>
-  );
-}
-
-export function AuthButton({ label, coral }: { label: string; coral?: boolean }) {
-  const [hovered, setHovered] = useState(false);
-  const [pressed, setPressed] = useState(false);
-  const bg = coral ? 'linear-gradient(145deg, #E8735A, #d4614a)' : 'linear-gradient(145deg, #2A7B7B, #1a5c5c)';
-  const shadow = coral ? 'rgba(232,115,90,0.3)' : 'rgba(42,123,123,0.3)';
-  return (
-    <button type="submit"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => { setHovered(false); setPressed(false); }}
-      onMouseDown={() => setPressed(true)}
-      onMouseUp={() => setPressed(false)}
-      style={{
-        width: '100%', padding: '0.9rem', borderRadius: 16, border: 'none', cursor: 'pointer',
-        fontFamily: FONT_BODY, fontWeight: 700, fontSize: '1rem', color: '#FFF8F0',
-        background: bg,
-        boxShadow: hovered
-          ? `10px 10px 22px ${shadow}, -5px -5px 14px rgba(255,255,255,0.6), inset 1px 1px 2px rgba(255,255,255,0.3)`
-          : `8px 8px 16px rgba(0,0,0,0.09), -4px -4px 12px rgba(255,255,255,0.8), inset 1px 1px 2px rgba(255,255,255,0.3)`,
-        transform: pressed ? 'scale(0.97)' : hovered ? 'translateY(-3px) scale(1.01)' : 'none',
-        transition: 'all 0.2s ease',
-        animation: 'df-heartbeat 3s ease-in-out infinite',
-      }}
-    >{label}</button>
-  );
-}
-
 export default function LoginPage() {
   const { t } = useTranslation();
   const { toast } = useToast();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [emailFocused, setEmailFocused] = useState(false);
   const [passFocused, setPassFocused] = useState(false);
 
@@ -97,14 +38,6 @@ export default function LoginPage() {
     resolver: zodResolver(formSchema),
     defaultValues: { email: '', password: '' },
   });
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePos({
-      x: (e.clientX - rect.left - rect.width / 2) * 0.02,
-      y: (e.clientY - rect.top - rect.height / 2) * 0.02,
-    });
-  }, []);
 
   const inputStyle = (focused: boolean): React.CSSProperties => ({
     width: '100%', padding: '0.85rem 1.1rem', borderRadius: 16,
@@ -144,22 +77,6 @@ export default function LoginPage() {
         background: '#FFF8F0', display: 'flex', flexDirection: 'column', justifyContent: 'center',
         padding: '4rem 3.5rem', position: 'relative', overflow: 'hidden',
       }}>
-        {/* Background blobs */}
-        {[
-          { size: 120, top: '10%', left: '-5%', opacity: 0.06 },
-          { size: 80, top: '70%', left: '80%', opacity: 0.05 },
-          { size: 60, top: '40%', left: '90%', opacity: 0.04 },
-        ].map((f, i) => (
-          <div key={i} style={{
-            position: 'absolute', top: f.top, left: f.left,
-            width: f.size, height: f.size,
-            borderRadius: '60% 40% 70% 30% / 50% 60% 40% 50%',
-            background: 'radial-gradient(circle, #E8735A, #2A7B7B)',
-            opacity: f.opacity,
-            animation: `df-blob-morph ${10 + i * 2}s ease-in-out infinite`,
-          }} />
-        ))}
-
         <div style={{ position: 'relative', zIndex: 1, maxWidth: 400 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '2.5rem', cursor: 'pointer', textDecoration: 'none' }}>
             <DermaFlowLogo size={32} />
@@ -214,51 +131,57 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* ── RIGHT: Decorative coral ── */}
-      <div className="df-login-decor"
-        onMouseMove={handleMouseMove}
-        style={{ background: 'linear-gradient(135deg, #F4A89A 0%, #E8735A 100%)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-      >
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.18) 100%)', zIndex: 2, pointerEvents: 'none' }} />
+      {/* ── RIGHT: Photo panel ── */}
+      <div className="df-login-decor" style={{ position: 'relative', overflow: 'hidden' }}>
+        {/* Background photo — hands touching healthy glowing skin */}
+        <Image
+          src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1200"
+          alt="Hands gently touching smooth healthy skin"
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+          priority
+          sizes="50vw"
+        />
 
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
-          <FloatingEl top="15%" left="20%" parallax={mousePos} scale={1.5} delay="0">
-            <DecorCircle size={90} opacity={0.25}>
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                <circle cx="22" cy="22" r="14" stroke="rgba(255,248,240,0.9)" strokeWidth="3" fill="rgba(255,248,240,0.15)" />
-                <line x1="32" y1="32" x2="42" y2="42" stroke="rgba(255,248,240,0.9)" strokeWidth="3.5" strokeLinecap="round" />
-                <line x1="16" y1="22" x2="28" y2="22" stroke="rgba(255,248,240,0.6)" strokeWidth="2" strokeLinecap="round" />
-                <line x1="22" y1="16" x2="22" y2="28" stroke="rgba(255,248,240,0.6)" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </DecorCircle>
-          </FloatingEl>
-          <FloatingEl bottom="25%" right="18%" parallax={mousePos} scale={1} delay="1">
-            <DecorCircle size={70} opacity={0.2}>
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-                <path d="M12 4 C16 10 24 10 28 16 C24 22 16 22 12 28" stroke="rgba(255,248,240,0.9)" strokeWidth="2" strokeLinecap="round" fill="none" />
-                <path d="M28 4 C24 10 16 10 12 16 C16 22 24 22 28 28" stroke="rgba(255,248,240,0.6)" strokeWidth="2" strokeLinecap="round" fill="none" />
-              </svg>
-            </DecorCircle>
-          </FloatingEl>
-          <FloatingEl top="55%" left="10%" parallax={mousePos} scale={0.8} delay="0.5">
-            <DecorCircle size={55} opacity={0.18}>
-              <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-                <circle cx="15" cy="15" r="10" stroke="rgba(255,248,240,0.8)" strokeWidth="2" fill="rgba(255,248,240,0.1)" />
-                <circle cx="15" cy="15" r="4" fill="rgba(255,248,240,0.4)" />
-              </svg>
-            </DecorCircle>
-          </FloatingEl>
-          <FloatingEl top="10%" right="10%" parallax={mousePos} scale={1.2} delay="2">
-            <DecorCircle size={50} opacity={0.15}>
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M14 4 L24 14 L14 24 L4 14 Z" stroke="rgba(255,248,240,0.8)" strokeWidth="2" fill="rgba(255,248,240,0.1)" strokeLinejoin="round" />
-              </svg>
-            </DecorCircle>
-          </FloatingEl>
+        {/* Warm tinted overlay */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 1,
+          background: 'linear-gradient(135deg, rgba(244,168,154,0.4) 0%, rgba(232,115,90,0.5) 100%)',
+        }} />
+
+        {/* Vignette */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 2,
+          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.25) 100%)',
+        }} />
+
+        {/* Quote overlay */}
+        <div style={{
+          position: 'absolute', bottom: '3rem', left: '50%', transform: 'translateX(-50%)',
+          zIndex: 3, textAlign: 'center', width: '80%',
+        }}>
+          <p style={{
+            fontFamily: FONT_BODY, fontStyle: 'italic', fontSize: '1.2rem',
+            color: 'rgba(255,248,240,0.95)', margin: 0,
+            textShadow: '0 2px 8px rgba(0,0,0,0.3)',
+          }}>
+            &ldquo;Early detection saves lives.&rdquo;
+          </p>
         </div>
 
-        <div style={{ position: 'absolute', bottom: '2.5rem', left: '50%', transform: 'translateX(-50%)', zIndex: 3, textAlign: 'center', width: '80%' }}>
-          <p style={{ fontFamily: FONT_BODY, fontStyle: 'italic', fontSize: '1.1rem', color: 'rgba(255,248,240,0.8)', margin: 0 }}>&ldquo;Early detection saves lives.&rdquo;</p>
+        {/* Top-right floating badge */}
+        <div style={{
+          position: 'absolute', top: '2rem', right: '2rem', zIndex: 3,
+          background: 'rgba(255,248,240,0.15)', backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255,255,255,0.25)', borderRadius: 50,
+          padding: '0.5rem 1rem',
+        }}>
+          <span style={{
+            fontFamily: FONT_BODY, fontSize: '0.75rem', fontWeight: 600,
+            color: 'rgba(255,248,240,0.9)', letterSpacing: '0.05em',
+          }}>
+            AI-Powered Skin Health
+          </span>
         </div>
       </div>
     </div>

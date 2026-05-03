@@ -354,8 +354,8 @@ export default function LandingPage() {
           </p>
 
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <HeroBtn primary href="/signup">Get Started →</HeroBtn>
-            <HeroBtn href="/login">See How It Works</HeroBtn>
+              <HeroBtn primary href="/signup">Get Started →</HeroBtn>
+              <HeroBtn href="/login">Returning User?</HeroBtn>
           </div>
         </div>
       </section>

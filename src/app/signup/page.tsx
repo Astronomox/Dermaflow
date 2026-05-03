@@ -1,11 +1,11 @@
 'use client';
 
 // src/app/signup/page.tsx
-// DermaFlow V2 — Signup page with claymorphism mirrored split layout
-// Preserves existing Firebase auth (initiateEmailSignUp)
+// DermaFlow V2 — Signup page with photo split layout (mirrored)
 
-import { useState, useCallback, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -30,57 +30,16 @@ const formSchema = z.object({
   path: ['confirmPassword'],
 });
 
-// ── Sub-components ──
-function DecorCircleTeal({ children, size, opacity }: { children: React.ReactNode; size: number; opacity: number }) {
-  return (
-    <div style={{
-      width: size, height: size, borderRadius: '50%',
-      background: `rgba(255,248,240,${opacity})`,
-      boxShadow: '5px 5px 12px rgba(0,0,0,0.15), -2px -2px 8px rgba(255,255,255,0.15), inset 1px 1px 2px rgba(255,255,255,0.25)',
-      border: '1px solid rgba(255,255,255,0.2)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-    }}>{children}</div>
-  );
-}
-
-function TealFloatingEl({ children, top, bottom, left, right, parallax, scale, duration, delay }: {
-  children: React.ReactNode; top?: string; bottom?: string; left?: string; right?: string;
-  parallax: { x: number; y: number }; scale: number; duration: string; delay: string;
-}) {
-  const posStyle: React.CSSProperties = {};
-  if (top) posStyle.top = top;
-  if (bottom) posStyle.bottom = bottom;
-  if (left) posStyle.left = left;
-  if (right) posStyle.right = right;
-  return (
-    <div style={{
-      position: 'absolute', ...posStyle,
-      transform: `translate(${-parallax.x * scale}px, ${-parallax.y * scale}px)`,
-      transition: 'transform 0.12s ease',
-      animation: `df-iconBob ${duration} ${delay} ease-in-out infinite`,
-    }}>{children}</div>
-  );
-}
-
 export default function SignupPage() {
   const { toast } = useToast();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [focused, setFocused] = useState('');
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { email: '', username: '', password: '', confirmPassword: '' },
   });
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePos({
-      x: (e.clientX - rect.left - rect.width / 2) * 0.02,
-      y: (e.clientY - rect.top - rect.height / 2) * 0.02,
-    });
-  }, []);
 
   const inputStyle = (id: string): React.CSSProperties => ({
     width: '100%', padding: '0.85rem 1.1rem', borderRadius: 16,
@@ -122,76 +81,65 @@ export default function SignupPage() {
 
   return (
     <div className="df-login-grid" style={{ minHeight: '100vh', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-      {/* ── LEFT: Decorative teal ── */}
-      <div className="df-login-decor"
-        onMouseMove={handleMouseMove}
-        style={{ background: 'linear-gradient(135deg, #2A7B7B 0%, #1a5c5c 100%)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-      >
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.18) 100%)', zIndex: 2, pointerEvents: 'none' }} />
+      {/* ── LEFT: Photo panel ── */}
+      <div className="df-login-decor" style={{ position: 'relative', overflow: 'hidden' }}>
+        {/* Background photo — skincare routine, healthy radiant skin */}
+        <Image
+          src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?q=80&w=1200"
+          alt="Beautiful healthy skin care routine"
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+          priority
+          sizes="50vw"
+        />
 
-        {/* Abstract face silhouette */}
-        <svg viewBox="0 0 200 280" style={{ position: 'absolute', width: '55%', opacity: 0.07, top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }}>
-          <ellipse cx="100" cy="120" rx="70" ry="90" stroke="#FFF8F0" strokeWidth="2" fill="none" />
-          {[0,1,2,3,4,5,6,7,8].map(i => <line key={`h${i}`} x1="30" y1={50+i*20} x2="170" y2={50+i*20} stroke="#FFF8F0" strokeWidth="0.7" />)}
-          {[0,1,2,3,4,5,6,7].map(i => <line key={`v${i}`} x1={30+i*20} y1="30" x2={30+i*20} y2="210" stroke="#FFF8F0" strokeWidth="0.7" />)}
-          <ellipse cx="78" cy="105" rx="12" ry="7" stroke="#FFF8F0" strokeWidth="1.5" fill="none" />
-          <ellipse cx="122" cy="105" rx="12" ry="7" stroke="#FFF8F0" strokeWidth="1.5" fill="none" />
-          <path d="M100 115 C96 125 88 132 94 135 C100 138 106 135 112 132 C118 129 104 125 100 115Z" stroke="#FFF8F0" strokeWidth="1.5" fill="none" />
-          <path d="M84 155 C92 162 108 162 116 155" stroke="#FFF8F0" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-        </svg>
+        {/* Teal tinted overlay */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 1,
+          background: 'linear-gradient(135deg, rgba(42,123,123,0.45) 0%, rgba(26,92,92,0.55) 100%)',
+        }} />
 
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
-          <TealFloatingEl top="12%" right="15%" parallax={mousePos} scale={1.5} duration="4s" delay="0s">
-            <DecorCircleTeal size={80} opacity={0.2}>
-              <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
-                <circle cx="21" cy="21" r="14" stroke="rgba(255,248,240,0.85)" strokeWidth="2" fill="rgba(255,248,240,0.1)" />
-                <circle cx="21" cy="21" r="6" stroke="rgba(255,248,240,0.5)" strokeWidth="1.5" fill="rgba(255,248,240,0.15)" />
-                <circle cx="21" cy="21" r="2" fill="rgba(255,248,240,0.6)" />
-              </svg>
-            </DecorCircleTeal>
-          </TealFloatingEl>
-          <TealFloatingEl bottom="20%" left="12%" parallax={mousePos} scale={1} duration="5.5s" delay="0.8s">
-            <DecorCircleTeal size={65} opacity={0.18}>
-              <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-                <path d="M10 4 C14 9 22 9 26 15 C22 21 14 21 10 27" stroke="rgba(255,248,240,0.85)" strokeWidth="2" strokeLinecap="round" fill="none" />
-                <path d="M26 4 C22 9 14 9 10 15 C14 21 22 21 26 27" stroke="rgba(168,230,207,0.8)" strokeWidth="2" strokeLinecap="round" fill="none" />
-              </svg>
-            </DecorCircleTeal>
-          </TealFloatingEl>
-          <TealFloatingEl top="50%" right="8%" parallax={mousePos} scale={0.8} duration="3.5s" delay="1.2s">
-            <DecorCircleTeal size={52} opacity={0.15}>
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <polygon points="14,2 24,8 24,20 14,26 4,20 4,8" stroke="rgba(255,248,240,0.8)" strokeWidth="1.5" fill="rgba(255,248,240,0.08)" />
-                <circle cx="14" cy="14" r="3" fill="rgba(255,248,240,0.4)" />
-              </svg>
-            </DecorCircleTeal>
-          </TealFloatingEl>
-        </div>
+        {/* Vignette */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 2,
+          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.25) 100%)',
+        }} />
 
-        <div style={{ position: 'absolute', bottom: '2.5rem', left: '50%', transform: 'translateX(-50%)', zIndex: 3, textAlign: 'center', width: '80%' }}>
-          <p style={{ fontFamily: FONT_BODY, fontStyle: 'italic', fontSize: '1rem', color: 'rgba(255,248,240,0.78)', margin: 0 }}>
+        {/* Quote overlay */}
+        <div style={{
+          position: 'absolute', bottom: '3rem', left: '50%', transform: 'translateX(-50%)',
+          zIndex: 3, textAlign: 'center', width: '80%',
+        }}>
+          <p style={{
+            fontFamily: FONT_BODY, fontStyle: 'italic', fontSize: '1.15rem',
+            color: 'rgba(255,248,240,0.95)', margin: 0,
+            textShadow: '0 2px 8px rgba(0,0,0,0.3)',
+          }}>
             &ldquo;Your skin tells a story. Let AI help you understand it.&rdquo;
           </p>
+        </div>
+
+        {/* Top-left floating badge */}
+        <div style={{
+          position: 'absolute', top: '2rem', left: '2rem', zIndex: 3,
+          background: 'rgba(255,248,240,0.15)', backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255,255,255,0.25)', borderRadius: 50,
+          padding: '0.5rem 1rem',
+        }}>
+          <span style={{
+            fontFamily: FONT_BODY, fontSize: '0.75rem', fontWeight: 600,
+            color: 'rgba(255,248,240,0.9)', letterSpacing: '0.05em',
+          }}>
+            Join 1000+ Users
+          </span>
         </div>
       </div>
 
       {/* ── RIGHT: Form ── */}
-      <div style={{ background: '#FFF8F0', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '3.5rem 3.5rem', position: 'relative', overflow: 'hidden' }}>
-        {/* Background blobs */}
-        {[
-          { size: 100, top: '5%', left: '-8%', opacity: 0.05 },
-          { size: 70, top: '75%', left: '85%', opacity: 0.04 },
-        ].map((f, i) => (
-          <div key={i} style={{
-            position: 'absolute', top: f.top, left: f.left,
-            width: f.size, height: f.size,
-            borderRadius: '60% 40% 70% 30% / 50% 60% 40% 50%',
-            background: 'radial-gradient(circle, #2A7B7B, #E8735A)',
-            opacity: f.opacity,
-            animation: `df-blob-morph ${12 + i * 2}s ease-in-out infinite`,
-          }} />
-        ))}
-
+      <div style={{
+        background: '#FFF8F0', display: 'flex', flexDirection: 'column', justifyContent: 'center',
+        padding: '3.5rem 3.5rem', position: 'relative', overflow: 'hidden',
+      }}>
         <div style={{ position: 'relative', zIndex: 1, maxWidth: 400 }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '2rem', cursor: 'pointer', textDecoration: 'none' }}>
             <DermaFlowLogo size={30} />
