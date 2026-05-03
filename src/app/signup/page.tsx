@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
+import { DermaFlowButtonSpinner } from '@/components/ui/dermaflow-spinner';
 
 import { useToast } from '@/hooks/use-toast';
 import { initiateEmailSignUp } from '@/firebase';
@@ -178,7 +178,7 @@ export default function SignupPage() {
               opacity: isPending ? 0.7 : 1,
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
             }}>
-              {isPending && <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} />}
+              {isPending && <DermaFlowButtonSpinner size={18} />}
               Create Account
             </button>
           </form>

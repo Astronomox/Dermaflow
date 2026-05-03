@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useRef, useEffect } from "react";
+import { useState, useTransition, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import {
   Camera,
@@ -24,6 +24,7 @@ import { useForm } from "react-hook-form";
 import { generateExplainableAI } from "@/ai/flows/explainable-ai";
 import { refineRiskAssessment } from "@/ai/flows/refine-risk-assessment";
 import { saveScanResult } from "@/lib/scan-history";
+import { DermaFlowSpinner } from "@/components/ui/dermaflow-spinner";
 import type {
   RefineRiskAssessmentInput,
   RefineRiskAssessmentOutput,
@@ -141,31 +142,44 @@ export default function AnalysisPage() {
     return () => unsubscribe();
   }, []);
 
-  // ✅ START CAMERA
+  // ✅ START CAMERA — requests stream, then opens modal
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: "environment",
-          width: { ideal: 1920 },
-          height: { ideal: 1080 }
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
         },
       });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        streamRef.current = stream;
-        setCameraOpen(true);
-        setCapturedPhoto(null);
-      }
-    } catch (error) {
-      console.error("Camera access denied:", error);
+      streamRef.current = stream;
+      setCameraOpen(true);
+      setCapturedPhoto(null);
+    } catch (error: any) {
+      console.error("[DERMAFLOW] Camera error:", error);
+      const msg = error?.name === 'NotFoundError'
+        ? 'No camera found on this device.'
+        : error?.name === 'NotAllowedError'
+        ? 'Camera access was denied. Allow camera permissions in your browser settings and try again.'
+        : error?.name === 'NotReadableError'
+        ? 'Camera is in use by another app. Close other camera apps and try again.'
+        : 'Could not access the camera. Please try again.';
       toast({
         variant: "destructive",
-        title: "Camera Access Denied",
-        description: "Please allow camera access to use this feature.",
+        title: "Camera Access Failed",
+        description: msg,
       });
     }
   };
+
+  // ✅ REF CALLBACK — fires the instant the <video> element mounts in the DOM
+  const videoRefCallback = useCallback((node: HTMLVideoElement | null) => {
+    videoRef.current = node;
+    if (node && streamRef.current) {
+      node.srcObject = streamRef.current;
+      node.play().catch(err => console.error('[DERMAFLOW] Video play failed:', err));
+    }
+  }, [cameraOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ✅ STOP CAMERA
   const stopCamera = () => {
@@ -384,10 +398,7 @@ export default function AnalysisPage() {
   if (userLoading) {
     return (
       <div className="flex items-center justify-center min-h-[600px]">
-        <div className="text-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="text-muted-foreground">Loading analysis...</p>
-        </div>
+        <DermaFlowSpinner size={48} label="Loading analysis..." />
       </div>
     );
   }
@@ -460,7 +471,7 @@ export default function AnalysisPage() {
               <div className="flex-1 relative overflow-hidden">
                 {!capturedPhoto ? (
                   <video
-                    ref={videoRef}
+                    ref={videoRefCallback}
                     autoPlay
                     playsInline
                     muted
