@@ -76,8 +76,13 @@ input::placeholder { color: rgba(45, 27, 14, 0.35); }
 
 /* ── Responsive: hide nav center links on mobile ── */
 @media (max-width: 768px) {
-  .df-nav { padding: 0 1.25rem !important; }
+  .df-nav { padding: 0 0.75rem !important; height: 56px !important; }
   .df-nav-links { display: none !important; }
+  .df-nav a[href="/login"],
+  .df-nav a[href="/signup"] {
+    font-size: 0.75rem !important;
+    padding: 0.35rem 0.75rem !important;
+  }
   .df-login-grid { grid-template-columns: 1fr !important; }
   .df-login-decor { display: none !important; }
 }
