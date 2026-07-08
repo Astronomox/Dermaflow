@@ -1,10 +1,10 @@
 'use client';
 
 // src/app/page.tsx
-// DermaFlow V3 — Deep Water / Bioluminescent redesign
-// River canvas animation in hero, glassmorphism cards
+// DermaFlow V4 — Monochrome / WebGL fluid water
+// Hero: GLSL fragment-shader river (FBM flow noise), pure grayscale theme
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import {
   DermaFlowLogo,
@@ -14,191 +14,217 @@ import {
   BioLLMIcon,
 } from '@/components/icons/dermaflow-icons';
 
-// ── Design tokens ──
+// ── Monochrome tokens ──
 const C = {
-  bg:        '#020B18',
-  bgCard:    'rgba(255,255,255,0.04)',
-  teal:      '#4ECDC4',
-  tealDim:   '#2A7B7B',
-  coral:     '#FF6B6B',
-  coralDim:  '#D4453A',
-  text:      '#E8F4F8',
-  textMid:   'rgba(232,244,248,0.6)',
-  textDim:   'rgba(232,244,248,0.38)',
-  border:    'rgba(255,255,255,0.08)',
-  borderHov: 'rgba(78,205,196,0.3)',
+  bg:       '#FFFFFF',
+  ink:      '#0A0A0A',
+  inkMid:   'rgba(10,10,10,0.62)',
+  inkDim:   'rgba(10,10,10,0.4)',
+  inkFaint: 'rgba(10,10,10,0.12)',
+  border:   'rgba(0,0,0,0.1)',
+  card:     'rgba(0,0,0,0.025)',
 } as const;
 
-const FONT_DISPLAY = '"Syne", sans-serif';
-const FONT_BODY    = '"Inter", sans-serif';
-const FONT_MONO    = '"JetBrains Mono", monospace';
+const FONT_DISPLAY = '"Montserrat", sans-serif';
+const FONT_BODY    = '"Montserrat", sans-serif';
+const FONT_MONO    = '"Montserrat", sans-serif';
 
-// ── RIVER CANVAS ANIMATION ──
-function RiverCanvas() {
+// ══════════════════════════════════════════════════════
+// WEBGL WATER — fragment shader fluid simulation
+// ══════════════════════════════════════════════════════
+const VERT = `
+attribute vec2 aPos;
+void main() { gl_Position = vec4(aPos, 0.0, 1.0); }
+`;
+
+const FRAG = `
+precision highp float;
+uniform vec2  uRes;
+uniform float uTime;
+
+vec2 hash22(vec2 p) {
+  p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+  return -1.0 + 2.0 * fract(sin(p) * 43758.5453123);
+}
+
+float noise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(
+    mix(dot(hash22(i + vec2(0.0, 0.0)), f - vec2(0.0, 0.0)),
+        dot(hash22(i + vec2(1.0, 0.0)), f - vec2(1.0, 0.0)), u.x),
+    mix(dot(hash22(i + vec2(0.0, 1.0)), f - vec2(0.0, 1.0)),
+        dot(hash22(i + vec2(1.0, 1.0)), f - vec2(1.0, 1.0)), u.x),
+    u.y);
+}
+
+// 4 octaves (perf)
+float fbmRiver(vec2 p) {
+  float v = 0.0;
+  float a = 0.55;
+  for (int i = 0; i < 4; i++) {
+    v += a * noise(p);
+    p *= vec2(1.9, 2.3);
+    a *= 0.5;
+  }
+  return v;
+}
+
+float ridge(vec2 p) {
+  return 1.0 - abs(fbmRiver(p)) * 2.0;
+}
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / uRes.xy;
+  vec2 p  = uv;
+  p.x *= uRes.x / uRes.y;
+
+  float t = uTime;
+
+  vec2 rp = vec2(p.x * 1.0, p.y * 6.0);
+
+  float channel = sin(uv.y * 3.14159);
+  float speed   = 0.5 + 0.9 * channel;
+  vec2 flow     = vec2(t * speed, 0.0);
+
+  // single meander warp (perf)
+  rp.y += fbmRiver(vec2(p.x * 0.7 - t * 0.18, p.y * 2.0)) * 2.0;
+
+  // 3 wave layers (perf)
+  float w1 = ridge(rp * vec2(1.2, 1.0) - flow * 1.0);
+  float w2 = ridge(rp * vec2(2.3, 1.4) - flow * 1.55 + vec2(3.7, 8.1));
+  float w3 = ridge(rp * vec2(4.5, 2.0) - flow * 2.4  + vec2(9.2, 1.7));
+
+  float water = w1 * 0.48 + w2 * 0.32 + w3 * 0.20;
+
+  float crest = smoothstep(0.6, 0.95, water);
+
+  float dark = 0.0;
+  dark += pow(max(water, 0.0), 1.35) * 0.72;
+  dark += crest * 0.30;
+
+  float edge = smoothstep(0.0, 0.22, uv.y) * smoothstep(1.0, 0.78, uv.y);
+  dark *= edge;
+  dark *= 0.5 + 0.5 * channel;
+
+  // ---- center deepening: darkest pool where the headline sits, so white text pops ----
+  vec2 d = uv - vec2(0.5, 0.52);
+  d.x *= uRes.x / uRes.y * 0.62;
+  float pool = 1.0 - smoothstep(0.15, 0.6, length(d));
+  dark = mix(dark, max(dark, 0.62) + crest * 0.15, pool);
+
+  dark = clamp(dark, 0.0, 0.96);
+
+  vec3 col = vec3(1.0 - dark);
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+function WaterGL() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animRef   = useRef<number>(0);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
 
-    let W = 0, H = 0;
+    const gl = canvas.getContext('webgl', { antialias: false, alpha: false })
+      || canvas.getContext('experimental-webgl');
+    if (!gl) { setFailed(true); return; }
+    const glc = gl as WebGLRenderingContext;
+
+    // respect reduced motion
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function compile(type: number, src: string) {
+      const sh = glc.createShader(type)!;
+      glc.shaderSource(sh, src);
+      glc.compileShader(sh);
+      if (!glc.getShaderParameter(sh, glc.COMPILE_STATUS)) {
+        console.error(glc.getShaderInfoLog(sh));
+        return null;
+      }
+      return sh;
+    }
+
+    const vs = compile(glc.VERTEX_SHADER, VERT);
+    const fs = compile(glc.FRAGMENT_SHADER, FRAG);
+    if (!vs || !fs) { setFailed(true); return; }
+
+    const prog = glc.createProgram()!;
+    glc.attachShader(prog, vs);
+    glc.attachShader(prog, fs);
+    glc.linkProgram(prog);
+    if (!glc.getProgramParameter(prog, glc.LINK_STATUS)) { setFailed(true); return; }
+    glc.useProgram(prog);
+
+    // fullscreen quad
+    const buf = glc.createBuffer();
+    glc.bindBuffer(glc.ARRAY_BUFFER, buf);
+    glc.bufferData(glc.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), glc.STATIC_DRAW);
+    const aPos = glc.getAttribLocation(prog, 'aPos');
+    glc.enableVertexAttribArray(aPos);
+    glc.vertexAttribPointer(aPos, 2, glc.FLOAT, false, 0, 0);
+
+    const uRes  = glc.getUniformLocation(prog, 'uRes');
+    const uTime = glc.getUniformLocation(prog, 'uTime');
+
+    let raf = 0;
+    const RENDER_SCALE = 0.55; // render at ~half res, CSS upscales — huge perf win, water blur hides it
+    const FRAME_MS = 1000 / 30; // cap at 30fps
 
     function resize() {
       if (!canvas) return;
-      W = canvas.width  = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    // ── Wave streams ──
-    const STREAMS = 28;
-    type Stream = {
-      y: number;
-      speed: number;
-      amplitude: number;
-      frequency: number;
-      phase: number;
-      width: number;
-      alpha: number;
-      colorT: number; // 0=teal, 1=coral
-    };
-
-    const streams: Stream[] = Array.from({ length: STREAMS }, (_, i) => ({
-      y:         (i / STREAMS) * 1.4 - 0.2,  // fraction of H
-      speed:     0.0004 + Math.random() * 0.0006,
-      amplitude: 18 + Math.random() * 60,
-      frequency: 0.003 + Math.random() * 0.005,
-      phase:     Math.random() * Math.PI * 2,
-      width:     0.5 + Math.random() * 2.2,
-      alpha:     0.06 + Math.random() * 0.18,
-      colorT:    Math.random(),
-    }));
-
-    // ── Floating particles (bubbles) ──
-    type Particle = { x: number; y: number; r: number; vy: number; vx: number; alpha: number; life: number; maxLife: number; };
-    const particles: Particle[] = [];
-
-    function spawnParticle() {
-      particles.push({
-        x:       Math.random() * W,
-        y:       H + 10,
-        r:       1 + Math.random() * 4,
-        vy:      -(0.3 + Math.random() * 0.9),
-        vx:      (Math.random() - 0.5) * 0.4,
-        alpha:   0,
-        life:    0,
-        maxLife: 140 + Math.random() * 180,
-      });
+      const w = Math.floor(canvas.clientWidth  * RENDER_SCALE);
+      const h = Math.floor(canvas.clientHeight * RENDER_SCALE);
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w; canvas.height = h;
+        glc.viewport(0, 0, w, h);
+      }
     }
 
-    let t = 0;
-    let spawnTimer = 0;
+    const start = performance.now();
+    let last = 0;
+    let paused = false;
 
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-
-      // Deep gradient background
-      const bg = ctx.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0,   '#020B18');
-      bg.addColorStop(0.5, '#041525');
-      bg.addColorStop(1,   '#020B18');
-      ctx.fillStyle = bg;
-      ctx.fillRect(0, 0, W, H);
-
-      // ── Draw streams ──
-      for (const s of streams) {
-        ctx.beginPath();
-        ctx.lineWidth = s.width;
-
-        const tealColor  = `rgba(78, 205, 196, ${s.alpha})`;
-        const coralColor = `rgba(255, 107, 107, ${s.alpha * 0.7})`;
-        ctx.strokeStyle  = s.colorT < 0.65 ? tealColor : coralColor;
-
-        const baseY = s.y * H;
-        for (let x = 0; x <= W; x += 3) {
-          const y = baseY
-            + Math.sin(x * s.frequency + t * s.speed * W + s.phase) * s.amplitude
-            + Math.sin(x * s.frequency * 1.7 + t * s.speed * W * 0.6 + s.phase * 1.3) * s.amplitude * 0.35;
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-      }
-
-      // ── Horizontal glow bands ──
-      for (let i = 0; i < 3; i++) {
-        const bandY = (0.25 + i * 0.25) * H + Math.sin(t * 0.0003 + i) * 30;
-        const grd   = ctx.createLinearGradient(0, bandY - 40, 0, bandY + 40);
-        grd.addColorStop(0,   'transparent');
-        grd.addColorStop(0.5, `rgba(78,205,196,${0.018 + i * 0.006})`);
-        grd.addColorStop(1,   'transparent');
-        ctx.fillStyle = grd;
-        ctx.fillRect(0, bandY - 40, W, 80);
-      }
-
-      // ── Particles ──
-      spawnTimer++;
-      if (spawnTimer % 6 === 0 && particles.length < 70) spawnParticle();
-
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.x += p.vx; p.y += p.vy; p.life++;
-        // fade in / out
-        if (p.life < 30)         p.alpha = p.life / 30;
-        else if (p.life > p.maxLife - 40) p.alpha = (p.maxLife - p.life) / 40;
-        else                     p.alpha = 1;
-
-        if (p.life >= p.maxLife) { particles.splice(i, 1); continue; }
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(78,205,196,${p.alpha * 0.55})`;
-        ctx.fill();
-
-        // glow ring on bigger particles
-        if (p.r > 2.5) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r * 2.5, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(78,205,196,${p.alpha * 0.12})`;
-          ctx.lineWidth   = 0.8;
-          ctx.stroke();
-        }
-      }
-
-      // ── Top & bottom fade-out vignette ──
-      const topFade = ctx.createLinearGradient(0, 0, 0, H * 0.22);
-      topFade.addColorStop(0, '#020B18');
-      topFade.addColorStop(1, 'transparent');
-      ctx.fillStyle = topFade;
-      ctx.fillRect(0, 0, W, H * 0.22);
-
-      const botFade = ctx.createLinearGradient(0, H * 0.78, 0, H);
-      botFade.addColorStop(0, 'transparent');
-      botFade.addColorStop(1, '#020B18');
-      ctx.fillStyle = botFade;
-      ctx.fillRect(0, H * 0.78, W, H * 0.22);
-
-      t++;
-      animRef.current = requestAnimationFrame(draw);
+    function frame(now: number) {
+      if (!reduced) raf = requestAnimationFrame(frame);
+      if (paused) return;
+      if (now - last < FRAME_MS) return; // 30fps throttle
+      last = now;
+      resize();
+      const t = reduced ? 0 : (now - start) / 1000;
+      glc.uniform2f(uRes, canvas!.width, canvas!.height);
+      glc.uniform1f(uTime, t);
+      glc.drawArrays(glc.TRIANGLE_STRIP, 0, 4);
     }
+    raf = requestAnimationFrame(frame);
+    if (reduced) { resize(); glc.uniform2f(uRes, canvas.width, canvas.height); glc.uniform1f(uTime, 0); glc.drawArrays(glc.TRIANGLE_STRIP, 0, 4); }
 
-    draw();
+    // pause when tab hidden or hero scrolled out of view
+    const onVis = () => { paused = document.hidden; };
+    document.addEventListener('visibilitychange', onVis);
+    const io = new IntersectionObserver(([e]) => { paused = !e.isIntersecting || document.hidden; }, { threshold: 0 });
+    io.observe(canvas);
 
     return () => {
-      cancelAnimationFrame(animRef.current);
-      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(raf);
+      document.removeEventListener('visibilitychange', onVis);
+      io.disconnect();
     };
   }, []);
 
+  if (failed) {
+    // graceful fallback: static gradient
+    return <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 55%, #E8E8E8 0%, #FFFFFF 70%)' }} />;
+  }
+
   return (
-    <canvas
-      ref={canvasRef}
-      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}
-    />
+    <canvas ref={canvasRef} style={{
+      position: 'absolute', inset: 0, width: '100%', height: '100%',
+      pointerEvents: 'none', zIndex: 0, display: 'block', imageRendering: 'auto',
+    }} />
   );
 }
 
@@ -216,16 +242,16 @@ function Nav() {
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, height: 72,
       display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2.5rem',
       transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
-      backdropFilter: scrolled ? 'blur(20px) saturate(1.4)' : 'none',
-      background: scrolled ? 'rgba(2,11,24,0.82)' : 'transparent',
-      boxShadow: scrolled ? '0 1px 0 rgba(78,205,196,0.12)' : 'none',
+      backdropFilter: scrolled ? 'blur(20px)' : 'none',
+      background: scrolled ? 'rgba(255,255,255,0.88)' : 'transparent',
+      borderBottom: scrolled ? `1px solid ${C.border}` : '1px solid transparent',
     }}>
       <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none' }}>
-        <DermaFlowLogo size={34} />
-        <span style={{ fontFamily: FONT_DISPLAY, fontWeight: 800, fontSize: '1.2rem', color: C.text, letterSpacing: '-0.02em' }}>DermaFlow AI</span>
+        <DermaFlowLogo size={32} />
+        <span style={{ fontFamily: FONT_DISPLAY, fontWeight: 700, fontSize: '1.15rem', color: C.ink, letterSpacing: '-0.02em' }}>DermaFlow AI</span>
       </Link>
 
-      <div className="df-nav-links" style={{ display: 'flex', gap: '2.2rem', alignItems: 'center' }}>
+      <div className="df-nav-links" style={{ display: 'flex', gap: '2.4rem', alignItems: 'center' }}>
         {['Features', 'About', 'Contact'].map(l => <NavLink key={l}>{l}</NavLink>)}
       </div>
 
@@ -241,7 +267,7 @@ function NavLink({ children }: { children: React.ReactNode }) {
   const [hov, setHov] = useState(false);
   return (
     <span onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-      style={{ fontFamily: FONT_BODY, fontSize: '0.92rem', fontWeight: 500, color: hov ? C.teal : C.textMid, cursor: 'pointer', transition: 'color 0.2s', letterSpacing: '0.01em' }}>
+      style={{ fontFamily: FONT_BODY, fontSize: '0.9rem', fontWeight: 500, color: hov ? C.ink : C.inkMid, cursor: 'pointer', transition: 'color 0.2s', letterSpacing: '0.01em' }}>
       {children}
     </span>
   );
@@ -249,19 +275,19 @@ function NavLink({ children }: { children: React.ReactNode }) {
 
 function NavBtn({ children, href, outlined }: { children: React.ReactNode; href: string; outlined?: boolean }) {
   const [hov, setHov] = useState(false);
-  const baseStyle: React.CSSProperties = {
-    fontFamily: FONT_BODY, fontWeight: 600, fontSize: '0.88rem',
-    padding: '0.5rem 1.3rem', borderRadius: 50, cursor: 'pointer',
+  const base: React.CSSProperties = {
+    fontFamily: FONT_BODY, fontWeight: 600, fontSize: '0.85rem',
+    padding: '0.5rem 1.3rem', borderRadius: 4, cursor: 'pointer',
     textDecoration: 'none', display: 'inline-block',
     transition: 'all 0.2s cubic-bezier(0.4,0,0.2,1)',
-    transform: hov ? 'translateY(-2px)' : 'none',
+    letterSpacing: '0.02em',
   };
   if (outlined) return (
-    <Link href={href} style={{ ...baseStyle, background: 'transparent', color: C.teal, border: `1.5px solid ${hov ? C.teal : 'rgba(78,205,196,0.4)'}`, boxShadow: hov ? `0 0 16px rgba(78,205,196,0.2)` : 'none' }}
+    <Link href={href} style={{ ...base, background: 'transparent', color: C.ink, border: `1px solid ${hov ? 'rgba(0,0,0,0.45)' : C.border}` }}
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>{children}</Link>
   );
   return (
-    <Link href={href} style={{ ...baseStyle, background: hov ? '#3bb5ac' : C.teal, color: C.bg, border: 'none', boxShadow: hov ? `0 8px 24px rgba(78,205,196,0.35)` : `0 4px 12px rgba(78,205,196,0.2)` }}
+    <Link href={href} style={{ ...base, background: hov ? '#333333' : C.ink, color: '#FFFFFF', border: '1px solid transparent' }}
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>{children}</Link>
   );
 }
@@ -277,34 +303,25 @@ function HeroBtn({ children, href, primary }: { children: React.ReactNode; href:
       onMouseDown={() => setPress(true)}
       onMouseUp={() => setPress(false)}
       style={{
-        position: 'relative', overflow: 'hidden', textDecoration: 'none',
-        fontFamily: FONT_BODY, fontWeight: 700, fontSize: '1.05rem',
-        padding: '0.95rem 2.4rem', borderRadius: 50, cursor: 'pointer', display: 'inline-block',
+        textDecoration: 'none',
+        fontFamily: FONT_BODY, fontWeight: 600, fontSize: '1rem',
+        padding: '0.9rem 2.3rem', borderRadius: 4, cursor: 'pointer', display: 'inline-block',
         transition: 'all 0.22s cubic-bezier(0.4,0,0.2,1)',
-        transform: press ? 'scale(0.96)' : hov ? 'translateY(-4px) scale(1.02)' : 'none',
+        transform: press ? 'scale(0.97)' : hov ? 'translateY(-2px)' : 'none',
+        letterSpacing: '0.01em',
         ...(primary ? {
-          background: `linear-gradient(135deg, ${C.teal}, #2AB5AC)`,
-          color: C.bg,
-          boxShadow: hov ? `0 12px 32px rgba(78,205,196,0.45), 0 0 0 1px rgba(78,205,196,0.3)` : `0 6px 20px rgba(78,205,196,0.25)`,
-          border: 'none',
+          background: hov ? '#FFFFFF' : '#FAFAFA',
+          color: '#0A0A0A',
+          border: '1px solid transparent',
+          boxShadow: hov ? '0 8px 32px rgba(0,0,0,0.4)' : '0 4px 16px rgba(0,0,0,0.3)',
         } : {
-          background: 'rgba(255,255,255,0.06)',
-          color: C.text,
-          border: `1.5px solid rgba(255,255,255,${hov ? 0.22 : 0.1})`,
-          boxShadow: hov ? '0 8px 24px rgba(0,0,0,0.3)' : '0 4px 12px rgba(0,0,0,0.2)',
+          background: 'rgba(255,255,255,0.12)',
+          color: '#FAFAFA',
+          border: `1px solid ${hov ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.3)'}`,
           backdropFilter: 'blur(12px)',
         }),
       }}
-    >
-      {primary && (
-        <span style={{
-          position: 'absolute', top: 0, left: '-100%', right: 0, bottom: 0,
-          background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.28) 50%, transparent 60%)',
-          animation: 'df-shimmerSweep 3.5s ease-in-out infinite', borderRadius: 50,
-        }} />
-      )}
-      <span style={{ position: 'relative', zIndex: 1 }}>{children}</span>
-    </Link>
+    >{children}</Link>
   );
 }
 
@@ -315,22 +332,24 @@ function FeatureCard({ Icon, title, desc, delay, visible, index }: {
   const [hov, setHov] = useState(false);
   return (
     <div
-      className="df-glass-card"
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
         padding: '2rem 1.75rem',
+        background: hov ? 'rgba(0,0,0,0.045)' : C.card,
+        border: `1px solid ${hov ? 'rgba(0,0,0,0.25)' : C.border}`,
+        borderRadius: 8,
         opacity: visible ? 1 : 0,
-        transform: !visible ? 'translateY(36px)' : hov ? 'translateY(-6px)' : 'translateY(0)',
+        transform: !visible ? 'translateY(32px)' : hov ? 'translateY(-4px)' : 'translateY(0)',
+        transition: 'all 0.4s cubic-bezier(0.16,1,0.3,1)',
         transitionDelay: visible ? `${delay}ms` : '0ms',
-        boxShadow: hov ? `0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(78,205,196,0.18), 0 0 32px rgba(78,205,196,0.06)` : '0 8px 24px rgba(0,0,0,0.3)',
       }}
     >
-      <div style={{ marginBottom: '1.25rem', animation: `df-iconBob ${3.2 + index * 0.45}s ease-in-out ${index * 0.4}s infinite` }}>
+      <div style={{ marginBottom: '1.4rem', opacity: hov ? 1 : 0.85, transition: 'opacity 0.3s' }}>
         <Icon />
       </div>
-      <h3 style={{ fontFamily: FONT_DISPLAY, fontWeight: 700, fontSize: '1.1rem', color: C.text, margin: '0 0 0.6rem', letterSpacing: '-0.01em' }}>{title}</h3>
-      <p style={{ fontFamily: FONT_BODY, fontSize: '0.9rem', color: C.textMid, lineHeight: 1.7, margin: 0 }}>{desc}</p>
+      <h3 style={{ fontFamily: FONT_DISPLAY, fontWeight: 700, fontSize: '1.08rem', color: C.ink, margin: '0 0 0.6rem', letterSpacing: '-0.01em' }}>{title}</h3>
+      <p style={{ fontFamily: FONT_BODY, fontSize: '0.88rem', color: C.inkMid, lineHeight: 1.7, margin: 0 }}>{desc}</p>
     </div>
   );
 }
@@ -343,14 +362,15 @@ function OncoBtn({ children, href }: { children: React.ReactNode; href: string }
       onMouseOver={() => setHov(true)}
       onMouseOut={() => setHov(false)}
       style={{
-        fontFamily: FONT_BODY, fontWeight: 600, fontSize: '0.95rem',
-        padding: '0.8rem 1.9rem', borderRadius: 50, cursor: 'pointer', textDecoration: 'none',
+        fontFamily: FONT_BODY, fontWeight: 600, fontSize: '0.92rem',
+        padding: '0.8rem 1.9rem', borderRadius: 4, cursor: 'pointer', textDecoration: 'none',
         display: 'inline-block',
-        background: `linear-gradient(135deg, ${C.coral}, ${C.coralDim})`,
-        color: '#fff',
-        boxShadow: hov ? `0 12px 28px rgba(255,107,107,0.4)` : `0 6px 16px rgba(255,107,107,0.22)`,
-        transform: hov ? 'translateY(-3px)' : 'none',
+        background: hov ? '#333333' : C.ink,
+        color: '#FFFFFF',
+        boxShadow: hov ? '0 8px 28px rgba(0,0,0,0.22)' : 'none',
+        transform: hov ? 'translateY(-2px)' : 'none',
         transition: 'all 0.22s ease',
+        letterSpacing: '0.01em',
       }}
     >{children}</Link>
   );
@@ -360,46 +380,46 @@ function OncoBtn({ children, href }: { children: React.ReactNode; href: string }
 function ReferralCard() {
   return (
     <div className="df-card-float" style={{
-      width: 300, borderRadius: 24,
-      background: 'rgba(255,255,255,0.05)',
+      width: 300, borderRadius: 12,
+      background: 'rgba(255,255,255,0.85)',
       backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(78,205,196,0.2)',
-      boxShadow: '0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(78,205,196,0.08), inset 0 1px 0 rgba(255,255,255,0.1)',
+      border: `1px solid rgba(0,0,0,0.12)`,
+      boxShadow: '0 32px 80px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.9)',
       padding: '1.75rem',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
-        <div style={{ width: 46, height: 46, borderRadius: '50%', background: `linear-gradient(135deg, ${C.teal}, ${C.tealDim})`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: FONT_DISPLAY, fontWeight: 800, fontSize: '1.2rem', color: C.bg, boxShadow: `0 4px 14px rgba(78,205,196,0.35)` }}>J</div>
+        <div style={{ width: 44, height: 44, borderRadius: '50%', background: C.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: FONT_DISPLAY, fontWeight: 800, fontSize: '1.15rem', color: '#FFFFFF' }}>J</div>
         <div>
-          <div style={{ fontFamily: FONT_DISPLAY, fontWeight: 700, fontSize: '0.95rem', color: C.text }}>Patient Referral Card</div>
-          <div style={{ fontFamily: FONT_MONO, fontSize: '0.63rem', color: C.textDim, letterSpacing: '0.07em' }}>ONCO-CONNECT #DF-2847</div>
+          <div style={{ fontFamily: FONT_DISPLAY, fontWeight: 700, fontSize: '0.92rem', color: C.ink }}>Patient Referral Card</div>
+          <div style={{ fontFamily: FONT_MONO, fontSize: '0.62rem', color: C.inkDim, letterSpacing: '0.07em' }}>ONCO-CONNECT #DF-2847</div>
         </div>
       </div>
-      <div style={{ height: 1, background: `linear-gradient(90deg, transparent, rgba(78,205,196,0.3), transparent)`, marginBottom: '1.1rem' }} />
+      <div style={{ height: 1, background: `linear-gradient(90deg, transparent, rgba(0,0,0,0.2), transparent)`, marginBottom: '1.1rem' }} />
       {[
         { label: 'Assessment', value: 'Benign Nevus' },
         { label: 'Confidence', value: '94.2%' },
         { label: 'Date', value: 'Apr 29, 2026' },
       ].map(f => (
         <div key={f.label} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.6rem', alignItems: 'center' }}>
-          <span style={{ fontFamily: FONT_BODY, fontSize: '0.78rem', color: C.textDim, fontWeight: 500 }}>{f.label}</span>
-          <span style={{ fontFamily: FONT_MONO, fontSize: '0.75rem', color: C.text, fontWeight: 700 }}>{f.value}</span>
+          <span style={{ fontFamily: FONT_BODY, fontSize: '0.78rem', color: C.inkDim, fontWeight: 500 }}>{f.label}</span>
+          <span style={{ fontFamily: FONT_MONO, fontSize: '0.74rem', color: C.ink, fontWeight: 700 }}>{f.value}</span>
         </div>
       ))}
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.25rem', alignItems: 'center' }}>
-        <span style={{ fontFamily: FONT_BODY, fontSize: '0.78rem', color: C.textDim, fontWeight: 500 }}>Risk Level</span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-          <div className="df-pulse-glow" style={{ width: 8, height: 8, borderRadius: '50%', background: C.teal }} />
-          <span style={{ fontFamily: FONT_MONO, fontSize: '0.75rem', color: C.teal, fontWeight: 700 }}>Low</span>
+        <span style={{ fontFamily: FONT_BODY, fontSize: '0.78rem', color: C.inkDim, fontWeight: 500 }}>Risk Level</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+          <div className="df-pulse-glow" style={{ width: 7, height: 7, borderRadius: '50%', background: C.ink }} />
+          <span style={{ fontFamily: FONT_MONO, fontSize: '0.74rem', color: C.ink, fontWeight: 700 }}>Low</span>
         </div>
       </div>
-      <div style={{ borderRadius: 12, background: 'rgba(78,205,196,0.07)', padding: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.75rem', border: '1px solid rgba(78,205,196,0.15)' }}>
+      <div style={{ borderRadius: 8, background: 'rgba(0,0,0,0.03)', padding: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.75rem', border: `1px solid ${C.border}` }}>
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
           {[0,1,2,3,4,5,6].map(row => [0,1,2,3,4,5,6].map(col => (
             <rect key={`${row}-${col}`} x={col*5+2} y={row*5+2} width="4" height="4" rx="0.5"
-              fill={((row+col)%3===0||(row===0&&col===0)||(row===0&&col===6)||(row===6&&col===0)) ? '#4ECDC4' : 'transparent'} opacity="0.85" />
+              fill={((row+col)%3===0||(row===0&&col===0)||(row===0&&col===6)||(row===6&&col===0)) ? '#0A0A0A' : 'transparent'} opacity="0.85" />
           )))}
         </svg>
-        <span style={{ fontFamily: FONT_BODY, fontSize: '0.68rem', color: C.textDim, lineHeight: 1.4 }}>Scan to verify<br />DermaFlow AI</span>
+        <span style={{ fontFamily: FONT_BODY, fontSize: '0.68rem', color: C.inkDim, lineHeight: 1.4 }}>Scan to verify<br />DermaFlow AI</span>
       </div>
     </div>
   );
@@ -427,51 +447,55 @@ export default function LandingPage() {
   }, []);
 
   const features = [
-    { Icon: AnalysisIcon,       title: 'Instant Skin Analysis',  desc: 'Upload a photo of any skin lesion and receive an instant AI-powered analysis with risk assessment scoring.',                           delay: 0   },
-    { Icon: ExplainableAIIcon,  title: 'Explainable AI',         desc: "Understand the 'why' behind every analysis with Grad-CAM heatmap visualizations highlighting areas of concern.",                     delay: 100 },
-    { Icon: PersonalizedCareIcon, title: 'Personalized Care',    desc: 'Get custom hygiene tips, dietary advice, and product recommendations tailored to your unique skin profile.',                          delay: 200 },
-    { Icon: BioLLMIcon,         title: 'Ask a Bio-LLM',          desc: 'Chat with a medically-trained AI assistant. Get verified answers to your dermatology questions anytime.',                             delay: 300 },
+    { Icon: AnalysisIcon,         title: 'Instant Skin Analysis', desc: 'Upload a photo of any skin lesion and receive an instant AI-powered analysis with risk assessment scoring.',       delay: 0   },
+    { Icon: ExplainableAIIcon,    title: 'Explainable AI',        desc: "Understand the 'why' behind every analysis with Grad-CAM heatmap visualizations highlighting areas of concern.", delay: 90  },
+    { Icon: PersonalizedCareIcon, title: 'Personalized Care',     desc: 'Get custom hygiene tips, dietary advice, and product recommendations tailored to your unique skin profile.',      delay: 180 },
+    { Icon: BioLLMIcon,           title: 'Ask a Bio-LLM',         desc: 'Chat with a medically-trained AI assistant. Get verified answers to your dermatology questions anytime.',         delay: 270 },
   ];
 
   return (
-    <div style={{ background: C.bg, minHeight: '100vh', color: C.text }}>
+    <div style={{ background: C.bg, minHeight: '100vh', color: C.ink }}>
       <Nav />
 
       {/* ── HERO ── */}
       <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden', paddingTop: 72 }}>
-        <RiverCanvas />
+        <WaterGL />
 
-        {/* Content */}
-        <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', maxWidth: 820, padding: '0 2rem' }}>
+        {/* darkening overlay to keep text legible */}
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'radial-gradient(ellipse 60% 55% at 50% 52%, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.15) 45%, transparent 75%)', pointerEvents: 'none' }} />
+
+        <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', maxWidth: 840, padding: '0 2rem' }}>
 
           {/* Badge */}
           <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-            background: 'rgba(78,205,196,0.08)',
-            border: '1px solid rgba(78,205,196,0.22)',
-            borderRadius: 50, padding: '0.4rem 1.1rem', marginBottom: '2.2rem',
-            animation: 'df-badgePulse 3s ease-in-out infinite',
+            display: 'inline-flex', alignItems: 'center', gap: '0.55rem',
+            border: '1px solid rgba(255,255,255,0.25)',
+            background: 'rgba(0,0,0,0.25)',
+            backdropFilter: 'blur(8px)',
+            borderRadius: 4, padding: '0.4rem 1rem', marginBottom: '2.4rem',
           }}>
-            <span style={{ width: 7, height: 7, borderRadius: '50%', background: C.teal, display: 'inline-block', boxShadow: `0 0 8px ${C.teal}` }} />
-            <span style={{ fontFamily: FONT_MONO, fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.14em', color: C.teal }}>AI-POWERED SKIN HEALTH</span>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#FFFFFF', display: 'inline-block' }} className="df-pulse-glow" />
+            <span style={{ fontFamily: FONT_MONO, fontSize: '0.68rem', fontWeight: 500, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.85)' }}>AI-POWERED SKIN HEALTH</span>
           </div>
 
-          <h1 style={{ margin: 0, lineHeight: 1.04 }}>
+          <h1 style={{ margin: 0, lineHeight: 1.02 }}>
             <span className="df-hero-word df-word-1" style={{
               display: 'block', fontFamily: FONT_DISPLAY, fontWeight: 800,
-              fontSize: 'clamp(3rem, 7.5vw, 5.8rem)', color: C.text, letterSpacing: '-0.035em',
+              fontSize: 'clamp(2.4rem, 6.5vw, 4.8rem)', color: '#FAFAFA', letterSpacing: '-0.04em',
+              textShadow: '0 2px 24px rgba(0,0,0,0.45)',
             }}>Your Skin.</span>
             <span className="df-hero-word df-word-2" style={{
               display: 'block', fontFamily: FONT_DISPLAY, fontWeight: 800,
-              fontSize: 'clamp(3rem, 7.5vw, 5.8rem)', letterSpacing: '-0.035em',
-              background: `linear-gradient(135deg, ${C.teal} 0%, #7EEEE8 55%, ${C.teal} 100%)`,
+              fontSize: 'clamp(2.4rem, 6.5vw, 4.8rem)', letterSpacing: '-0.04em',
+              background: 'linear-gradient(180deg, #FFFFFF 0%, rgba(255,255,255,0.55) 100%)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
+              filter: 'drop-shadow(0 2px 20px rgba(0,0,0,0.4))',
             }}>Understood.</span>
           </h1>
 
           <p style={{
-            fontFamily: FONT_BODY, fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
-            color: C.textMid, maxWidth: 560, margin: '1.6rem auto 2.8rem', lineHeight: 1.75, fontWeight: 400,
+            fontFamily: FONT_BODY, fontSize: 'clamp(1rem, 2.1vw, 1.15rem)',
+            color: 'rgba(255,255,255,0.88)', maxWidth: 540, margin: '1.8rem auto 3rem', textShadow: '0 1px 12px rgba(0,0,0,0.5)', lineHeight: 1.75, fontWeight: 400,
           }}>
             AI-powered skin analysis, personalized care, and expert guidance — all in one place.
           </p>
@@ -481,32 +505,29 @@ export default function LandingPage() {
             <HeroBtn href="/login">Returning User?</HeroBtn>
           </div>
 
-          {/* Scroll hint */}
-          <div style={{ marginTop: '4rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', opacity: 0.45 }}>
-            <span style={{ fontFamily: FONT_MONO, fontSize: '0.65rem', letterSpacing: '0.15em', color: C.textDim }}>SCROLL</span>
-            <div style={{ width: 1, height: 32, background: `linear-gradient(to bottom, ${C.teal}, transparent)` }} />
+          <div style={{ marginTop: '4.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', opacity: 0.4 }}>
+            <span style={{ fontFamily: FONT_MONO, fontSize: '0.62rem', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.7)' }}>SCROLL</span>
+            <div style={{ width: 1, height: 36, background: 'linear-gradient(to bottom, rgba(255,255,255,0.6), transparent)' }} />
           </div>
         </div>
       </section>
 
       {/* ── FEATURES ── */}
       <section ref={featuresRef} style={{ padding: '8rem 2rem', background: C.bg, position: 'relative' }}>
-        {/* subtle top border glow */}
-        <div style={{ position: 'absolute', top: 0, left: '10%', right: '10%', height: 1, background: `linear-gradient(90deg, transparent, rgba(78,205,196,0.3), transparent)` }} />
+        <div style={{ position: 'absolute', top: 0, left: '8%', right: '8%', height: 1, background: `linear-gradient(90deg, transparent, rgba(0,0,0,0.15), transparent)` }} />
 
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
-            <div style={{ fontFamily: FONT_MONO, fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.16em', color: C.teal, marginBottom: '1rem' }}>CAPABILITIES</div>
-            <h2 style={{ fontFamily: FONT_DISPLAY, fontWeight: 800, fontSize: 'clamp(2rem, 4vw, 3rem)', color: C.text, letterSpacing: '-0.025em', margin: '0 0 1rem' }}>
+            <div style={{ fontFamily: FONT_MONO, fontSize: '0.66rem', fontWeight: 500, letterSpacing: '0.2em', color: C.inkDim, marginBottom: '1.1rem' }}>CAPABILITIES</div>
+            <h2 style={{ fontFamily: FONT_DISPLAY, fontWeight: 800, fontSize: 'clamp(2rem, 4vw, 2.9rem)', color: C.ink, letterSpacing: '-0.03em', margin: '0 0 1rem' }}>
               What DermaFlow Can Do
             </h2>
-            <p style={{ fontFamily: FONT_BODY, fontSize: '1.05rem', color: C.textMid, marginBottom: '1.75rem', maxWidth: 480, margin: '0 auto 1.75rem' }}>
+            <p style={{ fontFamily: FONT_BODY, fontSize: '1rem', color: C.inkMid, maxWidth: 460, margin: '0 auto' }}>
               A full suite of AI-powered tools for your skin health journey.
             </p>
-            <div className="df-glow-line" style={{ width: 72, height: 3, borderRadius: 3, background: `linear-gradient(90deg, ${C.teal}, #7EEEE8)`, margin: '0 auto', boxShadow: `0 0 12px rgba(78,205,196,0.5)` }} />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
             {features.map(({ Icon, title, desc, delay }, i) => (
               <FeatureCard key={title} Icon={Icon} title={title} desc={desc} delay={delay} visible={featuresVisible} index={i} />
             ))}
@@ -515,53 +536,51 @@ export default function LandingPage() {
       </section>
 
       {/* ── ONCO-CONNECT ── */}
-      <section ref={oncoRef} style={{ background: 'linear-gradient(135deg, #041A2E 0%, #020B18 100%)', padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
-        {/* Dot grid */}
+      <section ref={oncoRef} style={{ background: '#F7F7F7', padding: '8rem 2rem', position: 'relative', overflow: 'hidden', borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}` }}>
+        {/* dot grid */}
         <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.05, pointerEvents: 'none' }}>
           <defs>
             <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
-              <circle cx="4" cy="4" r="1.5" fill="#4ECDC4" />
+              <circle cx="4" cy="4" r="1.2" fill="#000000" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#dots)" />
         </svg>
-        {/* Glow orb */}
-        <div style={{ position: 'absolute', top: '20%', right: '-10%', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(78,205,196,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '4rem', alignItems: 'center', position: 'relative', zIndex: 1 }}>
-          <div style={{ flex: '1 1 340px', opacity: oncoVisible ? 1 : 0, transform: oncoVisible ? 'none' : 'translateY(40px)', transition: 'all 0.8s cubic-bezier(0.16,1,0.3,1)' }}>
-            <div style={{ display: 'inline-block', fontFamily: FONT_MONO, fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.16em', color: C.teal, background: 'rgba(78,205,196,0.1)', border: `1px solid rgba(78,205,196,0.25)`, borderRadius: 50, padding: '0.35rem 1rem', marginBottom: '1.5rem' }}>ONCO-CONNECT</div>
-            <h2 style={{ fontFamily: FONT_DISPLAY, fontWeight: 800, fontSize: 'clamp(2rem, 4vw, 3rem)', color: C.text, letterSpacing: '-0.025em', margin: '0 0 1.25rem' }}>
+          <div style={{ flex: '1 1 340px', opacity: oncoVisible ? 1 : 0, transform: oncoVisible ? 'none' : 'translateY(36px)', transition: 'all 0.8s cubic-bezier(0.16,1,0.3,1)' }}>
+            <div style={{ display: 'inline-block', fontFamily: FONT_MONO, fontSize: '0.64rem', fontWeight: 500, letterSpacing: '0.2em', color: C.inkMid, border: `1px solid ${C.border}`, borderRadius: 4, padding: '0.35rem 1rem', marginBottom: '1.6rem' }}>ONCO-CONNECT</div>
+            <h2 style={{ fontFamily: FONT_DISPLAY, fontWeight: 800, fontSize: 'clamp(2rem, 4vw, 2.9rem)', color: C.ink, letterSpacing: '-0.03em', margin: '0 0 1.25rem' }}>
               Connecting You to Real Care
             </h2>
-            <p style={{ fontFamily: FONT_BODY, fontSize: '1.05rem', color: C.textMid, lineHeight: 1.8, marginBottom: '2.2rem' }}>
+            <p style={{ fontFamily: FONT_BODY, fontSize: '1rem', color: C.inkMid, lineHeight: 1.8, marginBottom: '2.3rem' }}>
               Our triage system helps you take the next step. Generate a digital referral card and find verified oncology centers near you — bridging the gap between digital assessment and professional medical consultation.
             </p>
             <OncoBtn href="/signup">Learn About Onco-Connect →</OncoBtn>
           </div>
-          <div style={{ flex: '1 1 300px', display: 'flex', justifyContent: 'center', opacity: oncoVisible ? 1 : 0, transform: oncoVisible ? 'none' : 'translateY(40px)', transition: 'all 0.8s 0.18s cubic-bezier(0.16,1,0.3,1)' }}>
+          <div style={{ flex: '1 1 300px', display: 'flex', justifyContent: 'center', opacity: oncoVisible ? 1 : 0, transform: oncoVisible ? 'none' : 'translateY(36px)', transition: 'all 0.8s 0.18s cubic-bezier(0.16,1,0.3,1)' }}>
             <ReferralCard />
           </div>
         </div>
       </section>
 
       {/* ── FOOTER ── */}
-      <footer style={{ background: '#020B18', padding: '3rem 2rem', borderTop: '1px solid rgba(78,205,196,0.1)' }}>
+      <footer style={{ background: C.bg, padding: '3rem 2rem' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '2rem', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-            <DermaFlowLogo size={30} />
-            <span style={{ fontFamily: FONT_DISPLAY, fontWeight: 800, fontSize: '1.05rem', color: C.text }}>DermaFlow AI</span>
+            <DermaFlowLogo size={28} />
+            <span style={{ fontFamily: FONT_DISPLAY, fontWeight: 700, fontSize: '1rem', color: C.ink }}>DermaFlow AI</span>
           </div>
           <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
             {['Features', 'About', 'Privacy', 'Contact'].map(l => (
-              <span key={l} style={{ fontFamily: FONT_BODY, fontSize: '0.88rem', color: C.textDim, cursor: 'pointer', transition: 'color 0.2s' }}
-                onMouseOver={e => (e.currentTarget.style.color = C.teal)}
-                onMouseOut={e  => (e.currentTarget.style.color = C.textDim)}>{l}</span>
+              <span key={l} style={{ fontFamily: FONT_BODY, fontSize: '0.86rem', color: C.inkDim, cursor: 'pointer', transition: 'color 0.2s' }}
+                onMouseOver={e => (e.currentTarget.style.color = C.ink)}
+                onMouseOut={e  => (e.currentTarget.style.color = C.inkDim)}>{l}</span>
             ))}
           </div>
           <div style={{ textAlign: 'right' }}>
-            <p style={{ fontFamily: FONT_BODY, fontSize: '0.78rem', color: C.textDim, margin: 0 }}>For informational purposes only. Not a substitute for professional medical advice.</p>
-            <p style={{ fontFamily: FONT_BODY, fontSize: '0.78rem', color: C.textDim, margin: '0.25rem 0 0' }}>© 2026 DermaFlow AI</p>
+            <p style={{ fontFamily: FONT_BODY, fontSize: '0.76rem', color: C.inkDim, margin: 0 }}>For informational purposes only. Not a substitute for professional medical advice.</p>
+            <p style={{ fontFamily: FONT_BODY, fontSize: '0.76rem', color: C.inkDim, margin: '0.25rem 0 0' }}>© 2026 DermaFlow AI</p>
           </div>
         </div>
       </footer>

@@ -54,11 +54,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body style={{ fontFamily: '"Inter", sans-serif' }}>
+      <body style={{ fontFamily: '"Montserrat", sans-serif' }}>
         <FirebaseClientProvider>
           <ThemeProvider
               attribute="class"
-              defaultTheme="dark"
+              defaultTheme="light"
               enableSystem={false}
               disableTransitionOnChange
           >
