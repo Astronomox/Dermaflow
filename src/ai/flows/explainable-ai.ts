@@ -13,6 +13,7 @@
  */
 
 import { ai } from '@/ai/genkit';
+import {guardAiCall, charCount} from '@/lib/guard';
 import { z } from 'genkit';
 
 const ExplainableAIInputSchema = z.object({
@@ -91,6 +92,7 @@ function classifyAndThrow(error: any): never {
 }
 
 export async function generateExplainableAI(input: ExplainableAIInput): Promise<ExplainableAIOutput> {
+  await guardAiCall('explainableAI', charCount(input), { limit: 6, maxChars: 8_000_000 });
   return explainableAIFlow(input);
 }
 

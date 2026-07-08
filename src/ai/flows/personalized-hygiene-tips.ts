@@ -9,6 +9,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import {guardAiCall, charCount} from '@/lib/guard';
 import {z} from 'genkit';
 
 const PersonalizedHygieneTipsInputSchema = z.object({
@@ -34,6 +35,7 @@ const PersonalizedHygieneTipsOutputSchema = z.object({
 export type PersonalizedHygieneTipsOutput = z.infer<typeof PersonalizedHygieneTipsOutputSchema>;
 
 export async function personalizedHygieneTips(input: PersonalizedHygieneTipsInput): Promise<PersonalizedHygieneTipsOutput> {
+  await guardAiCall('hygieneTips', charCount(input), { limit: 10, maxChars: 16_000 });
   return personalizedHygieneTipsFlow(input);
 }
 

@@ -9,6 +9,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import {guardAiCall, charCount} from '@/lib/guard';
 import {z} from 'genkit';
 import wav from 'wav';
 
@@ -28,6 +29,7 @@ const TextToSpeechOutputSchema = z.object({
 export type TextToSpeechOutput = z.infer<typeof TextToSpeechOutputSchema>;
 
 export async function textToSpeech(input: TextToSpeechInput): Promise<TextToSpeechOutput> {
+  await guardAiCall('tts', charCount(input), { limit: 8, maxChars: 12_000 });
   return textToSpeechFlow(input);
 }
 

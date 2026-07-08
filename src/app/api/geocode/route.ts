@@ -3,8 +3,13 @@
 // Usage: GET /api/geocode?q=Lagos
 
 import { NextRequest, NextResponse } from 'next/server';
+import { hit, requestIp } from '@/lib/guard';
 
 export async function GET(request: NextRequest) {
+  // per-IP rate limit: 30 req/min
+  if (!hit(`api:geocode:${requestIp(request)}`, 30, 60_000)) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+  }
   const { searchParams } = new URL(request.url);
   const q = searchParams.get('q');
 

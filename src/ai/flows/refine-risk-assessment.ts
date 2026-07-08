@@ -8,6 +8,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import {guardAiCall, charCount} from '@/lib/guard';
 import {z} from 'genkit';
 
 const RefineRiskAssessmentInputSchema = z.object({
@@ -39,6 +40,7 @@ export type RefineRiskAssessmentOutput = z.infer<typeof RefineRiskAssessmentOutp
 export async function refineRiskAssessment(
   input: RefineRiskAssessmentInput
 ): Promise<RefineRiskAssessmentOutput> {
+  await guardAiCall('refineRisk', charCount(input), { limit: 10, maxChars: 8_000_000 });
   return refineRiskAssessmentFlow(input);
 }
 

@@ -9,6 +9,7 @@
  */
 
 import {ai} from '@/ai/genkit';
+import {guardAiCall, charCount} from '@/lib/guard';
 import {z} from 'genkit';
 
 const MessageSchema = z.object({
@@ -30,6 +31,7 @@ const MedicalQuestionAnsweringOutputSchema = z.object({
 export type MedicalQuestionAnsweringOutput = z.infer<typeof MedicalQuestionAnsweringOutputSchema>;
 
 export async function medicalQuestionAnswering(input: MedicalQuestionAnsweringInput): Promise<MedicalQuestionAnsweringOutput> {
+  await guardAiCall('medicalQA', charCount(input), { limit: 10, maxChars: 24_000 });
   return medicalQuestionAnsweringFlow(input);
 }
 

@@ -4,6 +4,7 @@
 // Usage: GET /api/weather?lat=6.5244&lon=3.3792
 
 import { NextRequest, NextResponse } from 'next/server';
+import { hit, requestIp } from '@/lib/guard';
 
 interface WeatherData {
   location: { latitude: number; longitude: number };
@@ -77,6 +78,10 @@ function getAirQualityLabel(cloudCover: number): string {
 }
 
 export async function GET(request: NextRequest) {
+  // per-IP rate limit: 30 req/min
+  if (!hit(`api:weather:${requestIp(request)}`, 30, 60_000)) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+  }
   const { searchParams } = new URL(request.url);
   const lat = searchParams.get('lat');
   const lon = searchParams.get('lon');

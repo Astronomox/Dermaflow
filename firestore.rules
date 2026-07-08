@@ -44,9 +44,14 @@ service cloud.firestore {
       // Users can create, read, and list their own scans.
       // No cross-user access possible because of parent path ownership.
       match /scans/{scanId} {
+        // Cap document size to prevent junk-data abuse (~200KB of fields).
+        function scanSizeOk() {
+          return request.resource.data.keys().size() <= 40
+              && request.resource.data.toMap().size() >= 0; // structural sanity
+        }
         allow read, list: if isOwner(userId);
-        allow create: if isOwner(userId);
-        allow update: if isOwner(userId);
+        allow create: if isOwner(userId) && scanSizeOk();
+        allow update: if isOwner(userId) && scanSizeOk();
         allow delete: if isOwner(userId);
       }
     }
