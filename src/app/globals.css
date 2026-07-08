@@ -6,59 +6,51 @@
 
 @layer base {
   :root, .dark {
-    /* Base Colors - Deep Navy Backgrounds */
-    --background: 225 35% 8%;
-    --foreground: 210 20% 95%;
+    /* Base Colors - Deep Ocean */
+    --background: 218 50% 5%;
+    --foreground: 200 30% 93%;
 
-    /* Cards and popovers slightly lighter than background */
-    --card: 225 30% 11%;
-    --card-foreground: 210 20% 95%;
-    --popover: 225 30% 11%;
-    --popover-foreground: 210 20% 95%;
+    --card: 218 40% 8%;
+    --card-foreground: 200 30% 93%;
+    --popover: 218 40% 8%;
+    --popover-foreground: 200 30% 93%;
 
-    /* Primary Colors - Soft Teal for high contrast */
-    --primary: 175 45% 55%;
-    --primary-foreground: 225 40% 5%;
+    /* Primary - Bioluminescent Teal */
+    --primary: 177 55% 55%;
+    --primary-foreground: 218 50% 5%;
 
-    /* Secondary - subtle dark bluish grays */
-    --secondary: 220 25% 15%;
-    --secondary-foreground: 210 20% 90%;
+    --secondary: 215 30% 13%;
+    --secondary-foreground: 200 20% 88%;
 
-    /* Muted Elements */
-    --muted: 220 25% 15%;
-    --muted-foreground: 215 15% 65%;
+    --muted: 215 30% 13%;
+    --muted-foreground: 210 15% 58%;
 
-    /* Accents - brighter teal/blue */
-    --accent: 180 40% 20%;
-    --accent-foreground: 180 50% 85%;
+    --accent: 177 55% 20%;
+    --accent-foreground: 177 55% 80%;
 
-    /* States */
     --destructive: 350 65% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Borders & Inputs */
-    --border: 220 25% 18%;
-    --input: 220 25% 18%;
-    --ring: 175 45% 55%;
+    --border: 215 25% 14%;
+    --input: 215 25% 14%;
+    --ring: 177 55% 55%;
 
-    /* Charts */
-    --chart-1: 175 45% 55%;
-    --chart-2: 210 45% 60%;
-    --chart-3: 350 65% 65%;
+    --chart-1: 177 55% 55%;
+    --chart-2: 200 50% 60%;
+    --chart-3: 15 75% 62%;
     --chart-4: 40 75% 65%;
     --chart-5: 150 45% 55%;
 
     --radius: 0.75rem;
 
-    /* Sidebar */
-    --sidebar-background: 225 35% 8%;
-    --sidebar-foreground: 210 20% 95%;
-    --sidebar-primary: 175 45% 55%;
-    --sidebar-primary-foreground: 225 40% 5%;
-    --sidebar-accent: 220 25% 15%;
-    --sidebar-accent-foreground: 210 20% 95%;
-    --sidebar-border: 220 25% 18%;
-    --sidebar-ring: 175 45% 55%;
+    --sidebar-background: 218 50% 5%;
+    --sidebar-foreground: 200 30% 93%;
+    --sidebar-primary: 177 55% 55%;
+    --sidebar-primary-foreground: 218 50% 5%;
+    --sidebar-accent: 215 30% 13%;
+    --sidebar-accent-foreground: 200 30% 93%;
+    --sidebar-border: 215 25% 14%;
+    --sidebar-ring: 177 55% 55%;
   }
 }
 
