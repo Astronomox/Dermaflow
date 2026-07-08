@@ -17,7 +17,7 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
 
   if (isUserLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center" style={{ background: '#FFF8F0' }}>
+      <div className="flex min-h-screen items-center justify-center" style={{ background: '#FFFFFF' }}>
         <DermaFlowSpinner size={48} label="Loading your dashboard..." />
       </div>
     );

@@ -18,7 +18,7 @@ import { DermaFlowLogo } from '@/components/icons/dermaflow-icons';
 
 const FONT_HEADLINE = '"Bricolage Grotesque", sans-serif';
 const FONT_BODY = '"DM Sans", sans-serif';
-const COLOR_DARK = '#2D1B0E';
+const COLOR_DARK = '#171717';
 
 const formSchema = z.object({
   email: z.string().email('Invalid email address.'),
@@ -45,7 +45,7 @@ export default function SignupPage() {
     width: '100%', padding: '0.85rem 1.1rem', borderRadius: 16,
     border: focused === id ? '1.5px solid rgba(42,123,123,0.5)' : '1.5px solid rgba(255,255,255,0.4)',
     outline: 'none', fontFamily: FONT_BODY, fontSize: '0.95rem', color: COLOR_DARK,
-    background: 'linear-gradient(145deg, #ede4db, #f7efe6)',
+    background: 'linear-gradient(145deg, #E8E8E8, #F5F5F5)',
     boxShadow: focused === id
       ? 'inset 3px 3px 6px rgba(0,0,0,0.07), inset -2px -2px 4px rgba(255,255,255,0.7), 0 0 0 3px rgba(42,123,123,0.18)'
       : 'inset 3px 3px 6px rgba(0,0,0,0.06), inset -2px -2px 4px rgba(255,255,255,0.7)',
@@ -137,7 +137,7 @@ export default function SignupPage() {
 
       {/* ── RIGHT: Form ── */}
       <div style={{
-        background: '#FFF8F0', display: 'flex', flexDirection: 'column', justifyContent: 'center',
+        background: '#FFFFFF', display: 'flex', flexDirection: 'column', justifyContent: 'center',
         padding: '3.5rem 3.5rem', position: 'relative', overflow: 'hidden',
       }}>
         <div style={{ position: 'relative', zIndex: 1, maxWidth: 400 }}>
@@ -160,7 +160,7 @@ export default function SignupPage() {
                     onBlur={() => setFocused('')}
                     style={inputStyle(f.id)} />
                   {form.formState.errors[f.id] && (
-                    <p style={{ color: '#E8735A', fontSize: '0.8rem', marginTop: '0.25rem', fontFamily: FONT_BODY }}>
+                    <p style={{ color: '#404040', fontSize: '0.8rem', marginTop: '0.25rem', fontFamily: FONT_BODY }}>
                       {form.formState.errors[f.id]?.message}
                     </p>
                   )}
@@ -170,8 +170,8 @@ export default function SignupPage() {
 
             <button type="submit" disabled={isPending} style={{
               width: '100%', padding: '0.9rem', borderRadius: 16, border: 'none', cursor: isPending ? 'wait' : 'pointer',
-              fontFamily: FONT_BODY, fontWeight: 700, fontSize: '1rem', color: '#FFF8F0',
-              background: 'linear-gradient(145deg, #2A7B7B, #1a5c5c)',
+              fontFamily: FONT_BODY, fontWeight: 700, fontSize: '1rem', color: '#FFFFFF',
+              background: 'linear-gradient(145deg, #525252, #404040)',
               boxShadow: '8px 8px 16px rgba(0,0,0,0.09), -4px -4px 12px rgba(255,255,255,0.8), inset 1px 1px 2px rgba(255,255,255,0.3)',
               transition: 'all 0.2s ease',
               animation: 'df-heartbeat 3s ease-in-out infinite',
@@ -185,7 +185,7 @@ export default function SignupPage() {
 
           <p style={{ fontFamily: FONT_BODY, fontSize: '0.9rem', color: 'rgba(45,27,14,0.55)', textAlign: 'center', marginTop: '1.25rem' }}>
             Already have an account?{' '}
-            <Link href="/login" style={{ color: '#E8735A', fontWeight: 700, textDecoration: 'none' }}>Login</Link>
+            <Link href="/login" style={{ color: '#404040', fontWeight: 700, textDecoration: 'none' }}>Login</Link>
           </p>
         </div>
       </div>

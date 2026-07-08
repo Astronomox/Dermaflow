@@ -100,3 +100,8 @@
     -moz-osx-font-smoothing: grayscale;
   }
 }
+
+/* ── Monochrome media: every picture/photo/illustration renders grayscale ── */
+img, video, picture, image, [style*="background-image"] {
+  filter: grayscale(100%);
+}

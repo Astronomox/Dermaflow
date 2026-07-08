@@ -19,7 +19,7 @@ import { DermaFlowLogo } from '@/components/icons/dermaflow-icons';
 
 const FONT_HEADLINE = '"Bricolage Grotesque", sans-serif';
 const FONT_BODY = '"DM Sans", sans-serif';
-const COLOR_DARK = '#2D1B0E';
+const COLOR_DARK = '#171717';
 
 const formSchema = z.object({
   email: z.string().email('Invalid email address.'),
@@ -43,7 +43,7 @@ export default function LoginPage() {
     width: '100%', padding: '0.85rem 1.1rem', borderRadius: 16,
     border: focused ? '1.5px solid rgba(232,115,90,0.5)' : '1.5px solid rgba(255,255,255,0.4)',
     outline: 'none', fontFamily: FONT_BODY, fontSize: '0.95rem', color: COLOR_DARK,
-    background: 'linear-gradient(145deg, #ede4db, #f7efe6)',
+    background: 'linear-gradient(145deg, #E8E8E8, #F5F5F5)',
     boxShadow: focused
       ? 'inset 3px 3px 6px rgba(0,0,0,0.07), inset -2px -2px 4px rgba(255,255,255,0.7), 0 0 0 3px rgba(232,115,90,0.2)'
       : 'inset 3px 3px 6px rgba(0,0,0,0.06), inset -2px -2px 4px rgba(255,255,255,0.7)',
@@ -74,7 +74,7 @@ export default function LoginPage() {
     <div className="df-login-grid" style={{ minHeight: '100vh', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
       {/* ── LEFT: Form ── */}
       <div style={{
-        background: '#FFF8F0', display: 'flex', flexDirection: 'column', justifyContent: 'center',
+        background: '#FFFFFF', display: 'flex', flexDirection: 'column', justifyContent: 'center',
         padding: '4rem 3.5rem', position: 'relative', overflow: 'hidden',
       }}>
         <div style={{ position: 'relative', zIndex: 1, maxWidth: 400 }}>
@@ -93,7 +93,7 @@ export default function LoginPage() {
                 {...form.register('email')}
                 onFocus={() => setEmailFocused(true)} onBlur={() => setEmailFocused(false)}
                 style={inputStyle(emailFocused)} />
-              {form.formState.errors.email && <p style={{ color: '#E8735A', fontSize: '0.8rem', marginTop: '0.25rem', fontFamily: FONT_BODY }}>{form.formState.errors.email.message}</p>}
+              {form.formState.errors.email && <p style={{ color: '#404040', fontSize: '0.8rem', marginTop: '0.25rem', fontFamily: FONT_BODY }}>{form.formState.errors.email.message}</p>}
             </div>
 
             <div style={{ marginBottom: '0.5rem' }}>
@@ -102,17 +102,17 @@ export default function LoginPage() {
                 {...form.register('password')}
                 onFocus={() => setPassFocused(true)} onBlur={() => setPassFocused(false)}
                 style={inputStyle(passFocused)} />
-              {form.formState.errors.password && <p style={{ color: '#E8735A', fontSize: '0.8rem', marginTop: '0.25rem', fontFamily: FONT_BODY }}>{form.formState.errors.password.message}</p>}
+              {form.formState.errors.password && <p style={{ color: '#404040', fontSize: '0.8rem', marginTop: '0.25rem', fontFamily: FONT_BODY }}>{form.formState.errors.password.message}</p>}
             </div>
 
             <div style={{ textAlign: 'right', marginBottom: '2rem' }}>
-              <span style={{ fontFamily: FONT_BODY, fontSize: '0.85rem', color: '#E8735A', cursor: 'pointer', fontWeight: 600 }}>Forgot password?</span>
+              <span style={{ fontFamily: FONT_BODY, fontSize: '0.85rem', color: '#404040', cursor: 'pointer', fontWeight: 600 }}>Forgot password?</span>
             </div>
 
             <button type="submit" disabled={isPending} style={{
               width: '100%', padding: '0.9rem', borderRadius: 16, border: 'none', cursor: isPending ? 'wait' : 'pointer',
-              fontFamily: FONT_BODY, fontWeight: 700, fontSize: '1rem', color: '#FFF8F0',
-              background: 'linear-gradient(145deg, #E8735A, #d4614a)',
+              fontFamily: FONT_BODY, fontWeight: 700, fontSize: '1rem', color: '#FFFFFF',
+              background: 'linear-gradient(145deg, #404040, #333333)',
               boxShadow: '8px 8px 16px rgba(0,0,0,0.09), -4px -4px 12px rgba(255,255,255,0.8), inset 1px 1px 2px rgba(255,255,255,0.3)',
               transition: 'all 0.2s ease',
               animation: 'df-heartbeat 3s ease-in-out infinite',
@@ -126,7 +126,7 @@ export default function LoginPage() {
 
           <p style={{ fontFamily: FONT_BODY, fontSize: '0.9rem', color: 'rgba(45,27,14,0.55)', textAlign: 'center', marginTop: '1.5rem' }}>
             Don&apos;t have an account?{' '}
-            <Link href="/signup" style={{ color: '#2A7B7B', fontWeight: 700, textDecoration: 'none' }}>Sign up</Link>
+            <Link href="/signup" style={{ color: '#525252', fontWeight: 700, textDecoration: 'none' }}>Sign up</Link>
           </p>
         </div>
       </div>

@@ -505,10 +505,6 @@ export default function LandingPage() {
             <HeroBtn href="/login">Returning User?</HeroBtn>
           </div>
 
-          <div style={{ marginTop: '4.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', opacity: 0.4 }}>
-            <span style={{ fontFamily: FONT_MONO, fontSize: '0.62rem', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.7)' }}>SCROLL</span>
-            <div style={{ width: 1, height: 36, background: 'linear-gradient(to bottom, rgba(255,255,255,0.6), transparent)' }} />
-          </div>
         </div>
       </section>
 

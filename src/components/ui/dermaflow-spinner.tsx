@@ -14,12 +14,12 @@ export function DermaFlowSpinner({ size = 40, label }: { size?: number; label?: 
         <svg width={size} height={size} viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="dfSpinGrad" x1="0" y1="0" x2="36" y2="36">
-              <stop stopColor="#E8735A" />
-              <stop offset="1" stopColor="#2A7B7B" />
+              <stop stopColor="#404040" />
+              <stop offset="1" stopColor="#525252" />
             </linearGradient>
             <radialGradient id="dfSpinCircle" cx="50%" cy="50%" r="50%">
-              <stop stopColor="#F4A89A" />
-              <stop offset="1" stopColor="#2A7B7B" />
+              <stop stopColor="#BFBFBF" />
+              <stop offset="1" stopColor="#525252" />
             </radialGradient>
           </defs>
           <rect width="36" height="36" rx="10" fill="url(#dfSpinGrad)" />
@@ -58,7 +58,7 @@ export function DermaFlowButtonSpinner({ size = 18 }: { size?: number }) {
     >
       <defs>
         <linearGradient id="dfBtnSpinGrad" x1="0" y1="0" x2="36" y2="36">
-          <stop stopColor="#FFF8F0" />
+          <stop stopColor="#FFFFFF" />
           <stop offset="1" stopColor="rgba(255,248,240,0.5)" />
         </linearGradient>
       </defs>
