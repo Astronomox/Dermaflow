@@ -75,7 +75,7 @@ const secondaryFeatures = [
   },
 ];
 
-// Stats are now dynamic — loaded from Firestore in the component
+// Stats are now dynamic - loaded from Firestore in the component
 
 export default function DashboardPage() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);

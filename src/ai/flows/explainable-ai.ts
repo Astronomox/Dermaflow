@@ -83,7 +83,7 @@ function classifyAndThrow(error: any): never {
     );
   }
 
-  // Generic — still throw, never swallow
+  // Generic - still throw, never swallow
   throw new Error(
     `DERMAFLOW_AI_ERROR: Skin analysis failed unexpectedly. ` +
     `Details: ${error?.message || 'Unknown error'}. ` +
@@ -149,7 +149,7 @@ const explainableAIFlow = ai.defineFlow(
 
     // Validate that the AI actually returned structured output
     if (!res.output) {
-      console.error('[DERMAFLOW] AI returned empty output — model may have refused or returned unstructured text');
+      console.error('[DERMAFLOW] AI returned empty output - model may have refused or returned unstructured text');
       throw new Error(
         'DERMAFLOW_AI_ERROR: The AI model did not return a structured analysis. ' +
         'This can happen if the image is unclear or not a skin lesion. ' +

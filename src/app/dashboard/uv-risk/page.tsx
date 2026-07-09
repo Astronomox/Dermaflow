@@ -92,7 +92,7 @@ export default function UvRiskPage() {
         }
       },
       () => {
-        // Geolocation denied — fallback to Lagos
+        // Geolocation denied - fallback to Lagos
         fetchWeather(6.5244, 3.3792, "Lagos, Nigeria");
         toast({
           title: "Location access denied",

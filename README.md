@@ -19,7 +19,7 @@ Dermaflow started as the technical foundation for a team entry at the Futurise H
 ### Skin analysis with explainable AI
 Upload a photo of any skin concern. Dermaflow sends the image to Gemini 2.5 Flash via a Genkit flow, which identifies the condition (Benign Nevus, Melanoma, Basal Cell Carcinoma, etc.) and returns a confidence score. The model also returns a bounding box for the primary lesion.
 
-The bounding box is used to generate a heatmap overlay: an SVG rendered server-side that draws a red highlight and a blurred radial glow over the exact area the model flagged. The user does not just see a result — they see *why* the AI flagged it. This is the explainability layer.
+The bounding box is used to generate a heatmap overlay: an SVG rendered server-side that draws a red highlight and a blurred radial glow over the exact area the model flagged. The user does not just see a result - they see *why* the AI flagged it. This is the explainability layer.
 
 ### Refined risk assessment
 After the initial analysis, the user answers a short questionnaire: how long has the lesion been present, does it bleed or itch, has it changed color or size. A second Genkit flow feeds both the initial assessment and the questionnaire responses to Gemini, which produces a refined assessment and a rationale explaining how each symptom influenced the conclusion.
@@ -129,4 +129,4 @@ Dermaflow is for informational purposes only. It is not a substitute for profess
 
 ---
 
-Built by [Abdullahi Oriola](https://abdullahioriola.vercel.app) — Data Science student, UNILAG. Lagos, Nigeria.
+Built by [Abdullahi Oriola](https://abdullahioriola.vercel.app) - Data Science student, UNILAG. Lagos, Nigeria.

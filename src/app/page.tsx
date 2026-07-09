@@ -1,7 +1,7 @@
 'use client';
 
 // src/app/page.tsx
-// DermaFlow V4 — Monochrome / WebGL fluid water
+// DermaFlow V4 - Monochrome / WebGL fluid water
 // Hero: GLSL fragment-shader river (FBM flow noise), pure grayscale theme
 
 import { useState, useEffect, useRef } from 'react';
@@ -30,7 +30,7 @@ const FONT_BODY    = '"Montserrat", sans-serif';
 const FONT_MONO    = '"Montserrat", sans-serif';
 
 // ══════════════════════════════════════════════════════
-// WEBGL WATER — fragment shader fluid simulation
+// WEBGL WATER - fragment shader fluid simulation
 // ══════════════════════════════════════════════════════
 const VERT = `
 attribute vec2 aPos;
@@ -171,7 +171,7 @@ function WaterGL() {
     const uTime = glc.getUniformLocation(prog, 'uTime');
 
     let raf = 0;
-    const RENDER_SCALE = 0.55; // render at ~half res, CSS upscales — huge perf win, water blur hides it
+    const RENDER_SCALE = 0.55; // render at ~half res, CSS upscales - huge perf win, water blur hides it
     const FRAME_MS = 1000 / 30; // cap at 30fps
 
     function resize() {
@@ -497,7 +497,7 @@ export default function LandingPage() {
             fontFamily: FONT_BODY, fontSize: 'clamp(1rem, 2.1vw, 1.15rem)',
             color: 'rgba(255,255,255,0.88)', maxWidth: 540, margin: '1.8rem auto 3rem', textShadow: '0 1px 12px rgba(0,0,0,0.5)', lineHeight: 1.75, fontWeight: 400,
           }}>
-            AI-powered skin analysis, personalized care, and expert guidance — all in one place.
+            AI-powered skin analysis, personalized care, and expert guidance - all in one place.
           </p>
 
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -550,7 +550,7 @@ export default function LandingPage() {
               Connecting You to Real Care
             </h2>
             <p style={{ fontFamily: FONT_BODY, fontSize: '1rem', color: C.inkMid, lineHeight: 1.8, marginBottom: '2.3rem' }}>
-              Our triage system helps you take the next step. Generate a digital referral card and find verified oncology centers near you — bridging the gap between digital assessment and professional medical consultation.
+              Our triage system helps you take the next step. Generate a digital referral card and find verified oncology centers near you - bridging the gap between digital assessment and professional medical consultation.
             </p>
             <OncoBtn href="/signup">Learn About Onco-Connect →</OncoBtn>
           </div>

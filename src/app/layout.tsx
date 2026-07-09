@@ -6,11 +6,11 @@ import { LanguageProvider } from '@/context/language-context';
 import { FirebaseClientProvider } from '@/firebase';
 
 export const metadata: Metadata = {
-  title: 'DermaFlow AI — Your Skin, Understood',
+  title: 'DermaFlow AI - Your Skin, Understood',
   description: 'AI-powered skin analysis, personalized care recommendations, and expert guidance. Upload a photo, get instant results with explainable AI heatmaps, and connect with verified oncology centers when it matters.',
   metadataBase: new URL('https://dermaflow-zeta.vercel.app'),
   openGraph: {
-    title: 'DermaFlow AI — Your Skin, Understood',
+    title: 'DermaFlow AI - Your Skin, Understood',
     description: 'AI-powered skin analysis, personalized care, and expert guidance. Instant results with explainable heatmaps.',
     url: 'https://dermaflow-zeta.vercel.app',
     siteName: 'DermaFlow AI',
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'DermaFlow AI — Your Skin, Understood',
+        alt: 'DermaFlow AI - Your Skin, Understood',
       },
     ],
     locale: 'en_US',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'DermaFlow AI — Your Skin, Understood',
+    title: 'DermaFlow AI - Your Skin, Understood',
     description: 'AI-powered skin analysis, personalized care, and expert guidance. Instant results with explainable heatmaps.',
     images: ['/og-image.png'],
   },

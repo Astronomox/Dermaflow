@@ -116,7 +116,7 @@ export default function DigitalTwinPage() {
       label: "Overall Risk Level",
       value: stats.avgRiskLevel,
       status: stats.avgRiskLevel === 'Low' ? 'healthy' : stats.avgRiskLevel === 'N/A' ? 'unknown' : 'warning',
-      description: stats.avgRiskLevel === 'Low' ? "Low risk — keep monitoring" : stats.avgRiskLevel === 'N/A' ? "Run scans to assess" : "Consider professional consultation",
+      description: stats.avgRiskLevel === 'Low' ? "Low risk - keep monitoring" : stats.avgRiskLevel === 'N/A' ? "Run scans to assess" : "Consider professional consultation",
       color: stats.avgRiskLevel === 'Low' ? "bg-green-500/10 text-green-600 dark:text-green-400" : "bg-amber-500/10 text-amber-600 dark:text-amber-400",
     },
     {

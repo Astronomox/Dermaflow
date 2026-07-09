@@ -70,7 +70,7 @@ function getMelanomaRisk(uv: number): 'low' | 'moderate' | 'high' {
 }
 
 function getAirQualityLabel(cloudCover: number): string {
-  // Rough proxy — we'd need a real AQI API for accuracy
+  // Rough proxy - we'd need a real AQI API for accuracy
   // Open-Meteo has an Air Quality API too, but keeping it simple
   if (cloudCover > 80) return 'Moderate';
   if (cloudCover > 50) return 'Fair';

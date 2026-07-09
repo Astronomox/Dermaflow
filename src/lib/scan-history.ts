@@ -28,7 +28,7 @@ export interface ScanRecord {
   refinedAssessment?: string;
   rationale?: string;
   createdAt: Date | Timestamp;
-  // We don't store the full base64 image — too large for Firestore (1MB doc limit).
+  // We don't store the full base64 image - too large for Firestore (1MB doc limit).
   // Instead store a thumbnail or just metadata.
   imageSize?: number; // bytes of original image
 }
@@ -55,7 +55,7 @@ export async function saveScanResult(params: {
     const auth = getAuth();
     const user = auth.currentUser;
     if (!user) {
-      console.warn('[DERMAFLOW] Cannot save scan — user not authenticated');
+      console.warn('[DERMAFLOW] Cannot save scan - user not authenticated');
       return null;
     }
 
@@ -76,7 +76,7 @@ export async function saveScanResult(params: {
     console.log('[DERMAFLOW] Scan saved:', docRef.id);
     return docRef.id;
   } catch (error: any) {
-    // Don't crash the app if Firestore save fails — log and continue
+    // Don't crash the app if Firestore save fails - log and continue
     console.error('[DERMAFLOW] Failed to save scan:', error.code, error.message);
     return null;
   }

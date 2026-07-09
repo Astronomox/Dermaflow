@@ -1,6 +1,6 @@
 rules_version = '2';
 
-// Firebase Storage Security Rules — DermaFlow
+// Firebase Storage Security Rules - DermaFlow
 // Scan images are health data: strictly owner-only, capped size, images only.
 service firebase.storage {
   match /b/{bucket}/o {

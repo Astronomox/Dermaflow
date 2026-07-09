@@ -142,7 +142,7 @@ export default function AnalysisPage() {
     return () => unsubscribe();
   }, []);
 
-  // ✅ START CAMERA — requests stream, then opens modal
+  // ✅ START CAMERA - requests stream, then opens modal
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -172,7 +172,7 @@ export default function AnalysisPage() {
     }
   };
 
-  // ✅ REF CALLBACK — fires the instant the <video> element mounts in the DOM
+  // ✅ REF CALLBACK - fires the instant the <video> element mounts in the DOM
   const videoRefCallback = useCallback((node: HTMLVideoElement | null) => {
     videoRef.current = node;
     if (node && streamRef.current) {
@@ -249,7 +249,7 @@ export default function AnalysisPage() {
           refinedResult: null,
         });
 
-        // Save to Firestore (non-blocking — don't fail the UI if save fails)
+        // Save to Firestore (non-blocking - don't fail the UI if save fails)
         saveScanResult({
           assessment: result.assessment,
           confidence: result.confidence,

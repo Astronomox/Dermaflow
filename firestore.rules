@@ -1,10 +1,10 @@
 /**
- * # Firestore Security Rules — DermaFlow V2
+ * # Firestore Security Rules - DermaFlow V2
  *
  * CHANGES from original:
  * - Added /users/{userId}/scans subcollection rules
  *   Allows users to save and retrieve their scan analysis history.
- *   Same ownership model — users can only access their own scans.
+ *   Same ownership model - users can only access their own scans.
  */
 rules_version = '2';
 service cloud.firestore {

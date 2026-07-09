@@ -1,7 +1,7 @@
 'use client';
 
 // src/app/login/page.tsx
-// DermaFlow V2 — Login page with photo split layout
+// DermaFlow V2 - Login page with photo split layout
 
 import { useState, useTransition } from 'react';
 import Link from 'next/link';
@@ -133,7 +133,7 @@ export default function LoginPage() {
 
       {/* ── RIGHT: Photo panel ── */}
       <div className="df-login-decor" style={{ position: 'relative', overflow: 'hidden' }}>
-        {/* Background photo — hands touching healthy glowing skin */}
+        {/* Background photo - hands touching healthy glowing skin */}
         <Image
           src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1200"
           alt="Hands gently touching smooth healthy skin"

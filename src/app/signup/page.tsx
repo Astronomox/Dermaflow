@@ -1,7 +1,7 @@
 'use client';
 
 // src/app/signup/page.tsx
-// DermaFlow V2 — Signup page with photo split layout (mirrored)
+// DermaFlow V2 - Signup page with photo split layout (mirrored)
 
 import { useState, useTransition } from 'react';
 import Link from 'next/link';
@@ -83,7 +83,7 @@ export default function SignupPage() {
     <div className="df-login-grid" style={{ minHeight: '100vh', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
       {/* ── LEFT: Photo panel ── */}
       <div className="df-login-decor" style={{ position: 'relative', overflow: 'hidden' }}>
-        {/* Background photo — skincare routine, healthy radiant skin */}
+        {/* Background photo - skincare routine, healthy radiant skin */}
         <Image
           src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?q=80&w=1200"
           alt="Beautiful healthy skin care routine"

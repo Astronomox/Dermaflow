@@ -5,7 +5,7 @@
 //
 // NOTE: in-memory limits reset on redeploy and are per-instance. For
 // multi-instance production scale, swap `hit()` internals for a shared
-// store (e.g. Upstash Redis) — the call sites won't need to change.
+// store (e.g. Upstash Redis) - the call sites won't need to change.
 
 import { headers } from 'next/headers';
 

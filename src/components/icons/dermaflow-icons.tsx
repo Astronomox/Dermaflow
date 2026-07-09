@@ -1,5 +1,5 @@
 // src/components/icons/dermaflow-icons.tsx
-// DermaFlow V5 — Monochrome light icon set
+// DermaFlow V5 - Monochrome light icon set
 
 import React from 'react';
 
